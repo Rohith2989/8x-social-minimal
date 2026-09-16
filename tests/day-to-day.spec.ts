@@ -6,14 +6,15 @@ test('homepage day-to-day keeps media geometry fixed while details change', asyn
   await page.goto('/');
   await expect(page.locator('#day-to-day')).toHaveCount(1);
   await expect(page.locator('#day-to-day')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
-  await expect(page.locator('.stone-continuation')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
+  await expect(page.locator('.family-ending')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
   const image = page.locator('.day-film');
   await image.scrollIntoViewIfNeeded();
   const before = await image.boundingBox();
   const canvas = page.locator('.raster-rim');
   await image.hover();
   const frame = await canvas.evaluate((el: HTMLCanvasElement) => el.toDataURL());
-  await expect.poll(async () => (await canvas.evaluate((el: HTMLCanvasElement) => el.toDataURL())) !== frame).toBe(true);
+  await page.waitForTimeout(300);
+  expect(await canvas.evaluate((el: HTMLCanvasElement) => el.toDataURL())).toBe(frame);
   await page.getByRole('button', { name: 'Keep content moving.' }).click();
   await expect(page.getByText('Briefs, reviews and publishing. Kept moving by 8x.')).toBeVisible();
   const after = await image.boundingBox();

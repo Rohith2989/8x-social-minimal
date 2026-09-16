@@ -1,5 +1,7 @@
 # Asset provenance
 
+- `lib/footer-mark.json` and `public/footer/infinity.svg`: deterministic code-native derivatives of the original `public/8x.svg`, built with `node scripts/build-footer-mark.mjs`. The solid entrance preserves the actual mark. Its horizontally rotated 8 is sampled into 2,288 stationary dots for a layered print reveal. No generated image is used at runtime; generated v1 and v3 concept boards are art-direction reference only.
+
 - `public/reach/atlas.json`, `atlas-fallback.svg`, `coverage.json` and `lib/reach-markets.json`: unchanged copies from the existing `../8x-social` project, imported 2026-09-17. These are the original lighter-density map assets, not the rejected dense experiment. SHA-256 compared against all four source files. Original coverage metadata retains the inherited 61-country display and 51 explicitly listed/highlighted markets; no additional countries or claims were invented during this port.
 
 - `public/8x.svg` and `public/icon.svg`: original 8x brand assets copied from the existing project. Do not redraw the mark with a substitute font.

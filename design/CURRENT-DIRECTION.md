@@ -1,5 +1,17 @@
 # Current design direction
 
+## Latest: layered footer and viewport correction
+
+The user rejected the v2 point-morph animation and requested a new generated sequence before rebuilding. They specifically suggested layered motion. See footer-layered-v3: the generated board is saved, and the live footer now uses a coherent solid SVG turn followed by complementary masks revealing a stationary halftone print. No dot swarm or individual point morph. The hero now fits the full portrait frame at 1920×1080 and other desktop landscape sizes; wide headlines use two lines. Portrait tablets and phones retain natural document flow. The original map stays orange. New implementation awaits user visual review. This supersedes the v2 description below.
+
+## Current implementation: stone family ending (2026-09-17)
+
+The user approved implementing the family concept, then rejected the orange timed animation because it was already settled when reached and lacked a visible footer. That rejection supersedes the proposal below. The ending now uses warm stone, an orange dot seam from the preserved map, a native-scroll original 8 → raster → quarter-turn → open dotted infinity sequence, stationary products, and a separate semantic footer with contact/company/legal links. No replay controls, idle loops or extra ornamental animation earlier on the page. See [implementation details](../docs/FOOTER.md). The new version is implemented and tested, pending user visual review; do not claim approval yet.
+
+## Latest proposal: footer product family
+
+The user now requests a footer concept: the original 8 rotates horizontally and becomes dotted, with the product family on the right. This is intended to be the page's only animation feature. See [footer-infinity-v1](footer-infinity-v1/README.md) and its four-stage generated board. User-supplied product labels: 8x Careers, 8x Sale, 8x Social, 8x Research; 8x Next is an explicitly temporary fifth label because the user does not know the final name. Proposal only: footer and earlier page motion have not been changed. Wait for design feedback before implementing the ending or removing existing animation.
+
 ## Latest implementation: original orange map (2026-09-17)
 
 The user explicitly selected the map as the next implementation, superseding the earlier deferral below. Reach Atlas now follows the comparison on `/`. Preserve the original #f34b32 orange, geography, dot density and market data. The shared stone canvas warms as the map heading enters; navigation and the closing contact area share the same colour. No divider, full-page wipe, new pin or scroll interception. Country hover/click lifts, region filters, contrasting name labels and an accessible native market selector work on desktop and mobile. See docs/IMPLEMENTATION.md for timing and verification. Service choices, dashboard and brand/partner proof remain open content work; their prior layouts remain rejected. The 8-to-infinity ending remains deferred.

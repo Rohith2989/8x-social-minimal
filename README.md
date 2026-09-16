@@ -1,6 +1,6 @@
 # 8x Social Minimal
 
-The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day, Dot Reach, an interactive comparison, the original orange Reach Atlas and a closing contact area. The stone surface warms into orange as the map heading arrives, without a divider or extra scroll pin. Five distinct original-site creators appear across the video sections.
+The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day, Dot Reach, an interactive comparison, the original orange Reach Atlas and a stone product-family/contact footer. The stone surface warms into orange as the map heading arrives, without a divider or extra map scroll pin. Five distinct original-site creators appear across the video sections. The ending holds the original 8 through a scroll-driven layered SVG turn and halftone print reveal; earlier decorative effects are static.
 
 ## Run
 
@@ -18,6 +18,6 @@ The tests cover native scroll selection with stable media geometry; manual pause
 
 ## Direction and implementation
 
-Read `AGENTS.md`, `design/CURRENT-DIRECTION.md` and `docs/IMPLEMENTATION.md` before changing the page. Design folders preserve approval/rejection history; their presence does not imply approval. Review the live map at http://localhost:3904/#reach-atlas. Its country hover/click, region filters, mobile selector and failure fallback are covered by tests. The eventual 8-to-infinity family reveal remains future work.
+Read `AGENTS.md`, `design/CURRENT-DIRECTION.md`, `docs/IMPLEMENTATION.md` and `docs/FOOTER.md` before changing the page. Design folders preserve approval/rejection history; their presence does not imply approval. Review the live map at http://localhost:3904/#reach-atlas and scroll through the ending at http://localhost:3904/#family. Twenty-one behavioral tests cover the page, including the reversible footer, stable products, static rest, contact links and no-script fallback. 8x Next remains a placeholder; unverified products have no invented destinations.
 
 Next.js App Router, React, TypeScript and CSS. Original local SVG, font and creator media. No animation framework, scroll hijacking, external embeds, analytics, or artificial loading screen. The preview is marked `noindex` until launch is explicitly approved. Buttons link to existing 8x services; this project has no form backend.

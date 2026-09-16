@@ -17,6 +17,8 @@ export function Header() {
       frame = 0;
       const edge = header.current?.getBoundingClientRect().bottom ?? 0;
       setStone(start.getBoundingClientRect().top <= edge);
+      const ending = document.querySelector('.family-ending');
+      if (header.current) header.current.dataset.ending = String(!!ending && ending.getBoundingClientRect().top <= edge);
     };
     const queue = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
@@ -25,7 +27,7 @@ export function Header() {
     return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue); };
   }, []);
   useEffect(() => {
-    const targets = ['work', 'day-to-day', 'reach', 'comparison', 'reach-atlas'].map(id => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    const targets = ['work', 'day-to-day', 'reach', 'comparison', 'reach-atlas', 'family'].map(id => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
     const visible = new Set<Element>();
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }

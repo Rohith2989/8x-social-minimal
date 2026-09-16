@@ -19,7 +19,8 @@ test('dot reach continues stone, uses unique footage and preserves a live raster
   await portrait.hover();
   const canvas = page.locator('.portrait-raster');
   const snapshot = await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL());
-  await expect.poll(async () => (await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL())) !== snapshot).toBe(true);
+  await page.waitForTimeout(300);
+  expect(await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL())).toBe(snapshot);
   await expect(page.getByRole('button', {name:'Pause reach video',exact:true})).toBeVisible();
   await expect.poll(() => page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement) => v.currentTime)).toBeGreaterThan(0);
   const after = await portrait.boundingBox();
