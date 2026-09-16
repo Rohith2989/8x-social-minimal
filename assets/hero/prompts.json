@@ -1,0 +1,13 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "edit",
+  "original": "design/hero-v1/references/atlas-portraits-v1.webp",
+  "v1": {
+    "target": "assets/hero/portraits-cutout.png"
+  },
+  "v2": {
+    "target": "assets/hero/portraits-complete-v2.png",
+    "reference": "assets/hero/portraits-cutout.png",
+    "prompt": "Use case: identity-preserving photographic outpainting.\nAsset type: production website hero panorama, transparent RGBA background.\nInput image 1 is the EDIT TARGET: the existing five-person monochrome portrait montage.\nPrimary request: regenerate and extend the composition so the subjects have complete natural shoulders and upper torsos; especially the centre woman's shoulders must not be chopped off. Preserve the same five distinct people, their faces, hairstyles, order, gaze directions, black clothing, fine film-like detail and dramatic monochrome studio lighting as faithfully as possible. Expand below and slightly to the sides, do not merely zoom or crop.\nComposition: wide landscape panorama roughly 2.1:1. Five overlapping editorial half-body portraits, arranged across the width. Show full shoulder contours and upper chest/upper arms down to mid torso. Outermost subjects must have comfortable breathing space from the image edges, no head or shoulder touches the left/right border. Natural overlap where people stand together is fine, not severed shoulder cutouts. Faces remain large and expressive; no hands needed. Maintain the staggered head heights and the centre woman's direct gaze.\nBackground: actual transparent pixels behind and between silhouettes; no painted checkerboard, no solid backdrop. Keep all dark hair and black shirts OPAQUE. Dark clothing should gently fall into deep near-black shadow toward the lower torso; sufficient black clothing below all shoulders so the website can gradually fade ONLY the lower clothing into its charcoal background. Do not fade faces, necks or shoulders. No sharp artificial bottom crop through the shoulders.\nStyle: photographic, elegant real skin texture, detailed fine hair, restrained editorial portraiture. Avoid plastic skin, exaggerated HDR, artificial rim halos, extra people, typography, logos, frames, colored circles. Return only the production photo asset, no webpage mockup."
+  }
+}

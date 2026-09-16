@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-17",
+  "tool": "built-in image_gen",
+  "status": "Concept for review; not implemented or approved",
+  "prompt": "Use case: ui-mockup.\nGenerate one exceptional high-fidelity desktop website HERO concept for 8x social. Flat straight-on website screenshot, 1600x1100-ish landscape composition, no browser chrome, no presentation frame, no design annotations. This is a quieter new direction for an ambitious creator-network company. Minimal, visually powerful, editorial, extraordinary typographic care. Beautiful through proportion and confidence, not through numerous effects.\nReference image 1 is the approved existing five-person black-and-white portrait panorama. Reuse its subjects, portrait order, expressions and photographic treatment as faithfully as possible as ONE photographic composition; all five heads fully visible. Do not turn these into separate cards. Reference image 2 is the original 8x logo; retain its serif form as the small upper-left brand mark with lowercase sans-serif 'social' alongside.\nPalette: warm near-white #F8F8F5 dominates the upper two thirds, deep almost-black #141414 type, ONE vermilion orange #F44725 accent used sparingly on the primary CTA and one punctuation dot. No orange page fill. No blue, yellow, purple, gradients, 3D objects, glow, glassmorphism, dashboard widgets, badges or decorative microcopy.\nComposition: generous 72px side gutters. Slim header: logo left, 'For brands', 'For creators', 'How it works' near center-right, 'Sign in' and simple outlined 'Let’s talk ↗' right. Hairline bottom rule optional very pale. Enough clear room below header. Left-aligned huge confident clean Swiss grotesk headline with elegant medium weight, tightly controlled kerning and two lines exactly:\n'Creator networks.'\n'Built for your brand.'\nThe headline is the central focus, spanning most width without touching the edges. Last period is a small orange circular dot, not square. No eyebrow label or chapter number. Beneath the headline, on a spacious horizontal row, left supporting copy in comfortable readable 20px grey sans:\n'We find the creators, manage the content,'\n'and grow your organic reach.'\nOn the right of that same row, a refined orange pill button 'Build your network ↗' and a restrained text link 'See how it works →'. Large balanced negative space. Avoid oversized wasted gaps.\nBelow at roughly y=560, create a beautifully integrated panoramic black-and-white portrait image band from reference 1, almost full content width with narrow clean margins. One uninterrupted black photographic ground, subtle 2px corners, no borders, no overlapping image collage. Height about 370px, panorama preserves the five full heads and shoulder detail at natural proportions, no cropping of hair. All faces remain clean photographic greyscale. At only the extreme left and right edges of the black image, a very restrained small equal-circle raster fringe softens the edge into the warm white page: sparse 2px black dots in a regular print grid, fading out over 20px. This is a static graphic print treatment, not particles flying around. Black image area feels like an arresting cinematic group portrait, still and calm. Below the image a short warm-white margin and a thin rule; no additional slogan or labels, no stats or fake client logos. Do not put 'A world of voices' on the hero; we are drawing from its image only.\nOverall: meaningful creator portrait humanity combined with bold readable business promise; high-end brand confident enough to use fewer elements. Match a credible fully buildable browser layout, not concept art. Content readable and sharply rendered. Do not copy Listen Labs branding or blue; take only its disciplined hierarchy and palette consistency. No animations depicted as overlapping frames.",
+  "references": [
+    {
+      "path": "references/atlas-portraits-v1.webp",
+      "role": "Approved existing image; static photographic composition"
+    },
+    {
+      "path": "references/original-mark-reference.png",
+      "role": "Original brand mark; production should use exact SVG"
+    }
+  ],
+  "research": [
+    "https://listenlabs.ai/",
+    "https://claude.ai/artifact/7Ra7LYd5EVmSuCKeYz78K6"
+  ],
+  "output": "hero-concept.png"
+}
