@@ -23,12 +23,16 @@ test('scroll reveals a real transformation, stable products and a separate stone
     if (name === 'original') productY = bounds!.y;
     else expect(Math.abs(bounds!.y - productY)).toBeLessThan(1);
     images.push(await page.locator('.family-art>svg').evaluate(el => el.outerHTML));
-    await page.screenshot({ path: `docs/qa/footer-v3-${name}.png` });
+    if (name === 'infinity') await expect(page.locator('.family-current')).toHaveCSS('opacity', '1');
+    await page.screenshot({ path: `docs/qa/footer-current-${name}.png` });
   }
   expect(new Set(images).size).toBe(5);
   await expect(journey).toHaveAttribute('data-running', 'false');
   await position(page, .5);
-  expect(await page.locator('.family-art>svg').evaluate(el => el.outerHTML)).toBe(images[2]);
+  await expect(page.locator('.family-current')).toHaveCSS('opacity', '0');
+  // CSSOM may normalize the opacity style's whitespace after the crossfade.
+  const returned = await page.locator('.family-art>svg').evaluate(el => el.outerHTML);
+  expect(returned.replace(/style="[^"]*"/g,'') === images[2].replace(/style="[^"]*"/g,'')).toBe(true);
   await page.locator('#contact').scrollIntoViewIfNeeded();
   await expect(page.getByRole('contentinfo', { name: '8x Social footer' })).toBeVisible();
   await expect(page.locator('#contact').getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', 'https://www.8x.social/en/book-call');
@@ -41,7 +45,7 @@ test('scroll reveals a real transformation, stable products and a separate stone
   expect(errors).toEqual([]);
 });
 
-test('scroll animation waits at rest and returns to the original mark when scrolling back', async ({ page }) => {
+test('entrance waits at rest; settled dots move continuously without moving products', async ({ page }) => {
   await page.goto('/#family');
   const root = page.locator('#family');
   await expect(root).toHaveAttribute('data-ready', 'true');
@@ -51,14 +55,55 @@ test('scroll animation waits at rest and returns to the original mark when scrol
   await page.waitForTimeout(500);
   expect(await page.locator('.family-art>svg').evaluate(el => el.outerHTML)).toBe(frame);
   await position(page, .84); await expect(root).toHaveAttribute('data-phase', 'settled');
-  const settled = await page.locator('.family-art>svg').evaluate(el => el.outerHTML);
+  await expect(root).toHaveAttribute('data-flowing', 'true');
+  await expect(page.locator('.family-current')).toHaveCSS('opacity', '1');
+  const product = await page.locator('.family-directory').boundingBox();
+  const pixels = () => page.locator('.family-current').evaluate((canvas: HTMLCanvasElement) => { const data=canvas.getContext('2d')!.getImageData(0, 0, canvas.width, canvas.height).data; const sampled:number[]=[]; for(let i=0;i<data.length;i+=64) sampled.push(data[i],data[i+1],data[i+2],data[i+3]); return sampled; });
+  const first = await pixels();
+  await page.screenshot({path:'docs/qa/footer-current-flow-a.png'});
+  await page.waitForTimeout(1800);
+  const second = await pixels();
+  let coloured = 0, changed = 0, moved = 0, opaque = 0;
+  for(let i=0;i<first.length;i+=4) {
+    if (second[i+3]>180) opaque++;
+    if (second[i+3]>180 && Math.max(second[i],second[i+1],second[i+2])-Math.min(second[i],second[i+1],second[i+2])>70) coloured++;
+    if (Math.abs(first[i]-second[i])+Math.abs(first[i+1]-second[i+1])+Math.abs(first[i+2]-second[i+2])>90) changed++;
+    if (Math.abs(first[i+3]-second[i+3])>100) moved++;
+  }
+  // A small moving accent, never an all-over rainbow.
+  expect(coloured).toBeGreaterThan(30);
+  expect(coloured / opaque).toBeLessThan(.18);
+  expect(changed).toBeGreaterThan(100);
+  expect(moved).toBeGreaterThan(60);
+  expect(await page.locator('.family-directory').boundingBox()).toEqual(product);
+  await page.screenshot({path:'docs/qa/footer-current-flow-b.png'});
   await position(page, 1); await expect(root).toHaveAttribute('data-phase', 'settled');
-  // The last reading interval holds the approved print, without late sinking.
-  expect(await page.locator('.family-art>svg').evaluate(el => el.outerHTML)).toBe(settled);
   await position(page, 0); await expect(root).toHaveAttribute('data-phase', 'original');
+  await expect(root).toHaveAttribute('data-flowing', 'false');
+  await expect(page.locator('.family-current')).toHaveCSS('opacity', '0');
 });
 
-test('layered print keeps every dot fixed and finishes at the bottom of a tall window', async ({ page }) => {
+test('current stops offscreen and freezes to a colourful still for reduced motion', async ({page}) => {
+  await page.goto('/#family'); await position(page,.94);
+  const root=page.locator('#family'), canvas=page.locator('.family-current');
+  await expect(root).toHaveAttribute('data-flowing','true');
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await expect(root).toHaveAttribute('data-flowing','false');
+  await expect(canvas).toHaveCSS('opacity','1');
+  const still=await canvas.evaluate((el:HTMLCanvasElement)=>el.toDataURL());
+  await page.waitForTimeout(400);
+  expect(await canvas.evaluate((el:HTMLCanvasElement)=>el.toDataURL())).toBe(still);
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await position(page,.94); await expect(root).toHaveAttribute('data-flowing','true');
+  await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await expect(root).toHaveAttribute('data-flowing','false');
+  await expect(root).toHaveAttribute('data-running','false');
+  const stopped=await canvas.getAttribute('data-frame');
+  await page.waitForTimeout(400);
+  expect(await canvas.getAttribute('data-frame')).toBe(stopped);
+});
+
+test('entrance print geometry stays stable and finishes at the bottom of a tall window', async ({ page }) => {
   await page.setViewportSize({width:1226,height:1302}); await page.goto('/#family');
   const root=page.locator('#family'); await expect(root).toHaveAttribute('data-ready','true');
   const dots=page.locator('.family-print-layer');

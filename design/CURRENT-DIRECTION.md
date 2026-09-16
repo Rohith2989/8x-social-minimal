@@ -1,5 +1,9 @@
 # Current design direction
 
+## Latest: restrained colour current
+
+The colour-current storyboard is the visual target. User rejected the fixed-grid colour pass, a generic narrow ribbon, then excessive speed and rainbow coverage. Latest request is subtle motion and only a speck of colour. The endpoint now uses the board's sampled dot positions/radii, tiny coherent drift (under one SVG unit) and 0.1% breathing. One accent spans 12% of the path and travels in 40 seconds; most dots stay carbon. No point shuffling, blinking or whole-mark rotation at rest. The original layered SVG entrance remains. Implementation awaits user review; do not call it an exact match or approved. See docs/FOOTER.md.
+
 ## Latest: approved endpoint, refined motion and circle correction
 
 The user likes the v3 dotted footer endpoint and viewport result and asked to bring it alive with layered motion. Preserve the final geometry, palette and directory. The refined sequence lifts three shallow layers beneath the original solid mark, turns it as a coherent silhouette, compresses the layers, then prints the stationary dots. The last 17% of travel holds the finished mark. New choreography awaits review; the settled visual is approved. The orange hero circle was separately flagged for spilling through the faded shoulders: it is now smaller, inset behind the faces, and fades with the whole composition rather than behind transparent clothing. No new asset or dependency.

@@ -1,5 +1,7 @@
 # Asset provenance
 
+- `lib/current-reference.json`: 1,452 dot centres, radii and sampled RGB values measured from the main infinity artwork in the generated `design/footer-color-current-v1/01-color-sequence.png`. `scripts/sample-current-reference.py` performs measurement using Python, OpenCV, NumPy and scikit-image; it does not modify the source image. The runtime uses positions/radii and its own restrained animated pigment. Those Python libraries are regeneration-only, not web dependencies. The original SVG entrance and no-script fallback remain separate assets.
+
 - `lib/footer-mark.json` and `public/footer/infinity.svg`: deterministic code-native derivatives of the original `public/8x.svg`, built with `node scripts/build-footer-mark.mjs`. The solid entrance preserves the actual mark. Its horizontally rotated 8 is sampled into 2,288 stationary dots for a layered print reveal. No generated image is used at runtime; generated v1 and v3 concept boards are art-direction reference only.
 
 - `public/reach/atlas.json`, `atlas-fallback.svg`, `coverage.json` and `lib/reach-markets.json`: unchanged copies from the existing `../8x-social` project, imported 2026-09-17. These are the original lighter-density map assets, not the rejected dense experiment. SHA-256 compared against all four source files. Original coverage metadata retains the inherited 61-country display and 51 explicitly listed/highlighted markets; no additional countries or claims were invented during this port.

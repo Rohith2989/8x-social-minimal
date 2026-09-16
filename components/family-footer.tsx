@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { Arrow } from './icons';
 import { links } from '@/lib/content';
 import mark from '@/lib/footer-mark.json';
+import { createInfinityCurrent } from '@/lib/infinity-current';
 
 const clamp = (x: number) => Math.max(0, Math.min(1, x));
 const ease = (x: number) => { const t = clamp(x); return t * t * t * (t * (t * 6 - 15) + 10); };
@@ -17,10 +18,13 @@ export function FamilyFooter() {
   const root = useRef<HTMLElement>(null), stage = useRef<HTMLDivElement>(null), artwork = useRef<SVGSVGElement>(null);
   const ink = useRef<SVGGElement>(null), depth = useRef<SVGGElement>(null), suffix = useRef<SVGPathElement>(null);
   const solidMask = useRef<SVGLinearGradientElement>(null), printMask = useRef<SVGLinearGradientElement>(null);
+  const currentCanvas = useRef<HTMLCanvasElement>(null), printLayer = useRef<SVGGElement>(null);
   useEffect(() => {
     const journey = root.current!, content = stage.current!, el = artwork.current!, motion = matchMedia('(prefers-reduced-motion: reduce)');
     let span = 0, top = 100, raf = 0, progress = 0, target = 0, last = 0;
     let measured = false;
+    const canvas = currentCanvas.current!, current = createInfinityCurrent(canvas);
+    let visible = false, clock = 0, currentOpacity = 0, lastPaint = -1, scrollDirty = true;
     const draw = () => {
       // Lift the complete silhouette, turn it, then lay it onto the print plane.
       // Every layer shares one transform, so the serif edges never scatter.
@@ -55,20 +59,38 @@ export function FamilyFooter() {
     };
     const tick = (time: number) => {
       raf = 0;
-      if (document.hidden) { last = 0; return; }
-      target = sample();
+      if (document.hidden) { last = 0; journey.dataset.flowing = 'false'; return; }
+      if (scrollDirty) { target = sample(); scrollDirty = false; }
       const dt = last ? Math.min(64, time - last) : 16; last = time;
+      const previousProgress = progress;
       progress = motion.matches ? 1 : mix(progress, target, 1 - Math.exp(-dt / 85));
       if (Math.abs(progress - target) < .0003) progress = target;
-      draw();
+      if (progress !== previousProgress) draw();
       const running = Math.abs(progress - target) >= .0003;
       journey.dataset.running = String(running);
-      if (running) raf = requestAnimationFrame(tick); else last = 0;
+      const revealCurrent = current && progress >= .83 ? 1 : 0;
+      const previousOpacity = currentOpacity;
+      currentOpacity = motion.matches ? Number(revealCurrent) : mix(currentOpacity, Number(revealCurrent), 1 - Math.exp(-dt / 260));
+      if (Math.abs(currentOpacity - Number(revealCurrent)) < .001) currentOpacity = Number(revealCurrent);
+      const flowing = Boolean(current && visible && !motion.matches && currentOpacity > 0);
+      if (flowing) clock += dt / 1000;
+      if (currentOpacity !== previousOpacity) {
+        canvas.style.opacity = String(currentOpacity);
+        printLayer.current!.style.opacity = String(1 - currentOpacity);
+      }
+      // Native scroll remains independent; only the visible current keeps a loop.
+      if (current && currentOpacity > 0 && (motion.matches || time - lastPaint > (innerWidth <= 700 ? 30 : 15))) {
+        current.draw(motion.matches ? 1.6 : clock, !motion.matches); lastPaint = time;
+        canvas.dataset.frame = clock.toFixed(3);
+      }
+      journey.dataset.flowing = String(flowing);
+      if (running || flowing || currentOpacity !== Number(revealCurrent)) raf = requestAnimationFrame(tick); else last = 0;
     };
-    const schedule = () => { if (!raf && !document.hidden) raf = requestAnimationFrame(tick); };
+    const schedule = () => { scrollDirty = true; if (!raf) raf = requestAnimationFrame(tick); };
     const measure = () => {
       top = innerWidth <= 700 ? 82 : 110;
       const stageHeight = content.getBoundingClientRect().height;
+      current?.resize(el.getBoundingClientRect().width);
       span = !motion.matches && stageHeight + top + 20 < innerHeight ? innerHeight * 1.15 : 0;
       journey.style.setProperty('--family-travel', `${span}px`);
       journey.style.setProperty('--family-height', `${stageHeight}px`);
@@ -78,16 +100,18 @@ export function FamilyFooter() {
       draw(); journey.dataset.ready = 'true'; schedule();
     };
     const observer = new ResizeObserver(measure); observer.observe(el); observer.observe(content);
+    const visibility = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; schedule(); }, { threshold: 0 });
+    visibility.observe(el);
     measure(); window.addEventListener('scroll', schedule, { passive: true }); window.addEventListener('resize', measure);
     motion.addEventListener('change', measure); document.addEventListener('visibilitychange', schedule);
-    return () => { cancelAnimationFrame(raf); observer.disconnect(); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', measure); motion.removeEventListener('change', measure); document.removeEventListener('visibilitychange', schedule); };
+    return () => { cancelAnimationFrame(raf); observer.disconnect(); visibility.disconnect(); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', measure); motion.removeEventListener('change', measure); document.removeEventListener('visibilitychange', schedule); };
   }, []);
 
   return <div className="family-ending">
     <div className="family-seam" aria-hidden="true"><svg width="100%" height="72"><defs><pattern id="family-edge" width="8" height="72" patternUnits="userSpaceOnUse">{Array.from({ length: 9 }, (_, y) => <circle key={y} cx="4" cy={y * 8 + 2} r={5.8 * Math.pow(1 - y / 9, 1.3)} fill="#f34b32" />)}</pattern></defs><rect width="100%" height="72" fill="url(#family-edge)" /></svg></div>
     <section id="family" className="family-journey" ref={root} aria-label="Explore the 8x family" data-running="false">
       <div className="family-stage page-width" ref={stage}>
-        <div className="family-art" role="img" aria-label="The original 8 turns horizontally, then a print reveal changes its ink to dots as you scroll.">
+        <div className="family-art" role="img" aria-label="The original 8 turns into a dotted infinity, with a continuous orange, violet and cyan current flowing around its loops.">
           <img className="family-fallback" src="/footer/infinity.svg" alt="" width="900" height="600" />
           <svg ref={artwork} viewBox="0 0 900 600" fill="#171922" aria-hidden="true">
             <defs>
@@ -98,8 +122,9 @@ export function FamilyFooter() {
             </defs>
             <g mask="url(#family-solid-mask)"><g ref={depth} opacity="0">{[.08, .16, .24].map((opacity, i) => <path key={i} d={mark.eight} opacity={opacity} />)}</g><g ref={ink}><path d={mark.eight} /></g></g>
             <path ref={suffix} d={mark.x} transform="translate(280 300) scale(1.64) translate(-93 -132)" />
-            <g className="family-print-layer" mask="url(#family-print-mask)">{mark.dots.map(([a,b,r], i) => <circle key={i} cx={450-(b-132)*3} cy={300+(a-93)*2.2} r={r} />)}</g>
+            <g ref={printLayer} style={{opacity: 1}} className="family-print-layer" mask="url(#family-print-mask)">{mark.dots.map(([a,b,r], i) => <circle key={i} cx={450-(b-132)*3} cy={300+(a-93)*2.2} r={r} />)}</g>
           </svg>
+          <canvas ref={currentCanvas} className="family-current" width="900" height="600" aria-hidden="true" />
         </div>
         <div className="family-directory"><h2>Explore 8x</h2><ul>{products.map(product => <li key={product.name}>
           {product.href ? <a href={product.href} aria-label={'8x ' + product.name}><img src="/8x.svg" alt="8x" width="386" height="264" /><span>{product.name}</span><Arrow /></a>

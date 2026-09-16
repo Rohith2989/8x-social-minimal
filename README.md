@@ -1,5 +1,7 @@
 # 8x Social Minimal
 
+Latest footer update: the original layered SVG entrance now leads into a mostly carbon dotted infinity with a small, slow colour trace and subpixel breathing. It stops offscreen and respects reduced motion. The latest implementation awaits visual review; see `docs/FOOTER.md` for the current specification, validation and rollback point.
+
 The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day, Dot Reach, an interactive comparison, the original orange Reach Atlas and a stone product-family/contact footer. The stone surface warms into orange as the map heading arrives, without a divider or extra map scroll pin. Five distinct original-site creators appear across the video sections. The ending holds the original 8 through a scroll-driven layered SVG turn and halftone print reveal; earlier decorative effects are static.
 
 ## Run

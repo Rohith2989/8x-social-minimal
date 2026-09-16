@@ -4,6 +4,7 @@
 .family-stage{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:7%;align-items:center;padding-block:24px 50px}
 .family-journey[data-pinned=true] .family-stage{position:sticky;top:var(--family-top)}
 .family-art{position:relative;aspect-ratio:3/2;width:100%}
+.family-current{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;pointer-events:none}
 .family-art>svg,.family-fallback{position:absolute;inset:0;width:100%;height:100%;display:block}.family-art>svg{opacity:0}
 .family-journey[data-ready=true] .family-art>svg{opacity:1}.family-journey[data-ready=true] .family-fallback{visibility:hidden}
 .family-directory h2{font-size:18px;font-weight:450;letter-spacing:-.025em;line-height:1.4;margin:0 0 32px}

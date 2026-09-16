@@ -1,5 +1,17 @@
 # Layered stone family ending — September 17, 2026
 
+## Current revision: small, slow colour current
+
+This section supersedes the stationary-endpoint descriptions below. The user selected `design/footer-color-current-v1`, then rejected a fixed-grid implementation, a generic ribbon, and excessive motion/colour. Latest direction: subtle movement and just a small colour trace. Review at http://localhost:3904/?v=subtle-current-2#family and scroll down.
+
+The existing original-SVG lift/turn/print entrance remains intact. At 83% progress it crossfades into a canvas surface based on 1,452 dot positions and radii measured from the approved board. The colour accent occupies at most 12% of the loop's path, softly blends into carbon, and circles in 40 seconds. Dot drift is bounded to 0.55 SVG units, with 0.1% breathing over 14 seconds and a 0.25-unit depth wave. Dots do not shuffle between positions, blink or disappear. Radial shading gives each dot shallow depth. This is a code-rendered interpretation of the artwork, not an exact reproduction or an embedded screenshot.
+
+`lib/infinity-current.ts` owns the surface renderer. The visible endpoint has its own clock; it stops offscreen and when the document is hidden. Reduced motion shows a still accent; no-JavaScript retains the black SVG fallback. Canvas resolution caps at 1.75 DPR and mobile paints at roughly 30 fps. Scroll reversal removes the canvas and restores the original layered entrance. Products and links remain stationary. No new runtime dependencies.
+
+Final production build/TypeScript and all five targeted footer tests pass. Earlier full-suite run passed 22 tests. Tests verify a restrained coloured pixel fraction, visible but bounded surface movement, stationary products, reverse, reduced motion, offscreen pause, mobile, tall windows and no-script fallback. QA: `docs/qa/footer-current-*.png`. Visual approval is pending. Rollback baseline: `c797c0e`.
+
+## Historical v3 baseline
+
 The first orange, entrance-timed footer was rejected: the user saw it already settled and could not find a real footer. The subsequent point-morph version was also rejected. The user requested a generated sequence and suggested layered motion; see design/footer-layered-v3. The user now likes the final v3 dotted mark and responsive result. Its refined motion awaits review. The current layered revision uses warm stone (#e9e5dc), connected to the original orange map by a narrow raster seam. The map's palette, geometry and density are unchanged. Review at http://localhost:3904/?v=layered-finish-4#family, then scroll down.
 
 ## Sequence and layout
