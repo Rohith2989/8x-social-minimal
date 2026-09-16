@@ -1,5 +1,9 @@
 # Layered stone family ending — September 17, 2026
 
+## Footer information
+
+The user requested a more useful footer inspired by Listen Labs and explicitly asked to push everything. Under the brand/contact row, an open grid now contains a short brand description, Services (creator network, managed service, DIY tracking), Explore (brands, creators, how it works, markets), and Company (blog, LinkedIn, contact). Privacy/Terms and copyright remain below. No divider lines, new surface colour or extra animation. At tablet size the description spans all three columns; phones use two navigation columns. Service/blog/legal destinations were checked against the original https://www.8x.social/en/for-brands footer on September 17; the hierarchy reference was https://listenlabs.ai/. No invented addresses, product destinations or company claims.
+
 ## Current revision: small, slow colour current
 
 This section supersedes the stationary-endpoint descriptions below. The user selected `design/footer-color-current-v1`, then rejected a fixed-grid implementation, a generic ribbon, and excessive motion/colour. Latest direction: subtle movement and just a small colour trace. Review at http://localhost:3904/?v=subtle-current-2#family and scroll down.

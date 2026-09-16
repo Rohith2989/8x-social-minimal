@@ -17,10 +17,18 @@
 .family-product small{font-size:10px;letter-spacing:0;margin-left:auto}
 .family-footer{padding:80px 0 25px}
 .family-contact{display:flex;justify-content:space-between;align-items:center;gap:40px}
+.family-information{display:grid;grid-template-columns:1.9fr 1fr 1fr 1fr;gap:5%;margin-top:64px}
+.family-description{font-size:17px;line-height:1.6;letter-spacing:-.025em;max-width:300px;margin:0;color:#55565b}
+.family-information nav{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.family-information h2{font-size:13px;line-height:1.5;font-weight:500;color:#626269;margin:0 0 15px}
+.family-information a{font-size:16px;line-height:1.4;min-height:40px;display:flex;align-items:center;letter-spacing:-.025em}
+.family-information a:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
 .family-brand{display:flex;align-items:flex-end;gap:12px}.family-brand img{width:98px;height:auto}.family-brand span{font-size:44px;letter-spacing:-.065em;line-height:1.1}
 .family-call{font-size:clamp(26px,3.9vw,65px);letter-spacing:-.055em;line-height:1.1;display:flex;align-items:center;gap:32px}.family-call>svg{width:40px;height:40px;color:#f34b32}
-.family-bottom{margin-top:78px;display:flex;justify-content:space-between;align-items:center;gap:24px;font-size:13px}.family-bottom nav{display:flex;gap:24px}.family-bottom a{min-height:44px;display:flex;align-items:center}.family-bottom a:hover,.family-call:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.family-bottom{margin-top:54px;display:flex;justify-content:space-between;align-items:center;gap:24px;font-size:13px}.family-bottom nav{display:flex;gap:24px}.family-bottom a{min-height:44px;display:flex;align-items:center}.family-bottom a:hover,.family-call:hover{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
 .family-ending :focus-visible{outline:2px solid #171922;outline-offset:6px}
+@media(max-width:900px){.family-information{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.family-description{grid-column:1/-1;max-width:380px}}
+@media(max-width:480px){.family-information{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:44px;gap:26px 20px}.family-description{font-size:15px}.family-information a{min-height:44px;font-size:15px}.family-information h2{margin-bottom:8px}}
 /* All earlier ornamental motion is quiet; media and user controls still work. */
 main *,main *::before,main *::after,.site-header *,.site-header *::before,.site-header *::after{animation:none!important;transition:none!important}.reach-atlas .ra-country path{transform:none!important;filter:none!important}
 .site-header[data-ending=true]{--nav-surface:#e9e5dc!important}.site-header[data-ending=true] .nav-contact{background:#171922!important;color:#f4f3ee!important}.site-header[data-ending=true] .nav-link::after{background:#f34b32!important}
