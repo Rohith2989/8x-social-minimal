@@ -96,5 +96,10 @@ test('responsive layouts keep text and navigation inside the viewport', async ({
       expect(bounds!.x, `${selector} left at ${width}`).toBeGreaterThanOrEqual(0);
       expect(bounds!.x + bounds!.width, `${selector} right at ${width}`).toBeLessThanOrEqual(width + 1);
     }
+    if (width === 2558) {
+      await page.locator('.hero-portrait img').evaluate((img: HTMLImageElement) => img.decode());
+      await page.locator('.hero-portrait').scrollIntoViewIfNeeded();
+      await page.screenshot({ path: 'docs/qa/wide-portrait-blend.png' });
+    }
   }
 });

@@ -31,7 +31,7 @@ svg{width:24px;height:24px;flex:none}
 .nav-contact svg{width:20px;height:20px;transition:transform .25s}
 .nav-contact:hover svg{transform:translate(2px,-2px)}
 .menu-toggle{display:none}
-.hero{padding-top:57px;scroll-margin-top:120px;overflow:clip;max-width:calc(var(--max) + var(--gutter)*2);margin:auto}
+.hero{padding-top:57px;scroll-margin-top:120px;overflow:clip;margin:auto}
 .hero-reading{display:grid;grid-template-columns:minmax(0,1fr) 28%;gap:4%;position:relative;z-index:2}
 h1{margin:0;font-size:clamp(88px,10.45vw,193px);line-height:.915;font-weight:690;letter-spacing:-.071em}
 h1 span{display:block}
@@ -41,8 +41,10 @@ h1 span{display:block}
 .arrow-disc{width:56px;height:56px;display:grid;place-items:center;background:var(--signal);color:var(--ink);border-radius:50%;flex:none;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s}
 .arrow-disc svg{width:25px;height:25px}
 .hero-cta:hover .arrow-disc{transform:rotate(45deg);background:#ff654d}
-.hero-portrait{position:relative;margin-top:-16px;isolation:isolate;aspect-ratio:1817/866;width:100%;pointer-events:none}
-.hero-portrait picture{position:relative;z-index:1;display:block}
+.hero-portrait{position:relative;margin:-16px auto 0;isolation:isolate;aspect-ratio:1817/866;width:100%;max-width:calc(var(--max) + var(--gutter)*2);pointer-events:none}
+/* Keep the circle free of the artwork's width cap. Fade only the portrait
+   perimeter, so large monitors never expose the source image's rectangle. */
+.hero-portrait picture{position:relative;z-index:1;display:block;mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}
 .hero-portrait img{display:block;width:100%;height:auto;mask-image:linear-gradient(#000 0%,#000 72%,transparent 100%)}
 .hero-sun{display:block;position:absolute;z-index:0;right:-.6%;top:-20%;width:40%;aspect-ratio:1;border-radius:50%;background:var(--signal)}
 .hero-portrait::after{content:'';position:absolute;inset:72% 0 -1px;z-index:2;background:linear-gradient(transparent,var(--ink) 92%)}
