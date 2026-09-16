@@ -9,10 +9,13 @@ export function Header() {
   const menuButton = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
   useEffect(() => {
-    const target = document.getElementById('work');
-    if (!target) return;
-    const observer = new IntersectionObserver(([e]) => setSection(e.isIntersecting ? 'work' : 'network'), { rootMargin: '-15% 0px -35% 0px' });
-    observer.observe(target);
+    const targets = ['work', 'day-to-day', 'reach'].map(id => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    const visible = new Set<Element>();
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }
+      setSection(visible.size ? 'work' : 'network');
+    }, { rootMargin: '-15% 0px -35% 0px' });
+    targets.forEach(target => observer.observe(target));
     return () => observer.disconnect();
   }, []);
   useEffect(() => {

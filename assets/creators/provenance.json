@@ -1,0 +1,46 @@
+{
+  "source": "https://www.8x.social/en/for-brands",
+  "verified": "2026-09-17",
+  "creators": [
+    {
+      "id": "nickmakesmusic",
+      "handle": "@nickmakesmusic",
+      "section": "CreatorWork",
+      "originalPost": "https://www.tiktok.com/@nickmakesmusic/video/7622470688237964557",
+      "video": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/nickmakesmusic.mp4",
+      "poster": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/nickmakesmusic.jpg"
+    },
+    {
+      "id": "mindful-witmee",
+      "handle": "@mindful_witmee",
+      "section": "CreatorWork",
+      "originalPost": "https://www.tiktok.com/@mindful_witmee/video/7643685525139754254",
+      "video": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/mindful-witmee.mp4",
+      "poster": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/mindful-witmee.jpg"
+    },
+    {
+      "id": "techwithchow",
+      "handle": "@techwithchow",
+      "section": "CreatorWork",
+      "originalPost": "https://www.instagram.com/reel/DX0BKwzJUMN/",
+      "video": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/techwithchow.mp4",
+      "poster": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/techwithchow.jpg"
+    },
+    {
+      "id": "wellnesswithliv1",
+      "handle": "@wellnesswithliv1",
+      "section": "DayToDay",
+      "originalPost": "https://www.tiktok.com/@wellnesswithliv1/video/7634021381604248862",
+      "video": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/wellnesswithliv1.mp4",
+      "poster": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/wellnesswithliv1.jpg"
+    },
+    {
+      "id": "maggie-intech",
+      "handle": "@maggie.intech",
+      "section": "DotReach",
+      "originalPost": "https://www.instagram.com/reel/DW0O-L_DDR0/",
+      "video": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/maggie-intech.mp4",
+      "poster": "https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/maggie-intech.jpg"
+    }
+  ]
+}

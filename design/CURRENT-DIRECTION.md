@@ -1,6 +1,8 @@
 # Current design direction
 
-Latest request: Day-to-day must appear on the normal homepage; it is now integrated at `/` after CreatorWork, with its existing dot animation, accordion and video. A local port 3904 alias forwards to the single 3091 preview. User rejected partner-continuation-v1 as conventional, insufficiently minimal and missing the dot concept. Replacement [dot-reach-v1](dot-reach-v1/README.md) proposes one creator image resolving into a raster edge on the continuous stone surface. This is a generated proposal only, not implemented or approved.
+Latest request: user approved [dot-reach-v1](dot-reach-v1/README.md) and asked to implement with distinct original-site creators throughout. The root homepage now includes Dot Reach directly after Day-to-day on the same stone surface, with a live raster perimeter over monochrome Maggie footage, compact platform marks and native scrolling. The creator-content rail uses Nick, Mindful Witmee and Chow; Day-to-day uses Liv. No clips repeat across sections, and the studio montage remains only in the hero. Port 3904 remains an alias to the single 3091 preview.
+
+Partner-continuation-v1 is rejected: conventional, insufficiently minimal and missing the dot concept. Do not implement it.
 
 Use three surfaces—carbon, orange and warm stone. This explicitly reintroduces the earlier stone colour as part of the palette, superseding its rejection below. Keep the approved carbon hero. [day-to-day-v1](day-to-day-v1/README.md) preserves the original concept; `/concepts/day-to-day/` remains available. Fine dot treatments belong on image edges and the narrow surface seam; avoid a full-page effect. The temporary closing contact area also uses stone so the homepage does not immediately jump back to black.
 

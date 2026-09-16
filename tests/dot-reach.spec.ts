@@ -1,0 +1,49 @@
+import { test, expect } from '@playwright/test';
+
+test('dot reach continues stone, uses unique footage and preserves a live raster', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.goto('/');
+  const posters = await page.locator('video').evaluateAll(videos => videos.map(v => v.getAttribute('poster')));
+  expect(new Set(posters).size).toBe(5);
+  expect(posters.join(' ')).not.toMatch(/judy|jack|network-v1/);
+  const reach = page.locator('#reach');
+  await reach.scrollIntoViewIfNeeded();
+  await expect(page.getByRole('link',{name:'How it works',exact:true})).toHaveAttribute('aria-current','location');
+  await expect(reach).toHaveCSS('background-color', 'rgb(233, 229, 220)');
+  expect(await reach.evaluate(el => Math.abs(el.getBoundingClientRect().top - document.getElementById('day-to-day')!.getBoundingClientRect().bottom))).toBeLessThan(1);
+  const portrait = page.locator('.reach-portrait');
+  const before = await portrait.boundingBox();
+  await portrait.hover();
+  const canvas = page.locator('.portrait-raster');
+  const snapshot = await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL());
+  await expect.poll(async () => (await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL())) !== snapshot).toBe(true);
+  await page.getByRole('button', { name: 'Play reach video', exact:true }).click();
+  await expect(page.getByRole('button', {name:'Pause reach video',exact:true})).toBeVisible();
+  await expect.poll(() => page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement) => v.currentTime)).toBeGreaterThan(0);
+  const after = await portrait.boundingBox();
+  expect(after?.width).toBe(before?.width);expect(after?.height).toBe(before?.height);
+  await page.screenshot({path:'docs/qa/dot-reach-desktop.png'});
+  await page.evaluate(() => scrollTo({top:0,behavior:'instant'}));
+  await expect.poll(() => page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement) => v.paused)).toBe(true);
+  expect(errors).toEqual([]);
+});
+
+test('dot reach supports reduced motion, narrow screens and media failure', async ({page}) => {
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.setViewportSize({width:390,height:844});
+  await page.route('**/media/maggie-intech-v1.mp4', route => route.abort());
+  await page.goto('/');
+  await page.locator('.reach-portrait').scrollIntoViewIfNeeded();
+  const canvas=page.locator('.portrait-raster');
+  await expect.poll(() => canvas.evaluate((c:HTMLCanvasElement) => c.width)).toBeGreaterThan(0);
+  const frame=await canvas.evaluate((c:HTMLCanvasElement)=>c.toDataURL());
+  await page.locator('.reach-portrait').hover();
+  expect(await canvas.evaluate((c:HTMLCanvasElement)=>c.toDataURL())).toBe(frame);
+  expect(await page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement)=>v.paused)).toBe(true);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:'docs/qa/dot-reach-mobile.png'});
+  await page.getByRole('button',{name:'Play reach video',exact:true}).click();
+  await expect(page.locator('.reach-fallback')).toHaveAttribute('href','https://www.instagram.com/reel/DW0O-L_DDR0/');
+  await expect(page.locator('.reach-fallback')).toBeVisible();
+});

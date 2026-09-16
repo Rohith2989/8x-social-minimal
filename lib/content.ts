@@ -5,7 +5,10 @@ export const links = {
   home: 'https://www.8x.social/en/for-brands',
 };
 export const clips = [
-  { id: 'judy', title: 'Career discovery', handle: '@judyintech', platform: 'Instagram', caption: 'Career discovery, told in a creator’s own words.', source: 'https://www.instagram.com/reel/DVrltxPAT1l/', alt: 'Judy speaking from her kitchen, with a laptop in front of her.' },
-  { id: 'jack', title: 'Job-search advice', handle: '@jack.jobsearch', platform: 'TikTok', caption: 'A job-search hook made for the feed.', source: 'https://www.tiktok.com/@jack.jobsearch/video/7592640180767493406', alt: 'Jack speaking to camera in a yellow T-shirt.' },
-  { id: 'network', title: 'Product in action', handle: 'Product demo', platform: '', caption: 'The product shown in use, in the creator’s own hands.', source: 'https://cdn-mrktng.8x.social/assets/videos/recent-work-v1/creator-network.mp4', alt: 'A creator demonstrating a job-search product on a phone.' },
+  { id: 'nickmakesmusic', title: 'Entertainment', handle: '@nickmakesmusic', platform: 'TikTok', caption: 'A story told in the creator’s own voice.', source: 'https://www.tiktok.com/@nickmakesmusic/video/7622470688237964557', alt: 'Nick talking directly to his audience.' },
+  { id: 'mindful-witmee', title: 'Everyday routines', handle: '@mindful_witmee', platform: 'TikTok', caption: 'A product finding its place in an everyday routine.', source: 'https://www.tiktok.com/@mindful_witmee/video/7643685525139754254', alt: 'A creator playing a brain game on a tablet.' },
+  { id: 'techwithchow', title: 'Tech in the wild', handle: '@techwithchow', platform: 'Instagram', caption: 'Tech content, made outside the studio.', source: 'https://www.instagram.com/reel/DX0BKwzJUMN/', alt: 'Chow working on a laptop outdoors.' },
 ] as const;
+
+export const dayCreator = { id: 'wellnesswithliv1', handle: '@wellnesswithliv1', source: 'https://www.tiktok.com/@wellnesswithliv1/video/7634021381604248862' };
+export const reachCreator = { id: 'maggie-intech', handle: '@maggie.intech', source: 'https://www.instagram.com/reel/DW0O-L_DDR0/' };

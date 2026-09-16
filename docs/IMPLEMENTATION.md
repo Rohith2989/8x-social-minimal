@@ -20,9 +20,13 @@ Wide-screen edge correction: only the portrait layout retains the artwork width 
 
 ## Validation
 
-Production build and TypeScript checks pass. Eight serial Chromium behavioral tests pass, including Day-to-day on the normal root route, fixed media geometry, working raster motion and reduced-motion behaviour. Responsive checks span 320–2558px. Browser visual review completed at desktop and phone sizes. Browser/device-specific Safari and Firefox verification has not been performed. Native autoplay policy can require the visible Play control.
+Production build and TypeScript checks pass. Ten serial Chromium behavioral tests pass, including Day-to-day and Dot Reach on the root route, distinct creator assets, fixed media geometry, working raster motion, reduced motion, video failure and offscreen playback. Responsive checks span 320–2558px. Browser visual review completed at desktop and phone sizes; Maggie playback was also verified in the in-app browser on 3904. Browser/device-specific Safari and Firefox verification has not been performed. Native autoplay policy can require the visible Play control.
 
-Day-to-day is now included after CreatorWork on the homepage. Its CSS is shared from app/day-to-day.css, and the closing contact area continues the same stone surface. The old concept route remains valid. Port 3904 is a local streaming proxy to the single production server on 3091 (npm run preview:alias); normal root navigation was visually verified there. Generated next-section proposals have not been added to the live page.
+Day-to-day is included after CreatorWork, followed immediately by Dot Reach. Their CSS is in app/day-to-day.css and app/dot-reach.css. Both use #e9e5dc with no gap, colour wipe, transform of the full section or added sticky interval. The closing contact area continues this surface. The old concept route remains valid. Port 3904 is a local streaming proxy to the single production server on 3091 (npm run preview:alias).
+
+Dot Reach uses original Maggie footage with CSS grayscale/multiply and a canvas overlay whose round holes reveal the live video. Only the perimeter is drawn: the face and layout remain steady. Canvas DPR is capped at 1.5, animation at 24fps. The entry settles after 1.8 seconds and hover after 1.6 seconds; idle, offscreen and hidden-document loops stop. Native scroll adjusts only the edge pattern. Reduced motion is static. Both editorial videos start as posters and require deliberate muted playback, with offscreen pause and an original-source error link. No generated portrait or screenshot is used as runtime UI.
+
+Creator rail: Nick, Mindful Witmee, Chow. Day-to-day: Liv. Dot Reach: Maggie. All five are separate creators from the original site's recent-work gallery; see docs/ASSETS.md and assets/creators/provenance.json. The three old demo assets remain for rollback but are not referenced by the current page. The hero montage remains only in the hero.
 
 A test caught the sticky stage escaping its container when extra reading distance was padding. The container now uses measured min-height so the frames hold in place throughout the sequence.
 

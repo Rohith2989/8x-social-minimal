@@ -60,7 +60,7 @@ export function CreatorVideo({ index, active, inView, reduced, onSelect, onAtten
         onTimeUpdate={() => { const v = video.current; if (v?.duration) setProgress(v.currentTime / v.duration * 100); }}
         onVolumeChange={() => { if (video.current) setMuted(video.current.muted); }}
         onError={() => { setFailed(true); setPlaying(false); }}>
-        {loaded && <><source src={'/media/' + clip.id + '-v1.webm'} type="video/webm" /><source src={'/media/' + clip.id + '-v1.mp4'} type="video/mp4" /></>}
+        {loaded && <source src={'/media/' + clip.id + '-v1.mp4'} type="video/mp4" />}
       </video>
       {!active && <button className="poster-select" onClick={() => { onSelect(index); setUserPaused(false); setManualPlay(true); }} aria-label={'Watch ' + clip.title}><span><PlayIcon /></span></button>}
       {active && <div className="video-controls">

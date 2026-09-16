@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { RasterEdge } from './raster-edge';
 import { Arrow, PlayIcon } from './icons';
-import { links } from '@/lib/content';
+import { links, dayCreator } from '@/lib/content';
 
 const steps = [
   ['Find your people.', 'Creators who fit your category and audience.'],
@@ -54,14 +54,14 @@ export function DayToDay() {
       </div>
       <figure className="day-figure">
         <div className="day-film">
-          <video ref={video} width="480" height="854" preload="none" playsInline muted loop poster="/media/judy-v1.jpg" aria-label="Original creator example from Judy"
+          <video ref={video} width="480" height="854" preload="none" playsInline muted loop poster={'/media/' + dayCreator.id + '-v1.jpg'} aria-label={'Original creator example from ' + dayCreator.handle}
             onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)}>
-            <source src="/media/judy-v1.webm" type="video/webm" /><source src="/media/judy-v1.mp4" type="video/mp4" />
+            <source src={'/media/' + dayCreator.id + '-v1.mp4'} type="video/mp4" />
           </video>
           <RasterEdge revision={active} />
-          {failed && <a className="day-fallback" href="https://www.instagram.com/reel/DVrltxPAT1l/">Watch the original <Arrow /></a>}
+          {failed && <a className="day-fallback" href={dayCreator.source}>Watch the original <Arrow /></a>}
         </div>
-        <figcaption><a href="https://www.instagram.com/reel/DVrltxPAT1l/" target="_blank" rel="noreferrer">@judyintech<Arrow /></a><button aria-label={playing ? 'Pause creator example' : 'Play creator example'} onClick={() => { const player = video.current!; if (playing) player.pause(); else void player.play().catch(() => setFailed(true)); }}><PlayIcon playing={playing} /></button></figcaption>
+        <figcaption><a href={dayCreator.source} target="_blank" rel="noreferrer">{dayCreator.handle}<Arrow /></a><button aria-label={playing ? 'Pause creator example' : 'Play creator example'} onClick={() => { const player = video.current!; if (playing) player.pause(); else void player.play().catch(() => setFailed(true)); }}><PlayIcon playing={playing} /></button></figcaption>
       </figure>
     </div>
   </section>;

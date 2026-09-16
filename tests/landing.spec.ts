@@ -16,18 +16,18 @@ test('native scroll changes clip focus without moving the media frames', async (
   await page.locator('.hero-portrait img').evaluate((img: HTMLImageElement) => img.decode());
   await page.screenshot({ path: 'docs/qa/desktop-hero.png' });
   await workPosition(page, .1);
-  await expect(page.locator('#work')).toHaveAttribute('data-active', 'judy');
-  await expect(page.getByRole('button', { name: 'Pause Career discovery', exact: true })).toBeVisible();
+  await expect(page.locator('#work')).toHaveAttribute('data-active', 'nickmakesmusic');
+  await expect(page.getByRole('button', { name: 'Pause Entertainment', exact: true })).toBeVisible();
   await page.locator('.video-rail').evaluate(el => Promise.all(el.getAnimations().map(a => a.finished)));
   const before = await page.locator('.video-frame').evaluateAll(nodes => nodes.map(node => { const r = node.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; }));
   await workPosition(page, .5);
-  await expect(page.locator('#work')).toHaveAttribute('data-active', 'jack');
-  await expect(page.getByRole('button', { name: 'Pause Job-search advice', exact: true })).toBeVisible();
+  await expect(page.locator('#work')).toHaveAttribute('data-active', 'mindful-witmee');
+  await expect(page.getByRole('button', { name: 'Pause Everyday routines', exact: true })).toBeVisible();
   const after = await page.locator('.video-frame').evaluateAll(nodes => nodes.map(node => { const r = node.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; }));
   expect(after).toEqual(before);
   await page.screenshot({ path: 'docs/qa/desktop-content.png' });
   await workPosition(page, .9);
-  await expect(page.locator('#work')).toHaveAttribute('data-active', 'network');
+  await expect(page.locator('#work')).toHaveAttribute('data-active', 'techwithchow');
   expect(await page.locator('video').evaluateAll(nodes => nodes.filter(v => !(v as HTMLVideoElement).paused).length)).toBeLessThanOrEqual(1);
   expect(errors).toEqual([]);
 });
@@ -36,13 +36,13 @@ test('manual pause and sound hold, then offscreen playback stops', async ({ page
   await page.goto('/');
   await expect(page.locator('#work')).toHaveAttribute('data-sticky', 'true');
   await workPosition(page, .1);
-  await page.getByRole('button', { name: 'Pause Career discovery', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Play Career discovery', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Play Career discovery', exact: true }).click();
-  await page.getByRole('button', { name: 'Unmute Career discovery', exact: true }).click();
+  await page.getByRole('button', { name: 'Pause Entertainment', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Play Entertainment', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Play Entertainment', exact: true }).click();
+  await page.getByRole('button', { name: 'Unmute Entertainment', exact: true }).click();
   await workPosition(page, .6);
-  await expect(page.locator('#work')).toHaveAttribute('data-active', 'judy');
-  await expect(page.getByRole('button', { name: 'Mute Career discovery', exact: true })).toBeVisible();
+  await expect(page.locator('#work')).toHaveAttribute('data-active', 'nickmakesmusic');
+  await expect(page.getByRole('button', { name: 'Mute Entertainment', exact: true })).toBeVisible();
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await expect.poll(() => page.locator('video').evaluateAll(nodes => nodes.every(v => (v as HTMLVideoElement).paused && (v as HTMLVideoElement).muted))).toBe(true);
 });
@@ -57,13 +57,13 @@ test('mobile menu, manual clip selection and rail stay usable', async ({ page })
   await page.keyboard.press('Escape');
   await expect(page.getByRole('link', { name: 'How it works', exact: true })).toBeHidden();
   await expect(page.locator('#work')).toHaveAttribute('data-sticky', 'false');
-  await page.getByRole('button', { name: 'Product in action', exact: true }).click();
-  await expect(page.locator('#work')).toHaveAttribute('data-active', 'network');
+  await page.getByRole('button', { name: 'Tech in the wild', exact: true }).click();
+  await expect(page.locator('#work')).toHaveAttribute('data-active', 'techwithchow');
   await expect.poll(() => page.locator('.video-rail').evaluate(el => el.scrollLeft)).toBeGreaterThan(300);
   await page.locator('.video-rail').scrollIntoViewIfNeeded();
-  await expect(page.locator('[data-clip=network]')).toBeInViewport();
-  await page.getByRole('button', { name: 'Career discovery', exact: true }).click();
-  await expect(page.locator('#work')).toHaveAttribute('data-active', 'judy');
+  await expect(page.locator('[data-clip=techwithchow]')).toBeInViewport();
+  await page.getByRole('button', { name: 'Entertainment', exact: true }).click();
+  await expect(page.locator('#work')).toHaveAttribute('data-active', 'nickmakesmusic');
   await expect.poll(() => page.locator('.video-rail').evaluate(el => el.scrollLeft)).toBeLessThan(2);
 });
 
@@ -74,16 +74,16 @@ test('reduced motion avoids sticky traversal and autoplay but allows deliberate 
   await expect(page.locator('#work')).toHaveAttribute('data-sticky', 'false');
   expect(await page.locator('#work video source').count()).toBe(0);
   expect(await page.locator('video').evaluateAll(videos => videos.every(video => (video as HTMLVideoElement).paused))).toBe(true);
-  await page.getByRole('button', { name: 'Play Career discovery', exact: true }).click();
-  await expect(page.getByRole('button', { name: 'Pause Career discovery', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Play Entertainment', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Pause Entertainment', exact: true })).toBeVisible();
 });
 
 test('failed media exposes a usable original link', async ({ page }) => {
-  await page.route(/\/media\/judy-v1\.(webm|mp4)/, route => route.abort());
+  await page.route(/\/media\/nickmakesmusic-v1\.(webm|mp4)/, route => route.abort());
   await page.goto('/');
   await workPosition(page, .1);
   await expect(page.getByText('This clip couldn’t load.')).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Watch the original', exact: false })).toHaveAttribute('href', /instagram.com/);
+  await expect(page.getByRole('link', { name: 'Watch the original', exact: false })).toHaveAttribute('href', /tiktok.com/);
 });
 
 test('responsive layouts keep text and navigation inside the viewport', async ({ page }) => {
@@ -104,3 +104,4 @@ test('responsive layouts keep text and navigation inside the viewport', async ({
     }
   }
 });
+
