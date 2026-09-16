@@ -8,13 +8,25 @@ export function DotReach() {
   const video = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
+  const userPaused = useRef(false);
   useEffect(() => {
     const player = video.current!;
-    const observer = new IntersectionObserver(([entry]) => { if (!entry.isIntersecting) player.pause(); });
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    let inView = false;
+    const sync = () => {
+      if (!inView || document.hidden || reduced.matches || userPaused.current) { player.pause(); return; }
+      player.muted = true;
+      // A blocked autoplay attempt leaves the normal Play control available.
+      void player.play().catch(() => {});
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting && entry.intersectionRatio >= .3;
+      sync();
+    }, { threshold: [0, .3], rootMargin: '-90px 0px 0px' });
     observer.observe(player);
-    const visibility = () => { if (document.hidden) player.pause(); };
-    document.addEventListener('visibilitychange', visibility);
-    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', visibility); };
+    document.addEventListener('visibilitychange', sync);
+    reduced.addEventListener('change', sync);
+    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', sync); reduced.removeEventListener('change', sync); };
   }, []);
   return <section className="dot-reach" id="reach" aria-labelledby="reach-title">
     <div className="reach-grid page-width">
@@ -38,8 +50,8 @@ export function DotReach() {
         </div>
         <figcaption><a href={reachCreator.source} target="_blank" rel="noreferrer">{reachCreator.handle}<Arrow /></a><button aria-label={(playing ? 'Pause' : 'Play') + ' reach video'} onClick={() => {
           const player = video.current!;
-          if (playing) player.pause();
-          else void player.play().catch(error => { if (error.name !== 'AbortError') setFailed(true); });
+          if (playing) { userPaused.current = true; player.pause(); }
+          else { userPaused.current = false; void player.play().catch(error => { if (error.name !== 'AbortError') setFailed(true); }); }
         }}><PlayIcon playing={playing} /></button></figcaption>
       </figure>
     </div>

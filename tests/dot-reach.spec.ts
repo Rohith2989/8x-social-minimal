@@ -18,7 +18,6 @@ test('dot reach continues stone, uses unique footage and preserves a live raster
   const canvas = page.locator('.portrait-raster');
   const snapshot = await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL());
   await expect.poll(async () => (await canvas.evaluate((c: HTMLCanvasElement) => c.toDataURL())) !== snapshot).toBe(true);
-  await page.getByRole('button', { name: 'Play reach video', exact:true }).click();
   await expect(page.getByRole('button', {name:'Pause reach video',exact:true})).toBeVisible();
   await expect.poll(() => page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement) => v.currentTime)).toBeGreaterThan(0);
   const after = await portrait.boundingBox();
@@ -26,6 +25,13 @@ test('dot reach continues stone, uses unique footage and preserves a live raster
   await page.screenshot({path:'docs/qa/dot-reach-desktop.png'});
   await page.evaluate(() => scrollTo({top:0,behavior:'instant'}));
   await expect.poll(() => page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement) => v.paused)).toBe(true);
+  await reach.scrollIntoViewIfNeeded();
+  await expect(page.getByRole('button', {name:'Pause reach video',exact:true})).toBeVisible();
+  await page.getByRole('button', {name:'Pause reach video',exact:true}).click();
+  await page.evaluate(() => scrollTo({top:0,behavior:'instant'}));
+  await reach.scrollIntoViewIfNeeded();
+  await expect(page.getByRole('button', {name:'Play reach video',exact:true})).toBeVisible();
+  expect(await page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement) => v.paused)).toBe(true);
   expect(errors).toEqual([]);
 });
 

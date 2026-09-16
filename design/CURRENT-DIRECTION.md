@@ -1,5 +1,7 @@
 # Current design direction
 
+Latest follow-up: Maggie's Dot Reach video now starts muted when at least 30% is visible, pauses offscreen/hidden, resumes on re-entry, and respects deliberate pause and reduced motion. User rejected service-choice-v1's abstract dot fan. Replacement image proposal: [content-intelligence-v1](content-intelligence-v1/README.md), a wide analytics/product view using the original 8x dashboard as content reference, on the continuous stone surface. Not implemented or approved yet. User reiterated that the original orange map must be integrated later toward the end, in the same continuous page.
+
 Latest request: user approved [dot-reach-v1](dot-reach-v1/README.md) and asked to implement with distinct original-site creators throughout. The root homepage now includes Dot Reach directly after Day-to-day on the same stone surface, with a live raster perimeter over monochrome Maggie footage, compact platform marks and native scrolling. The creator-content rail uses Nick, Mindful Witmee and Chow; Day-to-day uses Liv. No clips repeat across sections, and the studio montage remains only in the hero. Port 3904 remains an alias to the single 3091 preview.
 
 Partner-continuation-v1 is rejected: conventional, insufficiently minimal and missing the dot concept. Do not implement it.
