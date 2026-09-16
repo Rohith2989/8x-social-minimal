@@ -72,7 +72,8 @@ test('reduced motion avoids sticky traversal and autoplay but allows deliberate 
   await page.goto('/');
   await page.locator('#work').scrollIntoViewIfNeeded();
   await expect(page.locator('#work')).toHaveAttribute('data-sticky', 'false');
-  expect(await page.locator('video source').count()).toBe(0);
+  expect(await page.locator('#work video source').count()).toBe(0);
+  expect(await page.locator('video').evaluateAll(videos => videos.every(video => (video as HTMLVideoElement).paused))).toBe(true);
   await page.getByRole('button', { name: 'Play Career discovery', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Pause Career discovery', exact: true })).toBeVisible();
 });

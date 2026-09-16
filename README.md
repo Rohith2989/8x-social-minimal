@@ -1,12 +1,14 @@
 # 8x Social Minimal
 
-The new minimal 8x landing page, built separately from the original `8x-social` project. Current implementation covers the approved carbon hero and continuous creator-content sequence, with a small closing contact area.
+The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day section and a closing contact area on the same stone surface.
 
 ## Run
 
 Requires Node 22. Install with `npm ci`, then `npm run dev`. Open http://localhost:3091.
 
 For a production preview: `npm run build` then `npm run start`. Both commands use port 3091; do not stop other projects' servers. Stop an existing 3091 process before switching between development and production.
+
+For the requested review address http://localhost:3904, keep the production server above running and start `npm run preview:alias` in another terminal. This lightweight local proxy streams the same app and videos from 3091; it does not run a second Next server. Day-to-day is part of `/` on both ports, with no concept subroute required. The old `/concepts/day-to-day` review route remains available.
 
 ## Verify
 

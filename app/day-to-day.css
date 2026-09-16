@@ -27,3 +27,5 @@
 .day-fallback{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;background:#e9e5dcee;gap:12px;z-index:2}
 @media(max-width:1100px){.day-grid{gap:5%}.day-reading h2{font-size:4.6vw}.day-steps{margin-top:38px}.day-description{font-size:21px}.day-step h3{font-size:22px}.day-step button{padding-block:19px}.day-cta{font-size:19px;margin-top:24px}}
 @media(max-width:720px){.day-to-day{margin-top:60px;padding:65px 0}.day-grid{grid-template-columns:1fr;gap:40px}.day-reading h2{font-size:clamp(36px,9.4vw,62px)}.day-description{font-size:19px;margin-top:24px}.day-steps{min-height:270px;margin-top:35px}.day-step h3{font-size:21px}.day-step p{font-size:16px}.day-figure{width:min(100%,380px)}.day-cta{margin-top:14px}.day-figure figcaption{font-size:15px}}
+
+.stone-continuation{background:#e9e5dc;color:#111;color-scheme:light}.stone-continuation .site-footer{margin-top:0;border-color:#1115}.stone-continuation .site-footer>div{color:#595750}.stone-continuation .site-footer>div a:hover{color:#111}

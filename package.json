@@ -10,6 +10,7 @@
     "dev": "next dev --hostname 127.0.0.1 --port 3091",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1 --port 3091",
+    "preview:alias": "node scripts/preview-alias.mjs",
     "typecheck": "tsc --noEmit",
     "test": "playwright test",
     "assets:build": "node scripts/build-assets.mjs"

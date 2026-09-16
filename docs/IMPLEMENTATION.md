@@ -20,7 +20,9 @@ Wide-screen edge correction: only the portrait layout retains the artwork width 
 
 ## Validation
 
-Production build and TypeScript checks pass. Six serial Chromium behavioral tests pass. Responsive checks span 320–2558px. Browser visual review completed at desktop and phone sizes. Browser/device-specific Safari and Firefox verification has not been performed. Native autoplay policy can require the visible Play control.
+Production build and TypeScript checks pass. Eight serial Chromium behavioral tests pass, including Day-to-day on the normal root route, fixed media geometry, working raster motion and reduced-motion behaviour. Responsive checks span 320–2558px. Browser visual review completed at desktop and phone sizes. Browser/device-specific Safari and Firefox verification has not been performed. Native autoplay policy can require the visible Play control.
+
+Day-to-day is now included after CreatorWork on the homepage. Its CSS is shared from app/day-to-day.css, and the closing contact area continues the same stone surface. The old concept route remains valid. Port 3904 is a local streaming proxy to the single production server on 3091 (npm run preview:alias); normal root navigation was visually verified there. Generated next-section proposals have not been added to the live page.
 
 A test caught the sticky stage escaping its container when extra reading distance was padding. The container now uses measured min-height so the frames hold in place throughout the sequence.
 
