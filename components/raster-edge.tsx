@@ -29,7 +29,7 @@ export function RasterEdge({ seam = false, revision = 0 }: { seam?: boolean; rev
         ctx.fill();
       } else {
         const band = 22;
-        ctx.fillStyle = '#e9e5dc';
+        ctx.fillStyle = getComputedStyle(host).backgroundColor;
         ctx.fillRect(0, 0, band, height); ctx.fillRect(width - band, 0, band, height);
         ctx.globalCompositeOperation = 'destination-out';
         ctx.beginPath();
@@ -74,9 +74,10 @@ export function RasterEdge({ seam = false, revision = 0 }: { seam?: boolean; rev
     host.addEventListener('pointerenter', pulse);
     host.addEventListener('focusin', pulse);
     window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('storysurfacechange', schedule);
     document.addEventListener('visibilitychange', schedule);
     reduced.addEventListener('change', schedule);
-    return () => { cancelAnimationFrame(raf); observer.disconnect(); ro.disconnect(); host.removeEventListener('pointerenter', pulse); host.removeEventListener('focusin', pulse); window.removeEventListener('scroll', schedule); document.removeEventListener('visibilitychange', schedule); reduced.removeEventListener('change', schedule); replay.current = () => {}; };
+    return () => { cancelAnimationFrame(raf); observer.disconnect(); ro.disconnect(); host.removeEventListener('pointerenter', pulse); host.removeEventListener('focusin', pulse); window.removeEventListener('scroll', schedule); window.removeEventListener('storysurfacechange', schedule); document.removeEventListener('visibilitychange', schedule); reduced.removeEventListener('change', schedule); replay.current = () => {}; };
   }, [seam]);
   return <canvas ref={canvas} className={seam ? 'raster-seam' : 'raster-rim'} aria-hidden="true" />;
 }

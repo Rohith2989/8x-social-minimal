@@ -1,5 +1,11 @@
 # Current design direction
 
+## Latest implementation: original orange map (2026-09-17)
+
+The user explicitly selected the map as the next implementation, superseding the earlier deferral below. Reach Atlas now follows the comparison on `/`. Preserve the original #f34b32 orange, geography, dot density and market data. The shared stone canvas warms as the map heading enters; navigation and the closing contact area share the same colour. No divider, full-page wipe, new pin or scroll interception. Country hover/click lifts, region filters, contrasting name labels and an accessible native market selector work on desktop and mobile. See docs/IMPLEMENTATION.md for timing and verification. Service choices, dashboard and brand/partner proof remain open content work; their prior layouts remain rejected. The 8-to-infinity ending remains deferred.
+
+## Earlier decisions (newest first)
+
 User approved building network-comparison-v1 and requested a Git push after completion. The root homepage now continues directly from Dot Reach into the comparison, on the same stone surface. Compact 8x / Influencers / Paid ads tabs change the shared detail area and bounded SVG dot motifs; layout height is reserved across all states. No new scroll lock, rules, cards or scene transition. Keyboard arrows/Home/End, reduced motion and narrow layouts supported. On mobile the comparison becomes a simple vertical reading list with orange dots. The original orange map remains later work; do not skip the other missing business topics.
 
 Latest user correction: the map MUST use the original orange surface, not stone. The proposed direct creator-to-map shortcut in continuous-reach-v1 is rejected because it skips important original-site content. Original content audit: brand proof, comparison, partner feedback, Self Serve / Full Service and real-time dashboard are missing or only partially represented. Design the comparison next on the continuous stone surface; keep the map later and orange. Rejected visual treatments do not imply deletion of their underlying business content.

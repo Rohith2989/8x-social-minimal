@@ -37,7 +37,7 @@ function DotGlyph({ mode, column }: { mode: number; column: number }) {
       }
       if (mode === 2) x += Math.floor(i / 6) % 2 * 5;
       const accent = mode === 0 ? (column === 1 ? [8, 9, 10].includes(i) : i === 6) : mode === 1 ? i % 12 === column * 3 : Math.floor(i / 6) === column + 1;
-      return <circle key={i} r="3.5" style={{ transform: `translate(${x}px, ${y}px)`, opacity: i < size * size ? 1 : 0, fill: accent ? '#f34b32' : '#111', transitionDelay: `${i % 6 * 12}ms` }} />;
+      return <circle key={i} r="3.5" style={{ transform: `translate(${x}px, ${y}px)`, opacity: i < size * size ? 1 : 0, fill: accent ? 'var(--story-accent,#f34b32)' : '#111', transitionDelay: `${i % 6 * 12}ms` }} />;
     })}
   </svg>;
 }

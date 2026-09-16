@@ -1,6 +1,6 @@
 # 8x Social Minimal
 
-The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day, Dot Reach, an interactive comparison and a closing contact area. The stone sections share one continuous surface without divider rules; motion stays within media, raster edges and comparison glyphs. Five distinct original-site creators appear across the video sections.
+The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day, Dot Reach, an interactive comparison, the original orange Reach Atlas and a closing contact area. The stone surface warms into orange as the map heading arrives, without a divider or extra scroll pin. Five distinct original-site creators appear across the video sections.
 
 ## Run
 
@@ -18,6 +18,6 @@ The tests cover native scroll selection with stable media geometry; manual pause
 
 ## Direction and implementation
 
-Read `AGENTS.md`, `design/CURRENT-DIRECTION.md` and `docs/IMPLEMENTATION.md` before changing the page. Design folders preserve approval/rejection history; their presence does not imply approval. The original orange Reach Atlas and eventual 8-to-infinity family reveal are future work, not implemented yet.
+Read `AGENTS.md`, `design/CURRENT-DIRECTION.md` and `docs/IMPLEMENTATION.md` before changing the page. Design folders preserve approval/rejection history; their presence does not imply approval. Review the live map at http://localhost:3904/#reach-atlas. Its country hover/click, region filters, mobile selector and failure fallback are covered by tests. The eventual 8-to-infinity family reveal remains future work.
 
 Next.js App Router, React, TypeScript and CSS. Original local SVG, font and creator media. No animation framework, scroll hijacking, external embeds, analytics, or artificial loading screen. The preview is marked `noindex` until launch is explicitly approved. Buttons link to existing 8x services; this project has no form backend.

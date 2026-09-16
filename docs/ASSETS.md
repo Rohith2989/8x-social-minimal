@@ -1,5 +1,7 @@
 # Asset provenance
 
+- `public/reach/atlas.json`, `atlas-fallback.svg`, `coverage.json` and `lib/reach-markets.json`: unchanged copies from the existing `../8x-social` project, imported 2026-09-17. These are the original lighter-density map assets, not the rejected dense experiment. SHA-256 compared against all four source files. Original coverage metadata retains the inherited 61-country display and 51 explicitly listed/highlighted markets; no additional countries or claims were invented during this port.
+
 - `public/8x.svg` and `public/icon.svg`: original 8x brand assets copied from the existing project. Do not redraw the mark with a substitute font.
 - `public/fonts/inter-latin-variable.woff2`: existing local Inter asset reused from the original project.
 - `public/media/judy-v1.*`, `jack-v1.*`, `network-v1.*`: original site posters and video formats copied from the existing project. Original source links are preserved in `lib/content.ts`; the product clip links directly to the original CDN. These are not generated videos.

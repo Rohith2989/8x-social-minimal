@@ -21,7 +21,7 @@ export function PortraitRaster() {
       const scrollPhase = reduced.matches ? .5 : Math.max(0, Math.min(1, 1-rect.top/innerHeight));
       ctx.globalCompositeOperation = 'source-over';
       ctx.clearRect(0,0,width,height);
-      ctx.fillStyle = '#e9e5dc';
+      ctx.fillStyle = getComputedStyle(host).backgroundColor;
       ctx.fillRect(0,0,width,height);
       ctx.clearRect(left,top,width-left-right,height-top-bottom);
       ctx.globalCompositeOperation = 'destination-out';
@@ -68,9 +68,10 @@ export function PortraitRaster() {
     const observer=new IntersectionObserver(schedule);observer.observe(host);
     const size=new ResizeObserver(resize);size.observe(host);resize();
     window.addEventListener('scroll',schedule,{passive:true});
+    window.addEventListener('storysurfacechange',schedule);
     host.addEventListener('pointerenter',enter);host.addEventListener('pointermove',move);host.addEventListener('focusin',enter);
     document.addEventListener('visibilitychange',schedule);reduced.addEventListener('change',schedule);
-    return () => { cancelAnimationFrame(raf);observer.disconnect();size.disconnect();window.removeEventListener('scroll',schedule);host.removeEventListener('pointerenter',enter);host.removeEventListener('pointermove',move);host.removeEventListener('focusin',enter);document.removeEventListener('visibilitychange',schedule);reduced.removeEventListener('change',schedule); };
+    return () => { cancelAnimationFrame(raf);observer.disconnect();size.disconnect();window.removeEventListener('scroll',schedule);window.removeEventListener('storysurfacechange',schedule);host.removeEventListener('pointerenter',enter);host.removeEventListener('pointermove',move);host.removeEventListener('focusin',enter);document.removeEventListener('visibilitychange',schedule);reduced.removeEventListener('change',schedule); };
   }, []);
   return <canvas className="portrait-raster" ref={canvas} aria-hidden="true" />;
 }
