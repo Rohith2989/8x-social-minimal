@@ -28,6 +28,9 @@ export function CreatorWork() {
     const root = journey.current!, content = stage.current!;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let raf = 0, span = 0, stickyTop = 0;
+    let anchorFrame = 0, anchorCancelled = false;
+    const initialHash = window.location.hash;
+    const cancelAnchor = () => { anchorCancelled = true; cancelAnimationFrame(anchorFrame); };
     const measure = () => {
       setReduced(motion.matches);
       const height = content.getBoundingClientRect().height;
@@ -63,10 +66,27 @@ export function CreatorWork() {
     }, { rootMargin: '-90px 0px -12% 0px', threshold: .08 });
     visibility.observe(content);
     measure();
+    // Hydrating the reading interval changes the position of later anchors.
+    // Restore only the initial fragment, once fonts/layout settle, never after user input.
+    const anchorEvents = ['wheel', 'touchstart', 'pointerdown', 'keydown'] as const;
+    anchorEvents.forEach(type => window.addEventListener(type, cancelAnchor, { passive: true, once: true }));
+    const restoreAnchor = () => { void document.fonts.ready.then(() => {
+      if (anchorCancelled || !initialHash || window.location.hash !== initialHash) return;
+      anchorFrame = requestAnimationFrame(() => {
+        measure();
+        anchorFrame = requestAnimationFrame(() => {
+          if (anchorCancelled) return;
+          const target = document.getElementById(initialHash.slice(1));
+          if (target && (root.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING)) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+        });
+      });
+    }); };
+    if (document.readyState === 'complete') restoreAnchor();
+    else window.addEventListener('load', restoreAnchor, { once: true });
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', measure);
     motion.addEventListener('change', measure);
-    return () => { cancelAnimationFrame(raf); observer.disconnect(); visibility.disconnect(); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', measure); motion.removeEventListener('change', measure); };
+    return () => { cancelAnchor(); window.removeEventListener('load', restoreAnchor); anchorEvents.forEach(type => window.removeEventListener(type, cancelAnchor)); cancelAnimationFrame(raf); observer.disconnect(); visibility.disconnect(); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', measure); motion.removeEventListener('change', measure); };
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
-# The whole picture — proposal
+# The whole picture — REJECTED
 
-New direction after the user rejected the service-selector dot fan. Generated concept only, awaiting review. Image: 01-section.png; exact built-in generation prompt: prompts.json.
+User rejected this concept as insufficiently polished and continuous. Do not implement it. Retained only as design history. Image: 01-section.png; exact built-in generation prompt: prompts.json.
 
 Content basis: original 8x site analytics/product section, https://www.8x.social/en/for-brands. Reference screenshot: https://www.8x.social/assets/imgs/dashboard/new-dashboard.png, saved unchanged under references. The shown 140.1K Users, 120.6K Creators and 265 Videos are values within that existing product preview, not verified current platform totals or campaign results. The dot trend is explicitly labelled illustrative. Do not present these as live business metrics.
 

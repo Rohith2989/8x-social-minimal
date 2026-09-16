@@ -6,10 +6,26 @@ import { links } from '@/lib/content';
 export function Header() {
   const [open, setOpen] = useState(false);
   const [section, setSection] = useState('network');
+  const [stone, setStone] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
   useEffect(() => {
-    const targets = ['work', 'day-to-day', 'reach'].map(id => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+    const start = document.getElementById('day-to-day');
+    if (!start) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const edge = header.current?.getBoundingClientRect().bottom ?? 0;
+      setStone(start.getBoundingClientRect().top <= edge);
+    };
+    const queue = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue); };
+  }, []);
+  useEffect(() => {
+    const targets = ['work', 'day-to-day', 'reach', 'comparison'].map(id => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
     const visible = new Set<Element>();
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) { if (entry.isIntersecting) visible.add(entry.target); else visible.delete(entry.target); }
@@ -26,7 +42,7 @@ export function Header() {
     document.addEventListener('pointerdown', outside);
     return () => { document.removeEventListener('keydown', close); document.removeEventListener('pointerdown', outside); };
   }, [open]);
-  return <header ref={header} className="site-header" data-menu-open={open}>
+  return <header ref={header} className="site-header" data-menu-open={open} data-surface={stone ? 'stone' : 'carbon'}>
     <div className="nav-rail">
       <a className="brand" href="#network" aria-label="8x Social — back to top" onClick={() => setOpen(false)}><img src="/8x.svg" alt="" width="68" height="47" /><span>social</span></a>
       <button ref={menuButton} className="menu-toggle" aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(!open)}>{open ? 'Close' : 'Menu'}<span aria-hidden="true">{open ? '−' : '+'}</span></button>

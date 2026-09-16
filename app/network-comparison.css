@@ -1,0 +1,28 @@
+.network-comparison{background:#e9e5dc;color:#111;color-scheme:light;padding:48px 0 96px;scroll-margin-top:120px}
+.comparison-intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:7%;align-items:end}
+.comparison-intro h2{font-size:clamp(49px,7vw,126px);line-height:.99;letter-spacing:-.068em;font-weight:660}
+.comparison-intro h2 span,.comparison-benefit h3 span{color:#f34b32}
+.comparison-intro>p{font-size:clamp(19px,1.85vw,29px);line-height:1.4;letter-spacing:-.035em;max-width:33ch;margin:0 0 4px}
+.comparison-tabs{display:flex;gap:clamp(24px,3vw,54px);align-items:center;margin:64px 0 54px;flex-wrap:wrap}
+.comparison-tabs button{position:relative;border:0;background:none;padding:12px 0 12px 25px;font-size:clamp(18px,1.85vw,29px);letter-spacing:-.045em;font-weight:600;color:#79766f;line-height:1.2;transition:color .16s;text-align:left;min-height:44px}
+.comparison-tabs button::before{content:'';position:absolute;left:0;top:50%;width:11px;height:11px;border-radius:50%;background:#f34b32;transform:translateY(-50%) scale(.45);opacity:0;transition:opacity .18s,transform .25s}
+.comparison-tabs button[aria-selected=true]{color:#111}.comparison-tabs button[aria-selected=true]::before{opacity:1;transform:translateY(-50%) scale(1)}
+.comparison-tabs button:hover{color:#111}
+.comparison-glyphs,.comparison-panel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:7%}
+.comparison-glyphs{margin-bottom:23px}
+.comparison-glyph{display:block;width:88px;height:88px;overflow:visible}
+.comparison-glyph circle{transition:transform .28s cubic-bezier(.2,.7,.2,1),fill .22s,opacity .2s}
+.network-comparison[data-entered=true] .comparison-glyph{animation:comparison-arrive .6s ease-out both}
+.network-comparison[data-entered=true] .comparison-glyph:nth-child(2){animation-delay:.07s}.network-comparison[data-entered=true] .comparison-glyph:nth-child(3){animation-delay:.14s}
+@keyframes comparison-arrive{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+.comparison-panels{display:grid}
+.comparison-panel{grid-area:1/1;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s,visibility .16s}
+.comparison-panel[data-active=true]{opacity:1;visibility:visible;pointer-events:auto}
+.comparison-benefit{min-width:0}
+.comparison-benefit h3{font-size:clamp(30px,3.85vw,69px);font-weight:620;letter-spacing:-.055em;line-height:1.06;margin:0}
+.comparison-benefit p{font-size:clamp(17px,1.55vw,26px);line-height:1.42;letter-spacing:-.027em;color:#44413b;margin:22px 0 0;max-width:26ch}
+.comparison-cta{display:flex;align-items:center;gap:14px;width:fit-content;margin-top:54px;font-size:clamp(18px,1.65vw,25px);letter-spacing:-.035em}
+.comparison-cta svg{width:22px;height:22px;transition:transform .2s}.comparison-cta:hover svg{transform:translate(3px,-3px)}
+@media(max-width:1000px){.comparison-intro{grid-template-columns:1.25fr 1fr;gap:5%}.comparison-intro h2{font-size:6.5vw}.comparison-intro>p{font-size:20px}.comparison-glyphs,.comparison-panel{column-gap:5%}.comparison-benefit h3{font-size:3.8vw}.comparison-tabs{margin-block:44px 36px}.comparison-tabs button{font-size:20px}.comparison-glyph{width:74px;height:74px}}
+@media(max-width:720px){.network-comparison{padding:30px 0 65px;scroll-margin-top:100px}.comparison-intro{display:block}.comparison-intro h2{font-size:clamp(43px,10.9vw,72px)}.comparison-intro>p{font-size:19px;max-width:32ch;margin-top:26px}.comparison-tabs{gap:6px;justify-content:space-between;flex-wrap:nowrap;margin:30px 0}.comparison-tabs button{font-size:clamp(14px,3.8vw,20px);padding-left:15px;letter-spacing:-.035em}.comparison-tabs button::before{width:7px;height:7px}.comparison-glyphs{display:none}.comparison-panel{grid-template-columns:1fr;gap:32px}.comparison-benefit{position:relative;padding-left:25px}.comparison-benefit::before{content:'';position:absolute;left:0;top:12px;width:7px;height:7px;background:#f34b32;border-radius:50%}.comparison-benefit h3{font-size:clamp(28px,7.5vw,40px)}.comparison-benefit h3 br{display:none}.comparison-benefit h3 br::after{content:' '}.comparison-benefit p{font-size:17px;max-width:32ch;margin-top:12px}.comparison-cta{font-size:18px;margin-top:35px}}
+@media(prefers-reduced-motion:reduce){.network-comparison *,.network-comparison *::before{animation:none!important;transition:none!important}}

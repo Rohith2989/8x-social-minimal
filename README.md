@@ -1,6 +1,6 @@
 # 8x Social Minimal
 
-The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day and Dot Reach sections, and a closing contact area. The two stone sections flow together naturally; only media and its raster edges animate. Five distinct original-site creators appear across the video sections.
+The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day, Dot Reach, an interactive comparison and a closing contact area. The stone sections share one continuous surface without divider rules; motion stays within media, raster edges and comparison glyphs. Five distinct original-site creators appear across the video sections.
 
 ## Run
 

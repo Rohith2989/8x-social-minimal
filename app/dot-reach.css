@@ -1,5 +1,5 @@
 .dot-reach{background:#e9e5dc;color:#111;color-scheme:light;scroll-margin-top:110px}
-.reach-grid{border-top:1px solid #1115;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4%;align-items:center;padding-block:72px 92px}
+.reach-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4%;align-items:center;padding-block:52px 64px}
 .reach-reading{padding-bottom:25px}
 .reach-reading h2{font-size:clamp(42px,5.7vw,104px);line-height:1;letter-spacing:-.063em;font-weight:640;white-space:nowrap}
 .reach-reading h2 span{color:#f34b32}

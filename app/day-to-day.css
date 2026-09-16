@@ -1,13 +1,10 @@
-.day-to-day{--stone:#e9e5dc;position:relative;background:var(--stone);color:#111;margin-top:100px;padding:100px 0 110px;color-scheme:light;scroll-margin-top:96px}
+.day-to-day{--stone:#e9e5dc;position:relative;background:var(--stone);color:#111;margin-top:100px;padding:100px 0 60px;color-scheme:light;scroll-margin-top:96px}
 .raster-seam{position:absolute;top:-1px;left:0;width:100%;height:28px;pointer-events:none}
 .day-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:8%;align-items:center}
 .day-reading h2{font-size:clamp(40px,4.9vw,89px);line-height:1.02;letter-spacing:-.064em;font-weight:660}
 .day-description{font-size:clamp(19px,1.7vw,29px);line-height:1.35;letter-spacing:-.034em;max-width:32ch;margin:30px 0 0}
 .day-steps{margin-top:62px;min-height:280px}
-.day-step{border-top:1px solid #1115;position:relative}
-.day-step:last-child{border-bottom:1px solid #1115}
-.day-step::before{content:'';height:2px;width:25%;position:absolute;top:-1px;left:0;background:#f34b32;transform:scaleX(0);transform-origin:left;transition:transform .24s}
-.day-step[data-active=true]::before{transform:scaleX(1)}
+.day-step{position:relative}
 .day-step h3{font-weight:530;font-size:clamp(18px,1.75vw,29px);letter-spacing:-.04em;margin:0}
 .day-step button{display:flex;width:100%;align-items:center;justify-content:space-between;text-align:left;color:inherit;border:0;background:none;padding:22px 0;gap:20px;font:inherit}
 .day-step button span{font-size:26px;font-weight:350;line-height:1;width:22px;text-align:center}
@@ -28,4 +25,4 @@
 @media(max-width:1100px){.day-grid{gap:5%}.day-reading h2{font-size:4.6vw}.day-steps{margin-top:38px}.day-description{font-size:21px}.day-step h3{font-size:22px}.day-step button{padding-block:19px}.day-cta{font-size:19px;margin-top:24px}}
 @media(max-width:720px){.day-to-day{margin-top:60px;padding:65px 0}.day-grid{grid-template-columns:1fr;gap:40px}.day-reading h2{font-size:clamp(36px,9.4vw,62px)}.day-description{font-size:19px;margin-top:24px}.day-steps{min-height:270px;margin-top:35px}.day-step h3{font-size:21px}.day-step p{font-size:16px}.day-figure{width:min(100%,380px)}.day-cta{margin-top:14px}.day-figure figcaption{font-size:15px}}
 
-.stone-continuation{background:#e9e5dc;color:#111;color-scheme:light}.stone-continuation .site-footer{margin-top:0;border-color:#1115}.stone-continuation .site-footer>div{color:#595750}.stone-continuation .site-footer>div a:hover{color:#111}
+.stone-continuation{background:#e9e5dc;color:#111;color-scheme:light}.stone-continuation .site-footer{margin-top:0}.stone-continuation .site-footer>div{color:#595750}.stone-continuation .site-footer>div a:hover{color:#111}

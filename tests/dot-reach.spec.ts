@@ -9,6 +9,8 @@ test('dot reach continues stone, uses unique footage and preserves a live raster
   expect(posters.join(' ')).not.toMatch(/judy|jack|network-v1/);
   const reach = page.locator('#reach');
   await reach.scrollIntoViewIfNeeded();
+  await expect(page.locator('.site-header')).toHaveAttribute('data-surface', 'stone');
+  await expect(page.locator('.site-header')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
   await expect(page.getByRole('link',{name:'How it works',exact:true})).toHaveAttribute('aria-current','location');
   await expect(reach).toHaveCSS('background-color', 'rgb(233, 229, 220)');
   expect(await reach.evaluate(el => Math.abs(el.getBoundingClientRect().top - document.getElementById('day-to-day')!.getBoundingClientRect().bottom))).toBeLessThan(1);
@@ -24,6 +26,7 @@ test('dot reach continues stone, uses unique footage and preserves a live raster
   expect(after?.width).toBe(before?.width);expect(after?.height).toBe(before?.height);
   await page.screenshot({path:'docs/qa/dot-reach-desktop.png'});
   await page.evaluate(() => scrollTo({top:0,behavior:'instant'}));
+  await expect(page.locator('.site-header')).toHaveAttribute('data-surface', 'carbon');
   await expect.poll(() => page.locator('.reach-portrait video').evaluate((v:HTMLVideoElement) => v.paused)).toBe(true);
   await reach.scrollIntoViewIfNeeded();
   await expect(page.getByRole('button', {name:'Pause reach video',exact:true})).toBeVisible();

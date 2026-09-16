@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import './day-to-day.css';
 import './dot-reach.css';
+import './network-comparison.css';
 
 const inter = localFont({ src: '../public/fonts/inter-latin-variable.woff2', weight: '100 900', variable: '--font-brand', display: 'swap' });
 export const metadata: Metadata = {
