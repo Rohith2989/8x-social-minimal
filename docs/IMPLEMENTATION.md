@@ -59,3 +59,6 @@ A test caught the sticky stage escaping its container when extra reading distanc
 Preserve the now-integrated original Reach Atlas and its exact orange `#f34b32`. The family ending is implemented after the map. Confirm the fifth product name and unverified product destinations before public launch; see FOOTER.md. Do not reinstate rejected standalone scenes, the old loader, diagram sections or repeated studio montage.
 
 Before a public launch, review final content and links, decide indexing/social metadata, and verify on target browsers. No hosting deployment has been performed.
+
+## Hero circle correction (2026-09-17)
+The orange circle is now sized to 60% of the portrait composition height and inset 20% from the right, with its top inside the frame. This keeps the circle behind faces instead of under the translucent shoulder perimeter. The bottom mask belongs to the combined portrait/circle container; only the horizontal edge fade stays on the portrait. Desktop viewport budgeting and full intrinsic image framing are unchanged. Verified the existing 11 hero sizes, including 1920x1080, and refreshed docs/qa/hero-*.png. No source image changes.

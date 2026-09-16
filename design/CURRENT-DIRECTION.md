@@ -1,5 +1,9 @@
 # Current design direction
 
+## Latest: approved endpoint, refined motion and circle correction
+
+The user likes the v3 dotted footer endpoint and viewport result and asked to bring it alive with layered motion. Preserve the final geometry, palette and directory. The refined sequence lifts three shallow layers beneath the original solid mark, turns it as a coherent silhouette, compresses the layers, then prints the stationary dots. The last 17% of travel holds the finished mark. New choreography awaits review; the settled visual is approved. The orange hero circle was separately flagged for spilling through the faded shoulders: it is now smaller, inset behind the faces, and fades with the whole composition rather than behind transparent clothing. No new asset or dependency.
+
 ## Latest: layered footer and viewport correction
 
 The user rejected the v2 point-morph animation and requested a new generated sequence before rebuilding. They specifically suggested layered motion. See footer-layered-v3: the generated board is saved, and the live footer now uses a coherent solid SVG turn followed by complementary masks revealing a stationary halftone print. No dot swarm or individual point morph. The hero now fits the full portrait frame at 1920×1080 and other desktop landscape sizes; wide headlines use two lines. Portrait tablets and phones retain natural document flow. The original map stays orange. New implementation awaits user visual review. This supersedes the v2 description below.

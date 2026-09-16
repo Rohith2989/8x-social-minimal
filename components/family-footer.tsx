@@ -22,20 +22,27 @@ export function FamilyFooter() {
     let span = 0, top = 100, raf = 0, progress = 0, target = 0, last = 0;
     let measured = false;
     const draw = () => {
-      const turn = ease((progress - .1) / .46), reveal = ease((progress - .57) / .33);
-      const transform = `translate(${mix(280, 450, turn)} 300) scale(${mix(1.64, 3, turn)} ${mix(1.64, 2.2, turn)}) rotate(${turn * 90}) translate(-93 -132)`;
+      // Lift the complete silhouette, turn it, then lay it onto the print plane.
+      // Every layer shares one transform, so the serif edges never scatter.
+      const turn = ease((progress - .18) / .36);
+      const lift = ease((progress - .07) / .16) * (1 - ease((progress - .46) / .14));
+      const reveal = ease((progress - .6) / .23);
+      const transform = `translate(${mix(280, 450, turn)} ${300 - lift * 18}) scale(${mix(1.64, 3, turn)} ${mix(1.64, 2.2, turn)}) rotate(${turn * 90}) translate(-93 -132)`;
       ink.current!.setAttribute('transform', transform);
-      // A shallow ink layer gives the solid turn weight; it closes before printing.
-      const lift = Math.sin(turn * Math.PI);
-      depth.current!.setAttribute('transform', `translate(${lift * 4} ${lift * 5}) ${transform}`);
-      depth.current!.setAttribute('opacity', String(lift * .13));
-      suffix.current!.setAttribute('opacity', String(1 - ease((progress - .04) / .16)));
+      depth.current!.setAttribute('transform', transform);
+      depth.current!.setAttribute('opacity', String(lift));
+      // Three shallow registration layers compress together as the mark lands.
+      Array.from(depth.current!.children).forEach((layer, i) => {
+        const distance = (3 - i) * lift;
+        layer.setAttribute('transform', `translate(${distance * 1.1} ${distance * 1.8})`);
+      });
+      suffix.current!.setAttribute('opacity', String(1 - ease((progress - .05) / .12)));
       const sweep = mix(-50, 950, reveal);
       for (const mask of [solidMask.current!, printMask.current!]) {
-        mask.setAttribute('x1', String(sweep - 35)); mask.setAttribute('x2', String(sweep + 35));
+        mask.setAttribute('x1', String(sweep - 42)); mask.setAttribute('x2', String(sweep + 42));
       }
       journey.dataset.progress = progress.toFixed(3);
-      journey.dataset.phase = progress < .1 ? 'original' : progress < .57 ? 'turn' : progress < .9 ? 'impression' : 'settled';
+      journey.dataset.phase = progress < .07 ? 'original' : progress < .18 ? 'lift' : progress < .6 ? 'turn' : progress < .83 ? 'impression' : 'settled';
     };
     const sample = () => {
       if (motion.matches) return 1;
@@ -89,7 +96,7 @@ export function FamilyFooter() {
               <mask id="family-solid-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="600"><rect width="900" height="600" fill="url(#family-solid-gradient)" /></mask>
               <mask id="family-print-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="600"><rect width="900" height="600" fill="url(#family-print-gradient)" /></mask>
             </defs>
-            <g mask="url(#family-solid-mask)"><g ref={depth} opacity="0"><path d={mark.eight} /></g><g ref={ink}><path d={mark.eight} /></g></g>
+            <g mask="url(#family-solid-mask)"><g ref={depth} opacity="0">{[.08, .16, .24].map((opacity, i) => <path key={i} d={mark.eight} opacity={opacity} />)}</g><g ref={ink}><path d={mark.eight} /></g></g>
             <path ref={suffix} d={mark.x} transform="translate(280 300) scale(1.64) translate(-93 -132)" />
             <g className="family-print-layer" mask="url(#family-print-mask)">{mark.dots.map(([a,b,r], i) => <circle key={i} cx={450-(b-132)*3} cy={300+(a-93)*2.2} r={r} />)}</g>
           </svg>

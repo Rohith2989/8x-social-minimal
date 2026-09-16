@@ -50,7 +50,11 @@ test('scroll animation waits at rest and returns to the original mark when scrol
   const frame = await page.locator('.family-art>svg').evaluate(el => el.outerHTML);
   await page.waitForTimeout(500);
   expect(await page.locator('.family-art>svg').evaluate(el => el.outerHTML)).toBe(frame);
+  await position(page, .84); await expect(root).toHaveAttribute('data-phase', 'settled');
+  const settled = await page.locator('.family-art>svg').evaluate(el => el.outerHTML);
   await position(page, 1); await expect(root).toHaveAttribute('data-phase', 'settled');
+  // The last reading interval holds the approved print, without late sinking.
+  expect(await page.locator('.family-art>svg').evaluate(el => el.outerHTML)).toBe(settled);
   await position(page, 0); await expect(root).toHaveAttribute('data-phase', 'original');
 });
 
