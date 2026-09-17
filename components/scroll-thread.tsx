@@ -21,7 +21,8 @@ export function ScrollThread() {
       const middle = innerHeight / 2;
       const stone = document.getElementById('day-to-day');
       const map = document.getElementById('reach-atlas')?.getBoundingClientRect();
-      rail.dataset.surface = map && map.top <= middle && map.bottom >= middle ? 'orange'
+      const services = document.getElementById('services')?.getBoundingClientRect();
+      rail.dataset.surface = map && (services ?? map).top <= middle && map.bottom >= middle ? 'orange'
         : stone && stone.getBoundingClientRect().top <= middle ? 'stone' : 'carbon';
     };
     const queue = () => { if (!frame) frame = requestAnimationFrame(update); };

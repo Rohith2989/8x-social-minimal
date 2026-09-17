@@ -1,0 +1,259 @@
+{
+  "sourcePage": "https://www.8x.social/en/showcase",
+  "imported": "2026-09-18",
+  "encoding": "320px wide H.264, 24fps, no audio; original duration",
+  "clips": [
+    {
+      "id": 1,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-1.mp4",
+      "video": "1.mp4",
+      "poster": "1.jpg"
+    },
+    {
+      "id": 2,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-2.mp4",
+      "video": "2.mp4",
+      "poster": "2.jpg"
+    },
+    {
+      "id": 3,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-3.mp4",
+      "video": "3.mp4",
+      "poster": "3.jpg"
+    },
+    {
+      "id": 4,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-4.mp4",
+      "video": "4.mp4",
+      "poster": "4.jpg"
+    },
+    {
+      "id": 5,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-5.mp4",
+      "video": "5.mp4",
+      "poster": "5.jpg"
+    },
+    {
+      "id": 6,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-6.mp4",
+      "video": "6.mp4",
+      "poster": "6.jpg"
+    },
+    {
+      "id": 7,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-7.mp4",
+      "video": "7.mp4",
+      "poster": "7.jpg"
+    },
+    {
+      "id": 9,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-9.mp4",
+      "video": "9.mp4",
+      "poster": "9.jpg"
+    },
+    {
+      "id": 10,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-10.mp4",
+      "video": "10.mp4",
+      "poster": "10.jpg"
+    },
+    {
+      "id": 11,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-11.mp4",
+      "video": "11.mp4",
+      "poster": "11.jpg"
+    },
+    {
+      "id": 12,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-12.mp4",
+      "video": "12.mp4",
+      "poster": "12.jpg"
+    },
+    {
+      "id": 13,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-13.mp4",
+      "video": "13.mp4",
+      "poster": "13.jpg"
+    },
+    {
+      "id": 14,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-14.mp4",
+      "video": "14.mp4",
+      "poster": "14.jpg"
+    },
+    {
+      "id": 15,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-15.mp4",
+      "video": "15.mp4",
+      "poster": "15.jpg"
+    },
+    {
+      "id": 16,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-16.mp4",
+      "video": "16.mp4",
+      "poster": "16.jpg"
+    },
+    {
+      "id": 17,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-17.mp4",
+      "video": "17.mp4",
+      "poster": "17.jpg"
+    },
+    {
+      "id": 18,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-18.mp4",
+      "video": "18.mp4",
+      "poster": "18.jpg"
+    },
+    {
+      "id": 19,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-19.mp4",
+      "video": "19.mp4",
+      "poster": "19.jpg"
+    },
+    {
+      "id": 20,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-20.mp4",
+      "video": "20.mp4",
+      "poster": "20.jpg"
+    },
+    {
+      "id": 21,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-21.mp4",
+      "video": "21.mp4",
+      "poster": "21.jpg"
+    },
+    {
+      "id": 22,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-22.mp4",
+      "video": "22.mp4",
+      "poster": "22.jpg"
+    },
+    {
+      "id": 23,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-23.mp4",
+      "video": "23.mp4",
+      "poster": "23.jpg"
+    },
+    {
+      "id": 24,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-24.mp4",
+      "video": "24.mp4",
+      "poster": "24.jpg"
+    },
+    {
+      "id": 25,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-25.mp4",
+      "video": "25.mp4",
+      "poster": "25.jpg"
+    },
+    {
+      "id": 27,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-27.mp4",
+      "video": "27.mp4",
+      "poster": "27.jpg"
+    },
+    {
+      "id": 28,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-28.mp4",
+      "video": "28.mp4",
+      "poster": "28.jpg"
+    },
+    {
+      "id": 29,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-29.mp4",
+      "video": "29.mp4",
+      "poster": "29.jpg"
+    },
+    {
+      "id": 30,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-30.mp4",
+      "video": "30.mp4",
+      "poster": "30.jpg"
+    },
+    {
+      "id": 31,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-31.mp4",
+      "video": "31.mp4",
+      "poster": "31.jpg"
+    },
+    {
+      "id": 32,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-32.mp4",
+      "video": "32.mp4",
+      "poster": "32.jpg"
+    },
+    {
+      "id": 33,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-33.mp4",
+      "video": "33.mp4",
+      "poster": "33.jpg"
+    },
+    {
+      "id": 34,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-34.mp4",
+      "video": "34.mp4",
+      "poster": "34.jpg"
+    },
+    {
+      "id": 35,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-35.mp4",
+      "video": "35.mp4",
+      "poster": "35.jpg"
+    },
+    {
+      "id": 36,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-36.mp4",
+      "video": "36.mp4",
+      "poster": "36.jpg"
+    },
+    {
+      "id": 37,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-37.mp4",
+      "video": "37.mp4",
+      "poster": "37.jpg"
+    },
+    {
+      "id": 38,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-38.mp4",
+      "video": "38.mp4",
+      "poster": "38.jpg"
+    },
+    {
+      "id": 39,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-39.mp4",
+      "video": "39.mp4",
+      "poster": "39.jpg"
+    },
+    {
+      "id": 40,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-40.mp4",
+      "video": "40.mp4",
+      "poster": "40.jpg"
+    },
+    {
+      "id": 41,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-41.mp4",
+      "video": "41.mp4",
+      "poster": "41.jpg"
+    },
+    {
+      "id": 42,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-42.mp4",
+      "video": "42.mp4",
+      "poster": "42.jpg"
+    },
+    {
+      "id": 43,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-43.mp4",
+      "video": "43.mp4",
+      "poster": "43.jpg"
+    },
+    {
+      "id": 45,
+      "source": "https://cdn-mrktng.8x.social/assets/videos/video-45.mp4",
+      "video": "45.mp4",
+      "poster": "45.jpg"
+    }
+  ]
+}

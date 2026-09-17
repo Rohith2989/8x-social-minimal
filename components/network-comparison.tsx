@@ -1,90 +1,88 @@
 'use client';
 
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Arrow } from './icons';
 import { links } from '@/lib/content';
 
-const modes = [
-  { id: 'network', label: '8x network', items: [
-    ['Creator-led', 'content', 'Creators make and publish in their own voice.'],
-    ['Organic', 'distribution', 'Content reaches people through the feed.'],
-    ['Managed', 'end to end', 'Briefs, reviews, payments. Handled by 8x.'],
-  ] },
-  { id: 'influencers', label: 'Influencers', items: [
-    ['Sponsored', 'content', 'Creators feature your brand in sponsored posts.'],
-    ['Creator', 'audiences', 'Distribution through the creator’s existing audience.'],
-    ['Campaign', 'partnerships', 'Scope and delivery agreed with the creator or agency.'],
-  ] },
-  { id: 'ads', label: 'Paid ads', items: [
-    ['Ad', 'creative', 'Creative produced for advertising placements.'],
-    ['Paid', 'distribution', 'Placement funded by your media spend.'],
-    ['Campaign', 'controls', 'Targeting, budgets and optimisation through ad tools.'],
-  ] },
+const approaches = [
+  { id: 'network', title: '8x network', caption: 'An ongoing creator programme', values: ['Original creator videos', 'Creator accounts', 'Run by 8x'] },
+  { id: 'influencers', title: 'Influencers', caption: 'Creator partnerships', values: ['Sponsored posts', 'Partner audiences', 'Creator or agency'] },
+  { id: 'ads', title: 'Paid ads', caption: 'Media campaigns', values: ['Ad creative', 'Paid placements', 'Media buying'] },
 ] as const;
+const labels = ['Content', 'Distribution', 'Management'];
 
-function DotGlyph({ mode, column }: { mode: number; column: number }) {
-  return <svg className="comparison-glyph" viewBox="0 0 100 100" aria-hidden="true">
-    {Array.from({ length: 36 }, (_, i) => {
-      const size = mode === 0 && column !== 1 ? 4 : 6;
-      const slot = i % (size * size);
-      let x = 8 + slot % size * (72 / (size - 1));
-      let y = 8 + Math.floor(slot / size) * (72 / (size - 1));
-      if (mode === 1) {
-        const group = Math.floor(i / 12);
-        const angle = (i % 12) / 12 * Math.PI * 2;
-        x = [25, 67, 46][group] + Math.cos(angle) * 18;
-        y = [26, 26, 67][group] + Math.sin(angle) * 18;
-      }
-      if (mode === 2) x += Math.floor(i / 6) % 2 * 5;
-      const accent = mode === 0 ? (column === 1 ? [8, 9, 10].includes(i) : i === 6) : mode === 1 ? i % 12 === column * 3 : Math.floor(i / 6) === column + 1;
-      return <circle key={i} r="3.5" style={{ transform: `translate(${x}px, ${y}px)`, opacity: i < size * size ? 1 : 0, fill: accent ? 'var(--story-accent,#f34b32)' : '#111', transitionDelay: `${i % 6 * 12}ms` }} />;
-    })}
+// A bounded print field: three layers breathe instead of animating hundreds of dots.
+const printDots = Array.from({ length: 360 }, (_, index) => {
+  const column = index % 20, row = Math.floor(index / 20);
+  const x = 7 + column * 11 + (row % 2) * 5.5, y = 7 + row * 11;
+  const density = Math.max(0, Math.min(1, (x / 220 * .7 + y / 198 * .8 - .55) / .85));
+  return { x, y, r: .35 + density ** 1.7 * 3.6, opacity: .15 + density * .8, layer: index % 3 };
+});
+
+function DotPrint() {
+  return <svg className="comparison-print" viewBox="0 0 230 210" aria-hidden="true" focusable="false">
+    {[0, 1, 2].map(layer => <g key={layer} className={`comparison-print-layer layer-${layer}`}>
+      {printDots.filter(dot => dot.layer === layer).map(dot => <circle key={`${dot.x}-${dot.y}`} cx={dot.x} cy={dot.y} r={dot.r} opacity={dot.opacity} />)}
+    </g>)}
   </svg>;
 }
 
-export function NetworkComparison() {
-  const [active, setActive] = useState(0);
-  const [entered, setEntered] = useState(false);
-  const root = useRef<HTMLElement>(null);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setEntered(true); observer.disconnect(); }
-    }, { threshold: .12 });
-    if (root.current) observer.observe(root.current);
-    return () => observer.disconnect();
-  }, []);
-  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    let next: number;
-    if (event.key === 'ArrowRight') next = (index + 1) % modes.length;
-    else if (event.key === 'ArrowLeft') next = (index + modes.length - 1) % modes.length;
-    else if (event.key === 'Home') next = 0;
-    else if (event.key === 'End') next = modes.length - 1;
-    else return;
-    event.preventDefault();
-    setActive(next);
-    tabs.current[next]?.focus();
-  };
+function CardContent({ index, visualOnly = false }: { index: number; visualOnly?: boolean }) {
+  const approach = approaches[index];
+  const cta = <>Build your network<Arrow /></>;
+  return <div className="comparison-content">
+    <header className="comparison-option-heading">
+      <h3 id={visualOnly ? undefined : `comparison-${approach.id}`}>{index === 0 && <i aria-hidden="true" />}{approach.title}</h3>
+      <p>{approach.caption}</p>
+      <div className="comparison-signature" aria-hidden="true">{Array.from({ length: index === 0 ? 5 : index === 1 ? 3 : 1 }, (_, i) => <i key={i} />)}</div>
+    </header>
+    <dl>{labels.map((label, row) => <div key={label}><dt>{label}</dt><dd>{approach.values[row]}</dd></div>)}</dl>
+    {index === 0 && (visualOnly ? <span className="comparison-cta">{cta}</span> : <a className="comparison-cta" href={links.build}>{cta}</a>)}
+  </div>;
+}
 
-  return <section ref={root} id="comparison" className="network-comparison" aria-labelledby="comparison-title" data-entered={entered}>
-    <div className="page-width">
+export function NetworkComparison() {
+  const root = useRef<HTMLElement>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [focused, setFocused] = useState<number | null>(null);
+  const [touched, setTouched] = useState<number | null>(null);
+  const [running, setRunning] = useState(false);
+  const active = hovered ?? focused ?? touched;
+
+  useEffect(() => {
+    let visible = false;
+    const update = () => setRunning(visible && !document.hidden);
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }, { threshold: 0 });
+    if (root.current) observer.observe(root.current);
+    document.addEventListener('visibilitychange', update);
+    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
+  }, []);
+
+  return <section ref={root} id="comparison" className="network-comparison" aria-labelledby="comparison-title" data-running={running}>
+    <div className="comparison-layout page-width">
       <div className="comparison-intro">
-        <h2 id="comparison-title">A different way<br />to grow<span>.</span></h2>
-        <p>Creator networks bring content, distribution and daily management together.</p>
+        <h2 id="comparison-title">Why brands are<br />{' '}moving budget here<span>.</span></h2>
+        <p>Three ways to reach people. A different way to build.</p>
       </div>
-      <div className="comparison-tabs" role="tablist" aria-label="Compare ways to reach your audience">
-        {modes.map((mode, index) => <button key={mode.id} ref={el => { tabs.current[index] = el; }} role="tab" id={'comparison-tab-' + mode.id} aria-selected={active === index} aria-controls={'comparison-panel-' + mode.id} tabIndex={active === index ? 0 : -1} onClick={() => setActive(index)} onKeyDown={event => onKeyDown(event, index)}>{mode.label}</button>)}
+      <div className="comparison-portrait" aria-hidden="true">
+        <img src="/media/comparison-portrait.webp" width="1086" height="1448" loading="lazy" decoding="async" alt="" />
       </div>
-      <div className="comparison-glyphs" aria-hidden="true">{[0, 1, 2].map(column => <DotGlyph key={column} mode={active} column={column} />)}</div>
-      {/* Layer intrinsic layouts so the longest mode reserves its space at every width. */}
-      <div className="comparison-panels">
-        {modes.map((mode, index) => <div key={mode.id} role="tabpanel" id={'comparison-panel-' + mode.id} aria-labelledby={'comparison-tab-' + mode.id} className="comparison-panel" data-active={active === index} aria-hidden={active !== index} inert={active !== index} tabIndex={active === index ? 0 : -1}>
-          {mode.items.map(([first, second, body]) => <div className="comparison-benefit" key={first}>
-            <h3>{first}<br />{' '}{second}<span>.</span></h3><p>{body}</p>
-          </div>)}
-        </div>)}
+      <div className="comparison-options" aria-label="Content, distribution and management compared">
+        {approaches.map((approach, index) => <article key={approach.id}
+          className="comparison-option" tabIndex={0} aria-labelledby={`comparison-${approach.id}`}
+          data-active={active === index} data-kind={approach.id}
+          onPointerEnter={event => { if (event.pointerType === 'mouse' || event.pointerType === 'pen') setHovered(index); }}
+          onPointerLeave={() => setHovered(null)}
+          onPointerDown={event => { if (event.pointerType === 'touch') setTouched(index); }}
+          onFocus={() => setFocused(index)}
+          onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(null); }}
+          onKeyDown={event => { if (event.key === 'Escape') { setHovered(null); setFocused(null); setTouched(null); event.currentTarget.blur(); } }}>
+          <CardContent index={index} />
+          {/* One shared mask reveals ink and light text at exactly the same edge.
+              The visual copy is inert; there is still only one accessible CTA. */}
+          <div className="comparison-ink" aria-hidden="true" inert><DotPrint /><CardContent index={index} visualOnly /></div>
+        </article>)}
       </div>
-      <a className="comparison-cta" href={links.build}>Build your network<Arrow /></a>
     </div>
   </section>;
 }

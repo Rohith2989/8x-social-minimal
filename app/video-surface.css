@@ -1,0 +1,31 @@
+.video-surface-section{position:relative;color:#111;color-scheme:light;background:var(--story-surface,#e9e5dc);padding:94px 0 105px;margin-top:70px;scroll-margin-top:100px}
+.surface-anchor{position:absolute;top:0;scroll-margin-top:100px}
+.surface-heading{display:flex;align-items:center;justify-content:space-between;gap:7%;margin-bottom:44px;max-width:1680px}
+.surface-heading h2{font-size:clamp(48px,6.3vw,108px);line-height:.98;letter-spacing:-.065em;font-weight:650;margin:0}
+.surface-heading h2 span{color:#f34b32}
+.surface-heading>div{max-width:410px;padding-right:12px}
+.surface-heading p{font-size:clamp(18px,1.6vw,27px);line-height:1.35;letter-spacing:-.035em;margin:0 0 23px}
+.surface-heading a{display:flex;gap:13px;align-items:center;width:fit-content;font-size:clamp(15px,1.1vw,19px);color:#b6321d}
+.surface-heading a svg{width:18px;height:18px;transition:transform .2s}.surface-heading a:hover svg{transform:translate(2px,-2px)}
+.video-surface{--surface-columns:9;--surface-gap:5px;position:relative;isolation:isolate;width:calc(100% - 40px);max-width:1800px;margin:0 auto}
+.surface-fallback,.surface-interactions{display:grid;grid-template-columns:repeat(var(--surface-columns),minmax(0,1fr));gap:var(--surface-gap)}
+.surface-fallback{filter:grayscale(1) brightness(.75);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.surface-poster{width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#191918}
+.video-surface[data-ready=true] .surface-fallback{visibility:hidden}
+.video-surface>canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.surface-interactions{position:absolute;inset:0}
+.surface-slot{position:relative;min-width:0}
+.surface-slot video{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.surface-cell{position:absolute;inset:0;width:100%;height:100%;background:transparent;border:0;padding:0}
+.surface-cell span{position:absolute;bottom:15%;left:50%;transform:translateX(-50%);background:#111e;color:#fff;font-size:11px;padding:7px;white-space:nowrap;opacity:0}
+.surface-cell:focus-visible{outline:2px solid #f34b32;outline-offset:-5px}.surface-cell:focus-visible span{opacity:1}
+.surface-original:not([hidden]){position:absolute;inset:12px;display:flex;gap:8px;align-items:center;justify-content:center;background:#111e;color:#fff;font-size:13px;padding:12px;text-align:center}
+.surface-pause{position:absolute;bottom:4px;right:12px;background:#111;color:#fff;padding:10px 14px;border:0;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}
+.surface-pause:focus-visible{clip-path:none;width:auto;height:auto;overflow:visible;z-index:3}
+.surface-caption{display:flex;justify-content:space-between;gap:24px;align-items:baseline;max-width:1680px;margin-top:25px;font-size:clamp(12px,.92vw,16px);letter-spacing:-.02em}
+.surface-caption p{margin:0}.surface-caption ul{list-style:none;display:flex;gap:20px;padding:0;margin:0;white-space:nowrap}.surface-caption li+li::before{content:'·';margin-right:20px;color:#8a867d}
+@media(min-width:1000px) and (max-height:1100px){.video-surface-section{padding-top:46px;padding-bottom:70px}.surface-heading{max-width:1480px;margin-bottom:30px}.surface-heading h2{font-size:clamp(64px,5.4vw,92px)}.video-surface{max-width:1540px}.surface-caption{max-width:1480px}}
+@media(min-width:2200px){.surface-heading{margin-bottom:54px}.video-surface-section{padding-top:110px}}
+@media(max-width:999px){.video-surface{--surface-columns:6;max-width:900px}.surface-heading h2{font-size:clamp(48px,7.5vw,75px)}.surface-heading{gap:30px}.surface-heading>div{max-width:290px}.surface-caption{align-items:flex-start;flex-direction:column;gap:14px}}
+@media(max-width:599px){.video-surface-section{padding:62px 0 70px;margin-top:45px}.surface-heading{display:block;margin-bottom:30px}.surface-heading h2{font-size:clamp(45px,12vw,69px)}.surface-heading>div{max-width:none;margin-top:26px}.surface-heading p{font-size:18px;margin-bottom:18px}.video-surface{--surface-columns:3;--surface-gap:3px;width:calc(100% - 24px)}.surface-caption{font-size:12px;gap:15px;margin-top:20px}.surface-caption ul{gap:10px}.surface-caption li+li::before{margin-right:10px}.surface-original:not([hidden]){inset:3px;font-size:11px;padding:5px}.surface-original svg{display:none}}
+@media(prefers-reduced-motion:reduce){.surface-heading a svg{transition:none}}

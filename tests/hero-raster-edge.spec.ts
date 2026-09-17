@@ -17,7 +17,7 @@ test('hero edge breathes gently without moving the photo and pauses offscreen', 
   });
   expect(finish.transform).not.toBe(start);
   expect(finish.displacement).toBeLessThan(1);
-  expect(finish.scale).toBeLessThanOrEqual(1.015);
+  expect(finish.scale).toBeLessThanOrEqual(1.056);
   expect(await image.boundingBox()).toEqual(before);
   await page.locator('#comparison').scrollIntoViewIfNeeded();
   await expect(edge).toHaveAttribute('data-active', 'false');

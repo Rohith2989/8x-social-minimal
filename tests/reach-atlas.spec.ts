@@ -45,10 +45,10 @@ test('original map coverage, density, orange and country interactions are preser
   expect(errors).toEqual([]);
 });
 
-test('approach reverses exactly and the map joins the page without a divider or pin', async ({ page }) => {
+test('approach reverses exactly and the map remains unpinned after services', async ({ page }) => {
   await arrive(page);
   const position = async (fraction: number) => {
-    await page.locator('#reach-atlas').evaluate((el, f) => scrollTo({ top: el.getBoundingClientRect().top + scrollY - innerHeight * f, behavior: 'instant' }), fraction);
+    await page.locator('#services').evaluate((el, f) => scrollTo({ top: el.getBoundingClientRect().top + scrollY - innerHeight * f, behavior: 'instant' }), fraction);
   };
   await position(1.1);
   await expect(page.locator('#comparison')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
@@ -61,7 +61,12 @@ test('approach reverses exactly and the map joins the page without a divider or 
   await expect(page.locator('#reach-atlas')).toHaveCSS('background-color', 'rgb(243, 75, 50)');
   await position(.85);
   await expect(page.locator('#comparison')).toHaveCSS('background-color', mid);
-  expect(await page.locator('#reach-atlas').evaluate(el => Math.abs(el.getBoundingClientRect().top - document.getElementById('comparison')!.getBoundingClientRect().bottom))).toBeLessThan(1);
+  // Feedback and service choices share the same unbroken surface before the map.
+  await expect(page.locator('#partner-feedback')).toHaveCSS('background-color', mid);
+  expect(await page.locator('#partner-feedback').evaluate(el => Math.abs(el.getBoundingClientRect().top - document.getElementById('comparison')!.getBoundingClientRect().bottom))).toBeLessThan(1);
+  await expect(page.locator('#services')).toHaveCSS('background-color', mid);
+  expect(await page.locator('#services').evaluate(el => Math.abs(el.getBoundingClientRect().top - document.getElementById('partner-feedback')!.getBoundingClientRect().bottom))).toBeLessThan(1);
+  expect(await page.locator('#reach-atlas').evaluate(el => Math.abs(el.getBoundingClientRect().top - document.getElementById('services')!.getBoundingClientRect().bottom))).toBeLessThan(1);
 });
 
 test('small countries, filters, reduced motion and a failed atlas request remain usable', async ({ page }) => {

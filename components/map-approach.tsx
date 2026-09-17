@@ -6,12 +6,13 @@ export function MapApproach() {
   useEffect(() => {
     const atlas = document.getElementById('reach-atlas');
     if (!atlas) return;
+    const entrance = document.getElementById('services') ?? atlas;
     const page = document.documentElement, motion = matchMedia('(prefers-reduced-motion: reduce)');
     let raf = 0, last = '';
     const mix = (a: number[], b: number[], p: number) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * p)).join(', ')})`;
     const update = () => {
       raf = 0;
-      const top = atlas.getBoundingClientRect().top;
+      const top = entrance.getBoundingClientRect().top;
       const t = Math.max(0, Math.min(1, (innerHeight - top) / (innerHeight * .3)));
       const p = motion.matches ? (top <= innerHeight ? 1 : 0) : t * t * (3 - 2 * t);
       const color = mix([233, 229, 220], [243, 75, 50], p);

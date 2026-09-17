@@ -119,17 +119,11 @@ export function CreatorWork() {
           <div className="clip-selectors" role="group" aria-label="Choose a creator example">
             {clips.map((clip, index) => <button key={clip.id} aria-pressed={active === index} aria-controls="creator-media" onClick={() => select(index)}><span className="selection-dot" aria-hidden="true" />{clip.title}</button>)}
           </div>
-          <p className="work-caption" aria-live="polite" aria-atomic="true"><span key={clips[active].id}>{clips[active].caption}</span></p>
         </div>
       </div>
       <div className="work-media" id="creator-media" role="region" aria-label="Original creator clips">
         <div className="video-rail" ref={rail}>
           {clips.map((clip, index) => <CreatorVideo key={clip.id} index={index} active={index === active} inView={inView} reduced={reduced} onSelect={select} onAttention={attention} />)}
-        </div>
-        <div className="clip-progress" role="group" aria-label="Select active clip" style={{ '--active-step': active } as React.CSSProperties}>
-          <span className="progress-track" aria-hidden="true" /><span className="progress-fill" aria-hidden="true" />
-          {clips.map((clip, index) => <button key={clip.id} aria-label={'Select ' + clip.title} aria-pressed={active === index} onClick={() => select(index)}><span /></button>)}
-          <span className="progress-marker" aria-hidden="true" />
         </div>
       </div>
     </div>

@@ -1,12 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test('homepage day-to-day keeps media geometry fixed while details change', async ({ page }) => {
+test('archived day-to-day concept keeps media geometry fixed while details change', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', e => errors.push(e.message));
-  await page.goto('/');
+  await page.goto('/concepts/day-to-day/');
   await expect(page.locator('#day-to-day')).toHaveCount(1);
   await expect(page.locator('#day-to-day')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
-  await expect(page.locator('.family-ending')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
   const image = page.locator('.day-film');
   await image.scrollIntoViewIfNeeded();
   const before = await image.boundingBox();

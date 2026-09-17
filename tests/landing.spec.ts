@@ -28,21 +28,21 @@ test('native scroll changes clip focus without moving the media frames', async (
   await page.screenshot({ path: 'docs/qa/desktop-content.png' });
   await workPosition(page, .9);
   await expect(page.locator('#work')).toHaveAttribute('data-active', 'techwithchow');
-  expect(await page.locator('video').evaluateAll(nodes => nodes.filter(v => !(v as HTMLVideoElement).paused).length)).toBeLessThanOrEqual(1);
+  await expect.poll(() => page.locator('#work video').evaluateAll(nodes => nodes.every(v => !(v as HTMLVideoElement).paused && (v as HTMLVideoElement).muted)) ).toBe(true);
   expect(errors).toEqual([]);
 });
 
-test('manual pause and sound hold, then offscreen playback stops', async ({ page }) => {
+test('manual pause holds independently, then offscreen playback stops', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#work')).toHaveAttribute('data-sticky', 'true');
   await workPosition(page, .1);
   await page.getByRole('button', { name: 'Pause Entertainment', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Play Entertainment', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Play Entertainment', exact: true }).click();
-  await page.getByRole('button', { name: 'Unmute Entertainment', exact: true }).click();
   await workPosition(page, .6);
-  await expect(page.locator('#work')).toHaveAttribute('data-active', 'nickmakesmusic');
-  await expect(page.getByRole('button', { name: 'Mute Entertainment', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Play Entertainment', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Pause Everyday routines', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Play Entertainment', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Pause Entertainment', exact: true })).toBeVisible();
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await expect.poll(() => page.locator('video').evaluateAll(nodes => nodes.every(v => (v as HTMLVideoElement).paused && (v as HTMLVideoElement).muted))).toBe(true);
 });
@@ -53,9 +53,9 @@ test('mobile menu, manual clip selection and rail stay usable', async ({ page })
   await page.locator('.hero-portrait img').evaluate((img: HTMLImageElement) => img.decode());
   await page.screenshot({ path: 'docs/qa/mobile-hero.png' });
   await page.getByRole('button', { name: /menu/i }).click();
-  await expect(page.getByRole('link', { name: 'How it works', exact: true })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'How it works', exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
-  await expect(page.getByRole('link', { name: 'How it works', exact: true })).toBeHidden();
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'How it works', exact: true })).toBeHidden();
   await expect(page.locator('#work')).toHaveAttribute('data-sticky', 'false');
   await page.getByRole('button', { name: 'Tech in the wild', exact: true }).click();
   await expect(page.locator('#work')).toHaveAttribute('data-active', 'techwithchow');
@@ -65,6 +65,8 @@ test('mobile menu, manual clip selection and rail stay usable', async ({ page })
   await page.getByRole('button', { name: 'Entertainment', exact: true }).click();
   await expect(page.locator('#work')).toHaveAttribute('data-active', 'nickmakesmusic');
   await expect.poll(() => page.locator('.video-rail').evaluate(el => el.scrollLeft)).toBeLessThan(2);
+  await page.locator('.video-rail').scrollIntoViewIfNeeded();
+  await page.screenshot({path:'docs/qa/creator-dots-mobile.png'});
 });
 
 test('reduced motion avoids sticky traversal and autoplay but allows deliberate playback', async ({ page }) => {

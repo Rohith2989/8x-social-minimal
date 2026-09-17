@@ -1,5 +1,17 @@
 # 8x Social Minimal
 
+Overnight checkpoint: `work/minimal-polish-2026-09-18` contains the saved work, with branch-specific Vercel Git deployments disabled. Main is unchanged; merge only when requested. See `docs/HANDOFF-2026-09-18.md` to resume.
+
+Latest local refinement: Services now pins while native scrolling plays Self Serve, then Full Service, then holds before the map. Mobile pins each choice separately; reduced motion removes the runway. Review http://localhost:3904/?v=services-pinned-1#services. Scroll to play or reverse. No commit or push.
+
+Latest local update: orange Self Serve / Full Service choices use staggered photographic stop-motion hands, then settle. Review http://localhost:3904/?v=service-stop-motion-1#services (reload to replay). The shared orange surface continues through the original map. See `docs/SERVICE-CHOICES.md`. No commit or push.
+
+Latest local update: partner feedback now follows comparison, with an automatic dot pressure ripple and central fluid-ink reveal, then a still reading state. Review http://localhost:3904/?v=feedback-impression-1#partner-feedback. See `docs/PARTNER-FEEDBACK.md`. No commit or push.
+
+Latest local update: the comparison now follows the approved photographic direction with three always-visible columns, dark hover/focus/touch panels and a restrained orange halftone breath. Review http://localhost:3904/?v=comparison-editorial-1#comparison. See `docs/COMPARISON.md`. No commit or push.
+
+Latest local update: the two repetitive stone video sections are merged into a continuous 18-clip showcase with a slow shared colour reveal and halftone perimeter. All 42 original showcase clips are imported locally; playback is limited to nearby visible clips. See `docs/VIDEO-SURFACE.md`. Review at http://localhost:3904/?v=video-surface-1#showcase. Changes remain uncommitted and unpushed, as requested.
+
 Latest footer update: the original layered SVG entrance now leads into a mostly carbon dotted infinity with a small, slow colour trace and subpixel breathing. It stops offscreen and respects reduced motion. The latest implementation awaits visual review; see `docs/FOOTER.md` for the current specification, validation and rollback point.
 
 The new minimal 8x landing page, built separately from the original `8x-social` project. The homepage includes the carbon hero, continuous creator-content sequence, stone Day-to-day, Dot Reach, an interactive comparison, the original orange Reach Atlas and a stone product-family/contact footer. The stone surface warms into orange as the map heading arrives, without a divider or extra map scroll pin. Five distinct original-site creators appear across the video sections. The ending holds the original 8 through a scroll-driven layered SVG turn and halftone print reveal; earlier decorative effects are static.

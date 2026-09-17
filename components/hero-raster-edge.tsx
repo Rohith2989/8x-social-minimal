@@ -47,13 +47,14 @@ export function HeroRasterEdge() {
     const hero = document.querySelector<HTMLElement>('.hero')!;
     const copy = hero.querySelector('.hero-reading')!;
     const header = document.querySelector('.site-header');
+    const work = document.getElementById('work');
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
     const syncMotion = () => { svg.dataset.active = String(visible && !document.hidden && !motion.matches); };
     const measure = () => {
       const outer = hero.getBoundingClientRect(), reading = copy.getBoundingClientRect();
       if (!outer.width || !outer.height) return;
-      const height = outer.bottom + window.scrollY;
+      const height = (work?.getBoundingClientRect().bottom ?? outer.bottom) + window.scrollY;
       svg.style.height = `${height}px`;
       svg.setAttribute('viewBox', `0 0 ${outer.width} ${height}`);
       const { paths, band } = edgePaths(outer.width, height, reading.left - outer.left, reading.bottom + window.scrollY);
@@ -63,8 +64,14 @@ export function HeroRasterEdge() {
     };
     const resize = new ResizeObserver(measure); resize.observe(hero); resize.observe(copy);
     if (header) resize.observe(header);
-    const intersection = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; syncMotion(); });
+    if (work) resize.observe(work);
+    const shown = new Set<Element>();
+    const intersection = new IntersectionObserver(entries => {
+      for (const entry of entries) { if (entry.isIntersecting) shown.add(entry.target); else shown.delete(entry.target); }
+      visible = shown.size > 0; syncMotion();
+    });
     intersection.observe(hero);
+    if (work) intersection.observe(work);
     document.addEventListener('visibilitychange', syncMotion);
     motion.addEventListener('change', syncMotion);
     measure(); syncMotion();
