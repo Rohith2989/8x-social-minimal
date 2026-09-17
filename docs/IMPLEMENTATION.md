@@ -1,5 +1,14 @@
 # Implementation handoff
 
+## Current hero: screen-edge raster v2
+
+Latest approved implementation: screen-edge raster v2 replaces the rejected photo border. Six SVG paths form asymmetric fields anchored to the physical hero edges. A 12-second cycle breathes opacity and at most 1.4% local width, with no portrait movement. Ultrawide fields broaden and soften, while text clearance stays protected; the orange disc follows the centered portrait group. Offscreen/hidden pauses and static reduced motion are supported. See design/hero-screen-edge-v2 and docs/IMPLEMENTATION.md. Later section/footer redesigns remain pending.
+
+Geometry updates only on resize; six CSS-animated path layers require no per-frame JavaScript. Bands cap at 420px, with fixed small dot spacing and lower overall opacity above 2600px. The top copy is protected with an inset limit. HeroSun measures the image on resize to prevent the orange disc floating away on ultrawide screens. No dependencies were added.
+
+Validation: production build and four targeted Playwright tests, including 320px mobile through 5120px ultrawide, original full-portrait viewport checks, no overflow, edge anchoring, stationary portraits, offscreen pause and reduced motion. Screenshots: docs/qa/screen-edge-*.png. Rollback baseline: fcc03d2 (the rejected photo-border version).
+
+
 ## Latest footer revision
 
 See [FOOTER.md](FOOTER.md) for the current stone ending. It supersedes older deferrals in this history: the family reveal is implemented, with a native-scroll transformation and complete contact/legal footer. Earlier ornamental motion is static; functional media and controls remain. The user rejected the initial orange timed footer. Current revision awaits visual review.

@@ -1,9 +1,11 @@
 import { Arrow } from './icons';
 import { links } from '@/lib/content';
 import { HeroRasterEdge } from './hero-raster-edge';
+import { HeroSun } from './hero-sun';
 
 export function Hero() {
   return <section className="hero" id="network" aria-labelledby="hero-title">
+    <HeroRasterEdge />
     <div className="hero-reading page-width">
       <h1 id="hero-title"><span>Your brand.</span><span>A world</span><span>of voices.</span></h1>
       <div className="hero-offer">
@@ -12,12 +14,11 @@ export function Hero() {
       </div>
     </div>
     <div className="hero-portrait" aria-label="A world of individual voices">
-      <span className="hero-sun" aria-hidden="true" />
+      <HeroSun />
       <picture>
         <source media="(max-width: 720px)" srcSet="/media/portraits-small-v2.webp" />
         <img src="/media/portraits-v2.webp" alt="Five people, each with their own perspective, in a single black-and-white portrait." width="1817" height="866" fetchPriority="high" decoding="async" />
       </picture>
-      <HeroRasterEdge />
     </div>
   </section>;
 }

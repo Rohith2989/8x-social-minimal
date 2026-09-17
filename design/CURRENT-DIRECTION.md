@@ -1,5 +1,11 @@
 # Current design direction
 
+## Latest approved implementation: screen-edge breathing
+
+Latest approved implementation: screen-edge raster v2 replaces the rejected photo border. Six SVG paths form asymmetric fields anchored to the physical hero edges. A 12-second cycle breathes opacity and at most 1.4% local width, with no portrait movement. Ultrawide fields broaden and soften, while text clearance stays protected; the orange disc follows the centered portrait group. Offscreen/hidden pauses and static reduced motion are supported. See design/hero-screen-edge-v2 and docs/IMPLEMENTATION.md. Later section/footer redesigns remain pending.
+
+The generated still is the approved direction; live results remain open to visual review. Earlier image-bound implementation descriptions below are historical and superseded.
+
 ## Latest implementation: subtle hero raster edge
 
 The user approved hero-raster-edge-v1 and requested particularly subtle animation. The original five-person portrait now has a narrow warm-grey halftone perimeter in three SVG paths. An eight-second CSS cycle changes opacity from .48 to .62 and shifts each layer at most .45px horizontally/.65px vertically; phases are staggered. The portrait itself is not animated or replaced. Geometry follows the actual image bounds on resize. Offscreen/hidden pauses and reduced-motion static rendering are implemented. Build and three targeted tests pass, including all 11 existing hero viewport checks. This finishes the hero task only; the three similar sections and standalone infinity footer remain subsequent work.

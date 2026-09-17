@@ -7,62 +7,67 @@ const smooth = (value: number) => {
   return t * t * (3 - 2 * t);
 };
 
-// Three fixed print layers, rather than thousands of animated particles.
-// Geometry is generated only on resize; CSS moves the layers by < 1px.
-function edgePaths(width: number, height: number) {
-  const paths = ['', '', ''];
-  const pitch = width < 600 ? 4 : 5;
-  const band = Math.min(42, width * .065);
-  for (let row = 0, y = 2; y < height; row++, y += pitch) {
-    for (let col = 0, x = 2 + (row % 2) * pitch / 2; x < width; col++, x += pitch) {
-      const side = Math.min(x, width - x);
-      const lower = Math.abs(y - height * .88);
-      if (side > band && lower > band * .65) continue;
-      const sideStrength = Math.pow(Math.max(0, 1 - side / band), 1.7) * smooth(y / height / .42);
-      const bottomStrength = Math.pow(Math.max(0, 1 - lower / (band * .65)), 2) * .35;
-      const strength = Math.max(sideStrength, bottomStrength);
-      const noise = .8 + .2 * Math.sin(row * 12.9898 + col * 78.233);
-      const radius = (width < 600 ? 1.15 : 1.5) * strength * noise;
-      if (radius < .2) continue;
-      const r = radius.toFixed(2), diameter = (radius * 2).toFixed(2);
-      paths[(row + col) % 3] += `M${(x-radius).toFixed(2)},${y.toFixed(2)}a${r},${r} 0 1,0 ${diameter},0a${r},${r} 0 1,0 -${diameter},0`;
+// Six static print plates: three per screen edge. Only their transform and
+// opacity breathe; the portrait and its bounds are never used as a frame.
+function edgePaths(width: number, height: number, gutter: number, copyBottom: number) {
+  const paths = ['', '', '', '', '', ''];
+  const mobile = width <= 700;
+  const spare = Math.max(0, (width - 1800) / 2);
+  const band = mobile ? Math.min(22, width * .045) : Math.min(420, width * .07 + spare * .2);
+  const pitch = mobile ? 4.5 : width > 2600 ? 7 : 5.5;
+  for (let side = 0; side < 2; side++) {
+    for (let row = 0, y = 2; y < height; row++, y += pitch) {
+      const t = y / height;
+      // Unequal, broad contours have no straight interior boundary.
+      const contour = .7 + .16 * Math.sin(t * 6.2 + side * 1.9) + .12 * Math.sin(t * 2.8 + side);
+      const copyClearance = Math.max(8, gutter - 22);
+      const open = smooth((y - copyBottom) / 110);
+      const extent = Math.min(band * contour, copyClearance + (band - copyClearance) * open);
+      const endFade = 1 - smooth((t - .78) / .22);
+      const appear = side ? .18 + .82 * smooth((t - .15) / .4) : .65 + .35 * smooth(t / .5);
+      for (let col = 0, offset = 1.5 + (row % 2) * pitch / 2; offset < extent; col++, offset += pitch) {
+        const strength = Math.pow(1 - offset / extent, 1.8) * appear * endFade;
+        const noise = .82 + .18 * Math.sin(row * 12.9898 + col * 78.233 + side * 43);
+        const radius = (mobile ? 1.2 : 2) * strength * noise;
+        if (radius < .2) continue;
+        const x = side ? width - offset : offset;
+        const r = radius.toFixed(2), diameter = (radius * 2).toFixed(2);
+        paths[side * 3 + (row + col) % 3] += `M${(x-radius).toFixed(2)},${y.toFixed(2)}a${r},${r} 0 1,0 ${diameter},0a${r},${r} 0 1,0 -${diameter},0`;
+      }
     }
   }
-  return paths;
+  return { paths, band };
 }
 
 export function HeroRasterEdge() {
   const root = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    const svg = root.current!, frame = svg.parentElement!, img = frame.querySelector('img')!;
+    const svg = root.current!, hero = svg.parentElement!, copy = hero.querySelector('.hero-reading')!;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
     const syncMotion = () => { svg.dataset.active = String(visible && !document.hidden && !motion.matches); };
     const measure = () => {
-      const outer = frame.getBoundingClientRect(), image = img.getBoundingClientRect();
-      if (!image.width || !image.height) return;
-      svg.setAttribute('viewBox', `0 0 ${image.width} ${image.height}`);
-      svg.style.left = `${image.left - outer.left}px`;
-      svg.style.top = `${image.top - outer.top}px`;
-      svg.style.width = `${image.width}px`;
-      svg.style.height = `${image.height}px`;
-      edgePaths(image.width, image.height).forEach((path, index) => svg.children[index].setAttribute('d', path));
+      const outer = hero.getBoundingClientRect(), reading = copy.getBoundingClientRect();
+      if (!outer.width || !outer.height) return;
+      svg.setAttribute('viewBox', `0 0 ${outer.width} ${outer.height}`);
+      const { paths, band } = edgePaths(outer.width, outer.height, reading.left - outer.left, reading.bottom - outer.top);
+      paths.forEach((path, index) => svg.children[index].setAttribute('d', path));
+      svg.dataset.band = band.toFixed(1);
       svg.dataset.ready = 'true';
     };
-    const resize = new ResizeObserver(measure); resize.observe(frame); resize.observe(img);
+    const resize = new ResizeObserver(measure); resize.observe(hero); resize.observe(copy);
     const intersection = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; syncMotion(); });
-    intersection.observe(frame);
-    img.addEventListener('load', measure);
+    intersection.observe(hero);
     document.addEventListener('visibilitychange', syncMotion);
     motion.addEventListener('change', syncMotion);
     measure(); syncMotion();
     return () => {
-      resize.disconnect(); intersection.disconnect(); img.removeEventListener('load', measure);
+      resize.disconnect(); intersection.disconnect();
       document.removeEventListener('visibilitychange', syncMotion); motion.removeEventListener('change', syncMotion);
     };
   }, []);
 
   return <svg ref={root} className="hero-raster-edge" data-active="false" aria-hidden="true" focusable="false">
-    {[0, 1, 2].map(layer => <path key={layer} className={`hero-raster-layer hero-raster-layer-${layer}`} />)}
+    {[0, 1, 2, 3, 4, 5].map(layer => <path key={layer} className={`hero-raster-layer hero-raster-layer-${layer % 3} ${layer < 3 ? 'hero-raster-left' : 'hero-raster-right'}`} />)}
   </svg>;
 }
