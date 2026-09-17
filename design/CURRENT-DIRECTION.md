@@ -1,5 +1,7 @@
 # Current design direction
 
+Latest correction: screen-edge dots now span the document top, including the navigation, with a smooth 100px density fade-in. This removes the abrupt horizontal start at the former hero/header boundary on 1080p and 2K. The layer remains decorative, pointer-transparent, resize-driven and paused offscreen/hidden; portrait composition is unchanged. Sidebar ideas are concepts only, not approved implementation.
+
 ## Latest approved implementation: screen-edge breathing
 
 Latest approved implementation: screen-edge raster v2 replaces the rejected photo border. Six SVG paths form asymmetric fields anchored to the physical hero edges. A 12-second cycle breathes opacity and at most 1.4% local width, with no portrait movement. Ultrawide fields broaden and soften, while text clearance stays protected; the orange disc follows the centered portrait group. Offscreen/hidden pauses and static reduced motion are supported. See design/hero-screen-edge-v2 and docs/IMPLEMENTATION.md. Later section/footer redesigns remain pending.

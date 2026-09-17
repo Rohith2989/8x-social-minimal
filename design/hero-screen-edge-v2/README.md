@@ -7,3 +7,5 @@ The user approved this direction and requested restrained breathing shape plus u
 Geometry changes only on resize. Motion pauses offscreen/hidden and becomes static for reduced motion. The orange disc remains behind the portraits even on ultrawide screens. Source: components/hero-raster-edge.tsx, components/hero-sun.tsx, app/hero-raster-edge.css. QA: docs/qa/screen-edge-*.png and the two hero Playwright specs.
 
 The later section and standalone infinity-footer redesigns are still pending.
+
+Latest correction: screen-edge dots now span the document top, including the navigation, with a smooth 100px density fade-in. This removes the abrupt horizontal start at the former hero/header boundary on 1080p and 2K. The layer remains decorative, pointer-transparent, resize-driven and paused offscreen/hidden; portrait composition is unchanged. Sidebar ideas are concepts only, not approved implementation.

@@ -1,12 +1,12 @@
 .hero{position:relative;isolation:isolate}
 .hero-portrait{z-index:1}
-.hero-raster-edge{position:absolute;inset:0;z-index:0;width:100%;height:100%;overflow:hidden;pointer-events:none;fill:#c4bfb2}
+.hero-raster-edge{position:absolute;top:0;left:0;z-index:31;width:100%;height:0;overflow:hidden;pointer-events:none;fill:#c4bfb2}
 /* The only exception to the earlier sections' decorative-motion reset. */
-main .hero-raster-edge .hero-raster-layer{opacity:.4;animation:hero-raster-breathe 12s ease-in-out infinite!important;animation-play-state:paused!important;transform-box:view-box;transform-origin:0 50%}
-main .hero-raster-edge .hero-raster-right{transform-origin:100% 50%}
-main .hero-raster-edge[data-active=true] .hero-raster-layer{animation-play-state:running!important}
-main .hero-raster-edge .hero-raster-layer-1{animation-delay:-4s!important;fill:#aaa69e}
-main .hero-raster-edge .hero-raster-layer-2{animation-delay:-8s!important;fill:#d8d2c6}
+.hero-raster-edge .hero-raster-layer{opacity:.4;animation:hero-raster-breathe 12s ease-in-out infinite!important;animation-play-state:paused!important;transform-box:view-box;transform-origin:0 50%}
+.hero-raster-edge .hero-raster-right{transform-origin:100% 50%}
+.hero-raster-edge[data-active=true] .hero-raster-layer{animation-play-state:running!important}
+.hero-raster-edge .hero-raster-layer-1{animation-delay:-4s!important;fill:#aaa69e}
+.hero-raster-edge .hero-raster-layer-2{animation-delay:-8s!important;fill:#d8d2c6}
 @keyframes hero-raster-breathe{0%,100%{opacity:.36;transform:scaleX(1)}50%{opacity:.5;transform:scaleX(1.014)}}
 @media(min-width:2600px){.hero-raster-edge{opacity:.85}}
-@media(prefers-reduced-motion:reduce){main .hero-raster-edge .hero-raster-layer{animation:none!important;opacity:.43;transform:none}}
+@media(prefers-reduced-motion:reduce){.hero-raster-edge .hero-raster-layer{animation:none!important;opacity:.43;transform:none}}

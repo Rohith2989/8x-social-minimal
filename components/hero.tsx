@@ -1,11 +1,9 @@
 import { Arrow } from './icons';
 import { links } from '@/lib/content';
-import { HeroRasterEdge } from './hero-raster-edge';
 import { HeroSun } from './hero-sun';
 
 export function Hero() {
   return <section className="hero" id="network" aria-labelledby="hero-title">
-    <HeroRasterEdge />
     <div className="hero-reading page-width">
       <h1 id="hero-title"><span>Your brand.</span><span>A world</span><span>of voices.</span></h1>
       <div className="hero-offer">

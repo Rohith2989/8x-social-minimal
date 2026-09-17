@@ -23,7 +23,8 @@ function edgePaths(width: number, height: number, gutter: number, copyBottom: nu
       const copyClearance = Math.max(8, gutter - 22);
       const open = smooth((y - copyBottom) / 110);
       const extent = Math.min(band * contour, copyClearance + (band - copyClearance) * open);
-      const endFade = 1 - smooth((t - .78) / .22);
+      // Start softly at the document top, including the navigation area.
+      const endFade = smooth(y / 100) * (1 - smooth((t - .78) / .22));
       const appear = side ? .18 + .82 * smooth((t - .15) / .4) : .65 + .35 * smooth(t / .5);
       for (let col = 0, offset = 1.5 + (row % 2) * pitch / 2; offset < extent; col++, offset += pitch) {
         const strength = Math.pow(1 - offset / extent, 1.8) * appear * endFade;
@@ -42,20 +43,26 @@ function edgePaths(width: number, height: number, gutter: number, copyBottom: nu
 export function HeroRasterEdge() {
   const root = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    const svg = root.current!, hero = svg.parentElement!, copy = hero.querySelector('.hero-reading')!;
+    const svg = root.current!;
+    const hero = document.querySelector<HTMLElement>('.hero')!;
+    const copy = hero.querySelector('.hero-reading')!;
+    const header = document.querySelector('.site-header');
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
     const syncMotion = () => { svg.dataset.active = String(visible && !document.hidden && !motion.matches); };
     const measure = () => {
       const outer = hero.getBoundingClientRect(), reading = copy.getBoundingClientRect();
       if (!outer.width || !outer.height) return;
-      svg.setAttribute('viewBox', `0 0 ${outer.width} ${outer.height}`);
-      const { paths, band } = edgePaths(outer.width, outer.height, reading.left - outer.left, reading.bottom - outer.top);
+      const height = outer.bottom + window.scrollY;
+      svg.style.height = `${height}px`;
+      svg.setAttribute('viewBox', `0 0 ${outer.width} ${height}`);
+      const { paths, band } = edgePaths(outer.width, height, reading.left - outer.left, reading.bottom + window.scrollY);
       paths.forEach((path, index) => svg.children[index].setAttribute('d', path));
       svg.dataset.band = band.toFixed(1);
       svg.dataset.ready = 'true';
     };
     const resize = new ResizeObserver(measure); resize.observe(hero); resize.observe(copy);
+    if (header) resize.observe(header);
     const intersection = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; syncMotion(); });
     intersection.observe(hero);
     document.addEventListener('visibilitychange', syncMotion);

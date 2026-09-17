@@ -40,10 +40,15 @@ test('raster stays at physical screen edges through desktop, ultrawide and mobil
     await expect.poll(()=>edge.getAttribute('viewBox')).toMatch(new RegExp(`^0 0 ${width} `));
     const bounds=await edge.boundingBox();
     expect(bounds!.x).toBe(0); expect(bounds!.width).toBe(width);
+    expect(bounds!.y).toBe(0);
+    const headerBottom = (await page.locator('.site-header').boundingBox())!.height;
     expect(await page.locator('.hero-portrait .hero-raster-edge').count()).toBe(0);
     const geometry=await edge.locator('path').evaluateAll(elements=>elements.map(el=>{
-      const b=(el as SVGPathElement).getBBox();return {x:b.x,width:b.width};
+      const b=(el as SVGPathElement).getBBox();return {x:b.x,y:b.y,width:b.width};
     }));
+    // The texture must begin softly inside the header, never at its bottom edge.
+    expect(Math.min(...geometry.map(b=>b.y))).toBeGreaterThan(0);
+    expect(Math.min(...geometry.map(b=>b.y))).toBeLessThan(headerBottom - 10);
     for(const left of geometry.slice(0,3)){expect(left.x).toBeLessThan(10);expect(left.x+left.width).toBeLessThan(width*.18);}
     for(const right of geometry.slice(3)){expect(right.x).toBeGreaterThan(width*.82);expect(right.x+right.width).toBeGreaterThan(width-10);}
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
