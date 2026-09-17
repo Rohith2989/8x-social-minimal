@@ -8,9 +8,10 @@ import { ReachAtlas } from '@/components/reach-atlas';
 import { MapApproach } from '@/components/map-approach';
 import { FamilyFooter } from '@/components/family-footer';
 import { HeroRasterEdge } from '@/components/hero-raster-edge';
+import { ScrollThread } from '@/components/scroll-thread';
 
 export default function Home() {
   return <><Header /><HeroRasterEdge /><MapApproach /><main id="main"><Hero /><CreatorWork /><DayToDay /><DotReach /><NetworkComparison /><ReachAtlas /></main>
-    <FamilyFooter />
+    <FamilyFooter /><ScrollThread />
   </>;
 }

@@ -25,7 +25,7 @@ function edgePaths(width: number, height: number, gutter: number, copyBottom: nu
       const extent = Math.min(band * contour, copyClearance + (band - copyClearance) * open);
       // Start softly at the document top, including the navigation area.
       const endFade = smooth(y / 100) * (1 - smooth((t - .78) / .22));
-      const appear = side ? .18 + .82 * smooth((t - .15) / .4) : .65 + .35 * smooth(t / .5);
+      const appear = .65 + .35 * smooth(t / .5);
       for (let col = 0, offset = 1.5 + (row % 2) * pitch / 2; offset < extent; col++, offset += pitch) {
         const strength = Math.pow(1 - offset / extent, 1.8) * appear * endFade;
         const noise = .82 + .18 * Math.sin(row * 12.9898 + col * 78.233 + side * 43);

@@ -1,5 +1,7 @@
 # Implementation handoff
 
+Latest approved update: Scroll Thread (option 01) is implemented as a slim fixed right-edge native-scroll control. A 36px orange segment and small handle follow progress; track clicks, dragging and Arrow/Page/Home/End keys work. A 44px hit area surrounds the line. Desktop fine pointers use it in place of the native scrollbar after hydration; mobile and no-JS retain native scrolling. It adapts contrast on stone/orange. Both hero raster sides now use the same vertical fade; the earlier delayed right-side appearance is removed. Subsequent sections remain deferred.
+
 Latest correction: screen-edge dots now span the document top, including the navigation, with a smooth 100px density fade-in. This removes the abrupt horizontal start at the former hero/header boundary on 1080p and 2K. The layer remains decorative, pointer-transparent, resize-driven and paused offscreen/hidden; portrait composition is unchanged. Sidebar ideas are concepts only, not approved implementation.
 
 ## Current hero: screen-edge raster v2
