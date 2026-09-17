@@ -7,6 +7,7 @@ import './network-comparison.css';
 import './reach-atlas.css';
 import './family-footer.css';
 import './hero-responsive.css';
+import './hero-raster-edge.css';
 
 const inter = localFont({ src: '../public/fonts/inter-latin-variable.woff2', weight: '100 900', variable: '--font-brand', display: 'swap' });
 export const metadata: Metadata = {

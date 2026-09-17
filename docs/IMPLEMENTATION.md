@@ -62,3 +62,11 @@ Before a public launch, review final content and links, decide indexing/social m
 
 ## Hero circle correction (2026-09-17)
 The orange circle is now sized to 60% of the portrait composition height and inset 20% from the right, with its top inside the frame. This keeps the circle behind faces instead of under the translucent shoulder perimeter. The bottom mask belongs to the combined portrait/circle container; only the horizontal edge fade stays on the portrait. Desktop viewport budgeting and full intrinsic image framing are unchanged. Verified the existing 11 hero sizes, including 1920x1080, and refreshed docs/qa/hero-*.png. No source image changes.
+
+## Hero raster edge (2026-09-17)
+
+Approved concept: design/hero-raster-edge-v1/01-hero-motion-board.png. The live implementation preserves the current portrait and circle composite and adds a narrow neutral raster edge. Three SVG paths combine all dots, generated on resize rather than per frame. Eight-second CSS opacity/translation cycles (.48–.62 opacity, at most .45px x / .65px y) are staggered. These three paths are the only exception to the earlier CSS motion reset. No animation framework, WebGL, new dependency or image generation is used at runtime.
+
+IntersectionObserver and document visibility pause the effect. Reduced motion keeps a static edge; no-JavaScript keeps the original photo. Overlay ignores pointer events and accessibility traversal. Its dimensions follow the actual photo rather than the full viewport, preserving full framing on ultrawide screens. Existing composition mask fades the lower edge into carbon.
+
+Production build passes. Three targeted Playwright tests pass: fixed photo and bounded motion, offscreen/reduced-motion handling, and the existing 11 desktop/tablet/phone viewport checks. Fresh captures: docs/qa/hero-*.png. Live review: http://localhost:3904/?v=hero-raster-edge-1. The next-section/footer redesign request is recorded but not implemented in this hero-only change.

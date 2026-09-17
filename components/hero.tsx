@@ -1,5 +1,6 @@
 import { Arrow } from './icons';
 import { links } from '@/lib/content';
+import { HeroRasterEdge } from './hero-raster-edge';
 
 export function Hero() {
   return <section className="hero" id="network" aria-labelledby="hero-title">
@@ -16,6 +17,7 @@ export function Hero() {
         <source media="(max-width: 720px)" srcSet="/media/portraits-small-v2.webp" />
         <img src="/media/portraits-v2.webp" alt="Five people, each with their own perspective, in a single black-and-white portrait." width="1817" height="866" fetchPriority="high" decoding="async" />
       </picture>
+      <HeroRasterEdge />
     </div>
   </section>;
 }

@@ -1,0 +1,8 @@
+.hero-raster-edge{position:absolute;inset:0;z-index:3;overflow:visible;pointer-events:none;fill:#c4bfb2}
+/* This is the only exception to the earlier sections' decorative-motion reset. */
+main .hero-raster-edge .hero-raster-layer{opacity:.52;animation:hero-raster-breathe 8s ease-in-out infinite!important;animation-play-state:paused!important;transform-origin:center}
+main .hero-raster-edge[data-active=true] .hero-raster-layer{animation-play-state:running!important}
+main .hero-raster-edge .hero-raster-layer-1{animation-delay:-2.7s!important;fill:#8b8983}
+main .hero-raster-edge .hero-raster-layer-2{animation-delay:-5.3s!important;fill:#ddd7c9}
+@keyframes hero-raster-breathe{0%,100%{opacity:.48;transform:translate(0,0)}50%{opacity:.62;transform:translate(.45px,-.65px)}}
+@media(prefers-reduced-motion:reduce){main .hero-raster-edge .hero-raster-layer{animation:none!important;opacity:.55;transform:none}}

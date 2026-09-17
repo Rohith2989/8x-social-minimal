@@ -1,5 +1,17 @@
 # Current design direction
 
+## Latest implementation: subtle hero raster edge
+
+The user approved hero-raster-edge-v1 and requested particularly subtle animation. The original five-person portrait now has a narrow warm-grey halftone perimeter in three SVG paths. An eight-second CSS cycle changes opacity from .48 to .62 and shifts each layer at most .45px horizontally/.65px vertically; phases are staggered. The portrait itself is not animated or replaced. Geometry follows the actual image bounds on resize. Offscreen/hidden pauses and reduced-motion static rendering are implemented. Build and three targeted tests pass, including all 11 existing hero viewport checks. This finishes the hero task only; the three similar sections and standalone infinity footer remain subsequent work.
+
+## Latest feedback: consistent media treatment, revised sections and standalone footer
+
+The user says Day-to-day, Real voices/Wider reach, and A different way to grow look too similar and must be redesigned. They also dislike inconsistent media treatments (boxes, dots, dotted mirror); keep backgrounds and media treatment consistent across the page. The first creator-content section is liked.
+
+The original 8x-to-infinity transition is now rejected. The future footer should start with an existing infinity at the bottom, with products arranged above/around it, rather than use the logo conversion as a transition. Video, layered motion or Blender remain open implementation choices, not approved decisions.
+
+Immediate task ONLY: generate the hero portrait edge animation concept using the supplied fine halftone border. See hero-raster-edge-v1. Keep five portraits still and complete. The three section redesigns and standalone footer concept follow later; no live changes to those areas in this proposal turn. This feedback supersedes older footer-entrance approval statements below.
+
 ## Latest: restrained colour current
 
 The colour-current storyboard is the visual target. User rejected the fixed-grid colour pass, a generic narrow ribbon, then excessive speed and rainbow coverage. Latest request is subtle motion and only a speck of colour. The endpoint now uses the board's sampled dot positions/radii, tiny coherent drift (under one SVG unit) and 0.1% breathing. One accent spans 12% of the path and travels in 40 seconds; most dots stay carbon. No point shuffling, blinking or whole-mark rotation at rest. The original layered SVG entrance remains. Implementation awaits user review; do not call it an exact match or approved. See docs/FOOTER.md.
