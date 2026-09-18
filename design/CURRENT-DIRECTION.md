@@ -1,3 +1,5 @@
+September 19 update: user requested removing the final animated 8x/product-family section for now, keeping the information footer, starting the hero dot transition earlier, and pushing to Git. The footer now follows the orange map directly. Hero progress includes the photo approach before sticky positioning, preserving the original endpoint, cursor wave and portrait colours. Future infinity design remains deferred.
+
 # Current design direction
 
 September 18 release: publish existing implementation work to `main` for Vercel per explicit user request. New shared infinity/product-family footer proposals remain unapproved and deferred until after this release. Preserve the current implemented footer for this deployment. See `docs/RELEASE-2026-09-18.md`; historical no-push instructions below are superseded for this release only.

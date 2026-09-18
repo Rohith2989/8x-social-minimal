@@ -1,3 +1,5 @@
+September 19 update: user requested removing the final animated 8x/product-family section for now, keeping the information footer, starting the hero dot transition earlier, and pushing to Git. The footer now follows the orange map directly. Hero progress includes the photo approach before sticky positioning, preserving the original endpoint, cursor wave and portrait colours. Future infinity design remains deferred.
+
 # 8x Social Minimal
 
 September 18 release authorization: user explicitly requested pushing all of today's and yesterday's implementation work to `main` so Vercel deploys it. This supersedes the historical local-only/checkpoint restrictions below for this release. Includes the previous polish checkpoint plus continuous Services playback, comparison entry ink reveal, pinned dashboard, and original carbon hero with bottom-aligned photo and cursor wave. The new infinity/product-family ending is still concept exploration, deferred until after deployment; do not implement any generated footer proposal without approval. Future changes stay local unless the user requests another push. See docs/RELEASE-2026-09-18.md.

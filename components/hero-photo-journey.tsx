@@ -20,10 +20,10 @@ export function HeroPhotoJourney() {
     const hero = section.closest<HTMLElement>('.hero')!;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     let renderer: RasterEngine | undefined, frame = 0, ready = false, disposed = false, visible = false;
-    let top = 96, height = 900, sourceHeight = 400, distance = 1100;
+    let top = 96, height = 900, sourceHeight = 400, distance = 1100, lead = 0;
     const render = () => {
       frame = 0;
-      const progress = motion.matches ? 0 : Math.max(0, Math.min(1, (top - section.getBoundingClientRect().top) / distance));
+      const progress = motion.matches ? 0 : Math.max(0, Math.min(1, (top + lead - section.getBoundingClientRect().top) / (distance + lead)));
       const scene = Math.min(1, progress / .84);
       section.dataset.progress = scene.toFixed(3);
       const text = smooth(.76, .98, scene);
@@ -46,6 +46,10 @@ export function HeroPhotoJourney() {
       hero.style.setProperty('--hero-header-height', `${top}px`);
       hero.style.setProperty('--hero-photo-height', `${sourceHeight}px`);
       distance = Math.max(height * 1.35, 450);
+      // Include the photo's approach to the header in the existing choreography.
+      // The first dots release around the middle of the viewport, before pinning.
+      lead = Math.max(0, innerHeight - top - sourceHeight);
+      section.style.setProperty('--hp-lead', `${lead}px`);
       section.style.setProperty('--hp-top', `${top}px`);
       section.style.setProperty('--hp-height', `${height}px`);
       section.style.setProperty('--hp-source-height', `${sourceHeight}px`);

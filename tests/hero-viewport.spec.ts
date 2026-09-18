@@ -3,7 +3,8 @@ import { test, expect, type Page } from '@playwright/test';
 async function scene(page: Page, p: number) {
   await page.locator('.hero-photo-journey').evaluate((el, p) => {
     const s = getComputedStyle(el);
-    scrollTo({ top: el.getBoundingClientRect().top + scrollY - parseFloat(s.getPropertyValue('--hp-top')) + parseFloat(s.getPropertyValue('--hp-distance')) * p, behavior: 'instant' });
+    const lead = parseFloat(s.getPropertyValue('--hp-lead'));
+    scrollTo({ top: el.getBoundingClientRect().top + scrollY - parseFloat(s.getPropertyValue('--hp-top')) - lead + (parseFloat(s.getPropertyValue('--hp-distance')) + lead) * p, behavior: 'instant' });
   }, p);
 }
 
@@ -31,6 +32,21 @@ test('original hero fits desktops; five voices stay contained through mobile and
     if([1920,390,2560].includes(width)) await page.screenshot({path:`docs/qa/hero-voices-${width}.png`});
   }
   expect(errors).toEqual([]);
+});
+
+test('photo starts releasing dots before it reaches the header', async ({page}) => {
+  for (const [width,height] of [[1920,1080],[2560,1440],[390,844]]) {
+    await page.setViewportSize({width,height}); await page.goto('/');
+    const root=page.locator('.hero-photo-journey');
+    await expect(root).toHaveAttribute('data-ready','true');
+    await expect(root).toHaveAttribute('data-progress','0.000');
+    await page.evaluate(() => scrollTo({top:innerHeight*.4,behavior:'instant'}));
+    await expect.poll(async () => Number(await root.getAttribute('data-progress'))).toBeGreaterThan(.25);
+    const stage=(await page.locator('.hp-stage').boundingBox())!;
+    const header=(await page.locator('.site-header').boundingBox())!;
+    expect(stage.y).toBeGreaterThan(header.height+40);
+    if(width===1920) await page.screenshot({path:'docs/qa/hero-earlier-release.png'});
+  }
 });
 
 test('original pointer field reaches the shader and releases smoothly on exit',async({page})=>{
