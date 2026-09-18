@@ -43,7 +43,10 @@ test('both hero edges have equally continuous vertical coverage', async ({page})
     const top = (slice: typeof paths) => Math.min(...slice.map(p=>p.top));
     const bottom = (slice: typeof paths) => Math.max(...slice.map(p=>p.bottom));
     expect(Math.abs(top(paths.slice(0,3))-top(paths.slice(3)))).toBeLessThan(15);
-    expect(Math.abs(bottom(paths.slice(0,3))-bottom(paths.slice(3)))).toBeLessThan(15);
+    // The field now spans the tall photo journey and creator section. Compare
+    // its soft lower fringe proportionally, since individual dots taper out.
+    const fieldHeight = await edge.evaluate(el => (el as SVGSVGElement).viewBox.baseVal.height);
+    expect(Math.abs(bottom(paths.slice(0,3))-bottom(paths.slice(3))) / fieldHeight).toBeLessThan(.005);
     await page.screenshot({path:`docs/qa/balanced-edges-${width}.png`});
   }
 });

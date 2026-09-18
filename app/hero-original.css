@@ -1,0 +1,44 @@
+/* Original photographic opening, adapted to the continuous carbon page. */
+.hero.hero-original{--hero-opening-height:100svh;--hero-header-height:96px;--hero-photo-height:clamp(calc(100vw / 6),36svh,calc(100vw / 3.01));height:auto;display:block;padding-top:0;overflow:clip;scroll-margin-top:96px}
+.hero-original .hero-reading{display:grid;grid-template-columns:minmax(0,1fr) 25%;gap:5%;padding-block:25px;align-items:center;min-height:calc(var(--hero-opening-height) - var(--hero-header-height) - var(--hero-photo-height))}
+.hero-original h1{font-size:clamp(56px,min(6.5vw,10.4svh),144px);line-height:1.015;letter-spacing:-.066em}
+.hero-original h1>span{display:block!important;margin:0!important;white-space:nowrap}
+.hero-original h1 .hero-period{display:inline;color:var(--signal)}
+.hero-original .hero-offer{padding:0;display:block}
+.hero-original .hero-offer p{font-size:clamp(18px,1.5vw,27px);line-height:1.35;max-width:28ch;letter-spacing:-.03em}
+.hero-original .hero-cta{margin-top:28px;background:var(--signal);color:#111;padding:15px 20px;gap:24px;font-size:16px;font-weight:540;max-width:none;letter-spacing:-.02em;min-height:50px;border-radius:3px}
+.hero-original .hero-cta svg{width:19px;height:19px}
+.hero-secondary{display:flex;gap:16px;width:fit-content;font-size:14px;margin-top:18px;min-height:36px;align-items:center}
+.hero-secondary:hover{text-decoration:underline;text-underline-offset:5px}
+.hero-photo-journey{--hp-height:calc(100svh - 96px);--hp-source-height:var(--hero-photo-height);--hp-copy:0;--hp-rise:16px;--hp-source:1;--hp-portraits:0;position:relative;background:#111}
+.hero-photo-journey[data-enhanced=true]{height:calc(var(--hp-height) + var(--hp-distance))}
+.hp-stage{position:relative;isolation:isolate}
+.hero-photo-journey[data-enhanced=true] .hp-stage{position:sticky;top:var(--hp-top);height:var(--hp-height);overflow:hidden}
+.hp-photo{height:var(--hp-source-height);position:relative;overflow:hidden;mask-image:linear-gradient(transparent,#000 22px,#000 calc(100% - 40px),transparent)}
+.hp-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(1) saturate(3);object-position:center}
+.hp-photo::after{content:'';position:absolute;inset:0;background:#ffd22e;mix-blend-mode:color}
+.hp-portraits{position:relative;width:94%;margin:40px auto 0;isolation:isolate;background:#000;mix-blend-mode:screen;mask-image:linear-gradient(transparent,#000 7%,#000 83%,transparent)}
+.hp-portraits>img{width:100%;height:auto;filter:brightness(1.5)}
+.hp-portraits>span{position:absolute;inset:0;background:linear-gradient(90deg,#ffd438 18%,#7bb0e8 22%,#7bb0e8 38%,#faf4db 42%,#faf4db 59%,#ad91e0 63%,#ad91e0 79%,#fa5433 83%);mix-blend-mode:multiply}
+.hp-portraits::after{content:'';position:absolute;inset:0;background:radial-gradient(circle,transparent 1.4px,#111 1.8px) 0 0/3.8px 3.8px}
+.hp-heading{position:relative;padding-block:25px 50px;text-align:center}
+.hp-heading h2{font-size:clamp(42px,min(8.4vw,12svh),162px);font-weight:570;line-height:1;letter-spacing:-.065em}
+.hp-heading h2>span{color:#ffd438}
+.hp-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+.hero-photo-journey[data-enhanced=true] .hp-portraits{position:absolute;width:var(--hp-portrait-width);height:var(--hp-portrait-height);top:var(--hp-portrait-top);left:50%;transform:translateX(-50%);margin:0;background:transparent;opacity:var(--hp-portraits)}
+.hero-photo-journey[data-enhanced=true] .hp-portraits>span{inset:0}
+.hero-photo-journey[data-enhanced=true] .hp-photo{opacity:var(--hp-source)}
+.hero-photo-journey[data-enhanced=true][data-ready=true] .hp-canvas{opacity:1}
+.hero-photo-journey[data-enhanced=true][data-ready=true] .hp-photo,.hero-photo-journey[data-enhanced=true][data-ready=true] .hp-portraits{visibility:hidden}
+.hero-photo-journey[data-enhanced=true] .hp-heading{position:absolute;top:77%;left:0;right:0;padding:0;opacity:var(--hp-copy);transform:translateY(var(--hp-rise));pointer-events:none}
+@media(min-width:2400px){.hero-original .hero-reading{padding-block:20px 65px}.hero-original h1{font-size:128px}}
+@media(max-width:1100px){.hero-original .hero-reading{grid-template-columns:minmax(0,1fr) 27%;gap:3%}.hero-original h1{font-size:6.25vw}.hero-original .hero-offer p{font-size:17px}.hero-original .hero-cta{font-size:13px;padding:12px 14px;gap:10px;margin-top:18px}.hero-secondary{font-size:12px;margin-top:8px}}
+@media(max-width:759px){.hero.hero-original{--hero-header-height:73px;padding-top:0}.hero-original .hero-reading{display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:0;padding-block:24px}.hero-original h1{font-size:clamp(30px,7.5vw,57px);line-height:1.05}.hero-original .hero-offer{margin-top:24px;display:flex;flex-wrap:wrap;gap:0 24px}.hero-original .hero-offer p{font-size:17px;max-width:34ch;width:100%;flex:none;margin-bottom:20px}.hero-original .hero-cta{margin-top:0;font-size:14px;padding:12px 16px}.hero-secondary{margin:0;font-size:13px}.hp-heading h2{font-size:clamp(36px,8vw,58px)}.hp-heading{padding-bottom:50px}.hp-photo{mask-image:linear-gradient(transparent,#000 12px,#000 calc(100% - 18px),transparent)}}
+@media(max-height:600px) and (min-width:760px){.hero-original h1{font-size:6vw}.hero-original .hero-reading{padding-bottom:28px}.hero-original .hero-offer p{font-size:16px}.hero-original .hero-cta{margin-top:15px;padding-block:10px}.hero-original .hero-secondary{margin-top:4px}}
+@media(prefers-reduced-motion:reduce){.hero-photo-journey .hp-heading{transform:none}}
+@media(max-width:500px){.hp-portraits::after{background:radial-gradient(circle,transparent .7px,#111 .9px) 0 0/1.95px 1.95px}}
+
+@media(min-width:760px) and (max-width:900px){.hero.hero-original{--hero-header-height:81px}}
+@media(max-height:600px) and (min-width:760px){.hero-original .hero-reading{padding-block:8px}.hero-original h1{font-size:5.4vw}.hero-original .hero-offer p{font-size:13px}.hero-original .hero-cta{min-height:34px;padding:7px 12px;font-size:12px;margin-top:8px}.hero-original .hero-secondary{min-height:26px;margin-top:3px;font-size:11px}}
+.hp-canvas:focus-visible{outline:1px solid #f34b32;outline-offset:-5px}
+.hero-photo-journey:not([data-enhanced=true]) .hp-canvas{visibility:hidden}

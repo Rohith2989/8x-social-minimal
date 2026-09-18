@@ -1,5 +1,18 @@
 # Current design direction
 
+September 18 release: publish existing implementation work to `main` for Vercel per explicit user request. New shared infinity/product-family footer proposals remain unapproved and deferred until after this release. Preserve the current implemented footer for this deployment. See `docs/RELEASE-2026-09-18.md`; historical no-push instructions below are superseded for this release only.
+
+Latest hero correction: restore the original 36svh bounded panorama and reserve the remaining opening viewport above it, so the photo meets the bottom at every tested size. Original cursor displacement is wired to pointer movement, release and keyboard arrows/Escape; no added controls. Carbon background and five original portrait colours remain. See docs/HERO-ORIGINAL.md. Local only.
+
+Latest hero approval supersedes static portrait composition: keep carbon, restore original yellow studio-photo → dot matrix → five coloured creator portraits. Preserve yellow/blue/cream/lavender/orange per latest explicit user instruction. Remove the “Many voices” typographic artwork from the generated hero concept. Existing minimal navigation and subtle screen-edge breathing continue. Implemented locally using original source images and raster renderer; see `docs/HERO-ORIGINAL.md`. No Git push.
+
+Latest approved implementation: three-stage pinned dashboard before the map. Use the refined dense overview, 20-tile content library and creator report from `dashboard-pinned-v2`. One fixed orange/stone frame; only inner dashboard content changes on native scroll. Existing TikTok/Instagram/YouTube Shorts marks are purposeful platform labels; keep dots in charts and a quiet breathing field behind the frame. Real local clips, example-labelled reporting, responsive manual tabs and reduced motion. See `docs/DASHBOARD.md`. Services remains a separate continuous timed loop without pinning. Local only.
+
+
+Latest correction: Services runs an ongoing eight-second loop independent of entry, exit and scroll. No pin or input lock; reduced motion is static. Comparison opens with the Network ink reveal on each visit, regardless of stationary cursor location, then accepts pointer, keyboard and touch selection. Supersedes the timed-pin history below. Keep local.
+
+Latest user correction supersedes scroll scrubbing: Services must pin while its animation plays itself, release afterward, and replay on re-entry from either direction without reload. Implemented as a short timed hold with sequential desktop gestures, per-panel mobile playback, and reset only after leaving the viewport. See docs/SERVICE-CHOICES.md. Local only.
+
 Latest approval: pin the Service Choices composition and scrub the hand sequence with scroll, Self Serve before Full Service. Implemented locally with native sticky positioning, responsive sequential mobile pins and a finished-state hold before the map. This supersedes earlier automatic timed playback and no-pin instructions for this section. All other sections remain unchanged. See docs/SERVICE-CHOICES.md.
 
 Latest: approved Service Choices page and staggered stop-motion are implemented locally. Self Serve uses the pointing hand; Full Service uses one conducting hand (rejected framing/handoff concepts are not used). Orange from the feedback exit through Services and map. Fixed content, 12fps photographic poses, automatic one-at-a-time performance then hold; no presentation timing strip on the website. See docs/SERVICE-CHOICES.md and design/service-stop-motion-v1. Awaiting user visual review. No Git push.

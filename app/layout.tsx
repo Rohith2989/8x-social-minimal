@@ -13,6 +13,8 @@ import './creator-presentation.css';
 import './video-surface.css';
 import './partner-feedback.css';
 import './service-choices.css';
+import './dashboard-preview.css';
+import './hero-original.css';
 
 const inter = localFont({ src: '../public/fonts/inter-latin-variable.woff2', weight: '100 900', variable: '--font-brand', display: 'swap' });
 export const metadata: Metadata = {

@@ -47,18 +47,44 @@ export function NetworkComparison() {
   const [focused, setFocused] = useState<number | null>(null);
   const [touched, setTouched] = useState<number | null>(null);
   const [running, setRunning] = useState(false);
-  const active = hovered ?? focused ?? touched;
+  const [defaultActive, setDefaultActive] = useState(false);
+  const [introducing, setIntroducing] = useState(false);
+  const introUntil = useRef(0);
+  const active = introducing ? 0 : hovered ?? focused ?? touched ?? (defaultActive ? 0 : null);
 
   useEffect(() => {
-    let visible = false;
+    let visible = false, armed = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const update = () => setRunning(visible && !document.hidden);
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }, { threshold: 0 });
-    if (root.current) observer.observe(root.current);
+    const reset = () => {
+      armed = true; clearTimeout(timer); introUntil.current = 0;
+      setIntroducing(false); setDefaultActive(false);
+      setHovered(null); setFocused(null); setTouched(null);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (!visible) reset();
+      update();
+    }, { threshold: 0 });
+    // Observe the card itself so mobile visitors see the fill, rather than
+    // having it finish while the tall portrait is still above the fold.
+    const entrance = new IntersectionObserver(([entry]) => {
+      if (!armed || !entry.isIntersecting || entry.intersectionRatio < .35) return;
+      armed = false;
+      setHovered(null); setFocused(null); setTouched(null);
+      setDefaultActive(true); setIntroducing(true);
+      introUntil.current = performance.now() + 900;
+      timer = setTimeout(() => setIntroducing(false), 900);
+    }, { threshold: [0, .35], rootMargin: '-100px 0px -8% 0px' });
+    if (root.current) {
+      observer.observe(root.current);
+      entrance.observe(root.current.querySelector('.comparison-option')!);
+    }
     document.addEventListener('visibilitychange', update);
-    return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
+    return () => { clearTimeout(timer); observer.disconnect(); entrance.disconnect(); document.removeEventListener('visibilitychange', update); };
   }, []);
 
-  return <section ref={root} id="comparison" className="network-comparison" aria-labelledby="comparison-title" data-running={running}>
+  return <section ref={root} id="comparison" className="network-comparison" aria-labelledby="comparison-title" data-running={running} data-introducing={introducing}>
     <div className="comparison-layout page-width">
       <div className="comparison-intro">
         <h2 id="comparison-title">Why brands are<br />{' '}moving budget here<span>.</span></h2>
@@ -71,12 +97,19 @@ export function NetworkComparison() {
         {approaches.map((approach, index) => <article key={approach.id}
           className="comparison-option" tabIndex={0} aria-labelledby={`comparison-${approach.id}`}
           data-active={active === index} data-kind={approach.id}
-          onPointerEnter={event => { if (event.pointerType === 'mouse' || event.pointerType === 'pen') setHovered(index); }}
+          onPointerEnter={event => {
+            if ((event.pointerType === 'mouse' || event.pointerType === 'pen') &&
+              performance.now() >= introUntil.current) setHovered(index);
+          }}
+          onPointerMove={event => {
+            if ((event.pointerType === 'mouse' || event.pointerType === 'pen') &&
+              (event.movementX !== 0 || event.movementY !== 0) && performance.now() >= introUntil.current) setHovered(index);
+          }}
           onPointerLeave={() => setHovered(null)}
-          onPointerDown={event => { if (event.pointerType === 'touch') setTouched(index); }}
-          onFocus={() => setFocused(index)}
+          onPointerDown={event => { if (event.pointerType === 'touch') { setIntroducing(false); setTouched(index); } }}
+          onFocus={() => { setIntroducing(false); setFocused(index); }}
           onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(null); }}
-          onKeyDown={event => { if (event.key === 'Escape') { setHovered(null); setFocused(null); setTouched(null); event.currentTarget.blur(); } }}>
+          onKeyDown={event => { if (event.key === 'Escape') { setHovered(null); setFocused(null); setTouched(null); setDefaultActive(false); setIntroducing(false); event.currentTarget.blur(); } }}>
           <CardContent index={index} />
           {/* One shared mask reveals ink and light text at exactly the same edge.
               The visual copy is inert; there is still only one accessible CTA. */}

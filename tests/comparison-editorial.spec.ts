@@ -15,6 +15,7 @@ test('all comparisons remain visible through hover and keyboard focus without re
   await expect(cards).toHaveCount(3);
   await expect(section.getByRole('tab')).toHaveCount(0);
   const geometry = () => cards.evaluateAll(elements => elements.map(el => ({ x: el.getBoundingClientRect().x, y: el.getBoundingClientRect().y + scrollY, height: el.getBoundingClientRect().height, width: el.getBoundingClientRect().width })));
+  await expect(section).toHaveAttribute('data-introducing', 'false');
   const before = await geometry();
   for (let i = 0; i < 3; i++) {
     await cards.nth(i).hover();
@@ -80,4 +81,46 @@ test('touch highlights one column without hiding its neighbours', async ({ brows
   await expect(cards.nth(1)).toHaveAttribute('data-active', 'false');
   await expect(page.locator('.comparison-option > .comparison-content dd')).toHaveCount(9);
   await context.close();
+});
+
+
+test('Network fills automatically with a stationary cursor elsewhere and fills again on return', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  const section = page.locator('#comparison');
+  const cards = section.locator('.comparison-option');
+  await page.mouse.move(1500, 450);
+  await cards.first().evaluate(el => scrollTo({ top: scrollY + el.getBoundingClientRect().top - 140, behavior: 'instant' }));
+  await expect(section).toHaveAttribute('data-introducing', 'true');
+  await expect(cards.first()).toHaveAttribute('data-active', 'true');
+  const ink = cards.first().locator('.comparison-ink');
+  await expect.poll(() => ink.evaluate(el => el.getAnimations().some(a => (a as CSSTransition).transitionProperty === 'clip-path'))).toBe(true);
+  await expect(section).toHaveAttribute('data-introducing', 'false');
+  await expect(ink).toHaveCSS('clip-path', 'ellipse(150% 150% at 100% 100%)');
+  await expect(cards.first()).toHaveAttribute('data-active', 'true');
+  await cards.nth(2).hover();
+  await expect(cards.nth(2)).toHaveAttribute('data-active', 'true');
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  await expect(section).toHaveAttribute('data-running', 'false');
+  await expect(ink).toHaveCSS('clip-path', 'ellipse(0% 0% at 100% 100%)');
+  await cards.first().evaluate(el => scrollTo({ top: scrollY + el.getBoundingClientRect().top - 140, behavior: 'instant' }));
+  await expect(section).toHaveAttribute('data-introducing', 'true');
+  await expect(cards.first()).toHaveAttribute('data-active', 'true');
+});
+
+
+test('mobile default reveal waits for the Network card to be visible', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  const section = page.locator('#comparison');
+  const card = section.locator('.comparison-option').first();
+  await card.evaluate(el => scrollTo({ top: scrollY + el.getBoundingClientRect().top - innerHeight + 60, behavior: 'instant' }));
+  await expect(section).toHaveAttribute('data-running', 'true');
+  await expect(card).toHaveAttribute('data-active', 'false');
+  await card.evaluate(el => scrollTo({ top: scrollY + el.getBoundingClientRect().top - 110, behavior: 'instant' }));
+  await expect(section).toHaveAttribute('data-introducing', 'true');
+  await expect(card).toHaveAttribute('data-active', 'true');
+  await expect(card.locator('.comparison-ink')).toHaveCSS('clip-path', 'ellipse(150% 150% at 100% 100%)');
 });

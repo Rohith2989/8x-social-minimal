@@ -13,7 +13,7 @@ test('native scroll changes clip focus without moving the media frames', async (
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page.locator('#work')).toHaveAttribute('data-sticky', 'true');
-  await page.locator('.hero-portrait img').evaluate((img: HTMLImageElement) => img.decode());
+  await page.locator('.hp-photo img').evaluate((img: HTMLImageElement) => img.decode());
   await page.screenshot({ path: 'docs/qa/desktop-hero.png' });
   await workPosition(page, .1);
   await expect(page.locator('#work')).toHaveAttribute('data-active', 'nickmakesmusic');
@@ -50,7 +50,7 @@ test('manual pause holds independently, then offscreen playback stops', async ({
 test('mobile menu, manual clip selection and rail stay usable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  await page.locator('.hero-portrait img').evaluate((img: HTMLImageElement) => img.decode());
+  await page.locator('.hp-photo img').evaluate((img: HTMLImageElement) => img.decode());
   await page.screenshot({ path: 'docs/qa/mobile-hero.png' });
   await page.getByRole('button', { name: /menu/i }).click();
   await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'How it works', exact: true })).toBeVisible();
@@ -100,8 +100,8 @@ test('responsive layouts keep text and navigation inside the viewport', async ({
       expect(bounds!.x + bounds!.width, `${selector} right at ${width}`).toBeLessThanOrEqual(width + 1);
     }
     if (width === 2558) {
-      await page.locator('.hero-portrait img').evaluate((img: HTMLImageElement) => img.decode());
-      await page.locator('.hero-portrait').scrollIntoViewIfNeeded();
+      await page.locator('.hp-photo img').evaluate((img: HTMLImageElement) => img.decode());
+      await page.locator('.hp-photo').scrollIntoViewIfNeeded();
       await page.screenshot({ path: 'docs/qa/wide-portrait-blend.png' });
     }
   }

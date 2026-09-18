@@ -1,3 +1,5 @@
+Latest local refinement: 8x Network opens with the existing 800ms curved ink fill when 35% of its card enters the reading area. A stationary cursor over another column cannot steal the opening reveal. After 900ms, actual pointer movement selects other columns; deliberate focus/touch works immediately. Network remains the default outside the cards. Leaving the entire section rearms the reveal for the next visit. Reduced-motion removes transitions. Mobile observes the card instead of the portrait/section entrance.
+
 # Editorial comparison
 
 Approved direction: `design/comparison-editorial-v1/01-approved-section.png` and `02-approved-motion.png`. Replaces the old mode tabs. All three approaches and all nine values remain readable at once. The same stone canvas continues from the video surface through normal document scroll; nothing pins, wipes, flies between sections, or hides while entering.

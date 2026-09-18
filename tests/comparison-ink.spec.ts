@@ -8,8 +8,12 @@ test('ink sweeps through intermediate curved states, shares text geometry, and r
   const card = page.getByRole('article', { name: '8x network', exact: true });
   const ink = card.locator('.comparison-ink');
   await card.scrollIntoViewIfNeeded();
+  await expect(page.locator('#comparison')).toHaveAttribute('data-introducing', 'false');
+  await card.focus(); await page.keyboard.press('Escape');
   await expect(ink).toHaveCSS('clip-path', 'ellipse(0% 0% at 100% 100%)');
   await card.hover();
+  await expect(card).toHaveAttribute('data-active', 'true');
+  await expect.poll(() => ink.evaluate(el => el.getAnimations().some(a => (a as CSSTransition).transitionProperty === 'clip-path'))).toBe(true);
   const duration = await ink.evaluate(el => {
     const animation = el.getAnimations().find(a => (a as CSSTransition).transitionProperty === 'clip-path')!;
     animation.pause(); animation.currentTime = 300;

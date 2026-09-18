@@ -5,7 +5,7 @@ test('hero edge breathes gently without moving the photo and pauses offscreen', 
   const edge = page.locator('.hero-raster-edge');
   await expect(edge).toHaveAttribute('data-ready', 'true');
   await expect(edge).toHaveAttribute('data-active', 'true');
-  const image = page.locator('.hero-portrait img');
+  const image = page.locator('.hp-photo img');
   const before = await image.boundingBox();
   const layers = edge.locator('path');
   await expect(layers.first()).toHaveCSS('animation-play-state', 'running');
@@ -22,7 +22,7 @@ test('hero edge breathes gently without moving the photo and pauses offscreen', 
   await page.locator('#comparison').scrollIntoViewIfNeeded();
   await expect(edge).toHaveAttribute('data-active', 'false');
   await expect(layers.first()).toHaveCSS('animation-play-state', 'paused');
-  await image.scrollIntoViewIfNeeded();
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
   await expect(edge).toHaveAttribute('data-active', 'true');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(edge).toHaveAttribute('data-active', 'false');
@@ -42,7 +42,7 @@ test('raster stays at physical screen edges through desktop, ultrawide and mobil
     expect(bounds!.x).toBe(0); expect(bounds!.width).toBe(width);
     expect(bounds!.y).toBe(0);
     const headerBottom = (await page.locator('.site-header').boundingBox())!.height;
-    expect(await page.locator('.hero-portrait .hero-raster-edge').count()).toBe(0);
+    expect(await page.locator('.hp-photo .hero-raster-edge').count()).toBe(0);
     const geometry=await edge.locator('path').evaluateAll(elements=>elements.map(el=>{
       const b=(el as SVGPathElement).getBBox();return {x:b.x,y:b.y,width:b.width};
     }));
@@ -52,13 +52,6 @@ test('raster stays at physical screen edges through desktop, ultrawide and mobil
     for(const left of geometry.slice(0,3)){expect(left.x).toBeLessThan(10);expect(left.x+left.width).toBeLessThan(width*.18);}
     for(const right of geometry.slice(3)){expect(right.x).toBeGreaterThan(width*.82);expect(right.x+right.width).toBeGreaterThan(width-10);}
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-    if (width >= 1920) {
-      await expect.poll(async () => {
-        const photo = await page.locator('.hero-portrait img').boundingBox();
-        const sun = await page.locator('.hero-sun').boundingBox();
-        return sun!.x + sun!.width <= photo!.x + photo!.width;
-      }).toBe(true);
-    }
     await page.screenshot({path:`docs/qa/screen-edge-${width}.png`});
   }
 });

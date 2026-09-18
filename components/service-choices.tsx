@@ -37,13 +37,12 @@ export function ServiceChoices() {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const inner = section.querySelector<HTMLElement>('.service-inner')!;
     const header = document.querySelector<HTMLElement>('.site-header');
-    const tracks = [...section.querySelectorAll<HTMLElement>('.service-option-track')];
     const kinds: Kind[] = ['self', 'full'];
     const stages = kinds.map(kind => ({ kind, element: section.querySelector<HTMLElement>(`[data-hand="${kind}"]`)!,
       image: new Image(), ready: false, frame: -1 }));
-    let raf = 0, disposed = false, top = 0, distance = 0;
-    let mode: 'desktop' | 'stacked' | 'none' = 'none';
-    const clamp = (value: number) => Math.max(0, Math.min(1, value));
+    let raf = 0, disposed = false;
+    // A page-lifetime clock: entering, leaving and scrolling never restart a gesture.
+    const cycle = 8000;
 
     function draw(index: number, exposure: number) {
       const s = stages[index], canvas = s.element.querySelector('canvas')!, ctx = canvas.getContext('2d');
@@ -74,66 +73,55 @@ export function ServiceChoices() {
       ctx.drawImage(s.image, pose % 4 * cellW, Math.floor(pose / 4) * cellH, cellW, cellH, p.x, p.y, p.size, p.size);
       s.frame = exposure; s.element.dataset.pose = String(pose); s.element.dataset.ready = 'true';
     }
-    // A bounded native-scroll runway. No wheel interception, timers or locked body.
+    function exposureAt(kind: Kind, elapsed: number) {
+      const last = poses[kind].length - 1;
+      const forward = poses[kind].length * 1000 / FPS;
+      const returning = elapsed - forward - 500;
+      if (elapsed < 0) return 0;
+      if (elapsed < forward) return Math.min(last, Math.floor(elapsed * FPS / 1000));
+      if (returning < 0) return last;
+      // Retrace the photographed poses to rest rather than snapping to frame one.
+      return Math.max(0, last - Math.floor(returning * FPS / 1000));
+    }
     function measure() {
       if (disposed) return;
-      top = Math.ceil(header?.getBoundingClientRect().height ?? 90);
-      mode = reduced.matches || innerHeight < 520 ? 'none' : innerWidth >= 760 ? 'desktop' : 'stacked';
-      section.dataset.pin = mode;
+      const top = Math.ceil(header?.getBoundingClientRect().height ?? 90);
+      section.dataset.layout = innerHeight < 520 ? 'natural' : innerWidth >= 760 ? 'desktop' : 'stacked';
       section.style.setProperty('--service-top', `${top}px`);
       section.style.setProperty('--service-view', `${innerHeight - top}px`);
-      distance = Math.round(innerHeight * (mode === 'desktop' ? 1.8 : .95));
-      section.style.height = mode === 'desktop' ? `${innerHeight - top + distance}px` : '';
-      tracks.forEach(track => {
-        const panel = track.querySelector<HTMLElement>('.service-option')!;
-        track.style.height = mode === 'stacked' ? `${panel.offsetHeight + distance}px` : '';
-      });
       stages.forEach(s => { s.frame = -1; });
       schedule();
     }
-    function renderProgress(index: number, progress: number) {
-      const s = stages[index], last = poses[s.kind].length - 1;
-      const exposure = Math.min(last, Math.floor(clamp(progress) * (last + 1)));
-      s.element.dataset.state = progress <= 0 ? 'waiting' : progress >= 1 ? 'held' : 'scrubbing';
-      if (exposure !== s.frame) draw(index, exposure);
-    }
-    function update() {
+    function update(now: number) {
       raf = 0;
-      if (disposed) return;
-      if (document.hidden) return;
-      if (mode === 'none') {
-        stages.forEach((_, i) => renderProgress(i, 1));
-        return;
-      }
-      if (mode === 'desktop') {
-        const progress = clamp((top - section.getBoundingClientRect().top) / distance);
-        section.dataset.progress = progress.toFixed(3);
-        // Arrive, tap, breathe, conduct, then a readable hold before release.
-        renderProgress(0, (progress - .08) / .32);
-        renderProgress(1, (progress - .48) / .38);
-      } else {
-        tracks.forEach((track, i) => {
-          const progress = clamp((top - track.getBoundingClientRect().top) / distance);
-          track.dataset.progress = progress.toFixed(3);
-          renderProgress(i, (progress - .12) / .7);
-        });
-      }
+      if (disposed || document.hidden) return;
+      const phase = now % cycle;
+      section.dataset.playback = reduced.matches ? 'static' : 'looping';
+      stages.forEach((s, index) => {
+        const exposure = reduced.matches ? poses[s.kind].length - 1 : exposureAt(s.kind, phase - (index ? 3450 : 0));
+        if (s.frame !== exposure) draw(index, exposure);
+      });
+      if (!reduced.matches && stages.some(s => s.ready)) schedule();
     }
     function schedule() { if (!raf && !document.hidden) raf = requestAnimationFrame(update); }
+    // Hidden tabs skip painting; the clock keeps advancing, so returning resumes
+    // the current phase instead of replaying an entrance performance.
+    function visibility() { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else schedule(); }
     stages.forEach(s => {
-      s.element.dataset.state = 'waiting';
       s.image.onload = () => { if (disposed) return; s.ready = true; schedule(); };
-      s.image.onerror = () => { s.element.dataset.state = 'held'; };
       s.image.src = `/media/service-hands/${s.kind}.webp`;
     });
     const resize = new ResizeObserver(measure);
     resize.observe(inner); if (header) resize.observe(header);
-    addEventListener('scroll', schedule, { passive: true }); addEventListener('resize', measure);
-    document.addEventListener('visibilitychange', schedule); reduced.addEventListener('change', measure);
+    addEventListener('resize', measure);
+    document.addEventListener('visibilitychange', visibility); reduced.addEventListener('change', measure);
     document.fonts.ready.then(() => { if (!disposed) measure(); }); measure();
-    return () => { disposed = true; cancelAnimationFrame(raf); resize.disconnect(); removeEventListener('scroll', schedule); removeEventListener('resize', measure);
-      document.removeEventListener('visibilitychange', schedule); reduced.removeEventListener('change', measure);
-      stages.forEach(s => { s.image.onload = null; s.image.onerror = null; }); };
+    return () => {
+      disposed = true; cancelAnimationFrame(raf); resize.disconnect();
+      removeEventListener('resize', measure);
+      document.removeEventListener('visibilitychange', visibility); reduced.removeEventListener('change', measure);
+      stages.forEach(s => { s.image.onload = null; });
+    };
   }, []);
 
   return <section ref={root} id="services" className="service-choices" aria-labelledby="services-title">
