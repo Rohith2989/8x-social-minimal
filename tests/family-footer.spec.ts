@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('map leads directly to the information footer on desktop and mobile', async ({page}) => {
+test('map leads to the infinity and then the information footer on desktop and mobile', async ({page}) => {
   await page.goto('/');
   await expect(page.locator('.family-journey, .family-art, .family-current, .family-directory')).toHaveCount(0);
   for (const width of [390,1920,2560]) {
@@ -8,10 +8,10 @@ test('map leads directly to the information footer on desktop and mobile', async
     await page.locator('#contact').scrollIntoViewIfNeeded();
     await expect(page.locator('#contact').getByRole('link',{name:'Privacy',exact:true})).toBeVisible();
     await expect(page.locator('#contact').getByRole('link',{name:'Build your network.'})).toBeVisible();
-    const gap=await page.evaluate(() => document.querySelector('.family-ending')!.getBoundingClientRect().top-document.querySelector('#reach-atlas')!.getBoundingClientRect().bottom);
-    expect(Math.abs(gap)).toBeLessThan(2);
+    const gaps=await page.evaluate(() => [document.querySelector('#family')!.getBoundingClientRect().top-document.querySelector('#reach-atlas')!.getBoundingClientRect().bottom,document.querySelector('.family-ending')!.getBoundingClientRect().top-document.querySelector('#family')!.getBoundingClientRect().bottom]);
+    gaps.forEach(gap=>expect(Math.abs(gap)).toBeLessThan(2));
     expect(await page.evaluate(() => document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-    if(width===1920) await page.screenshot({path:'docs/qa/footer-without-animation.png'});
+    if(width===1920) await page.screenshot({path:'docs/qa/footer-after-infinity.png'});
   }
 });
 

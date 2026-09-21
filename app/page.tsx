@@ -9,11 +9,12 @@ import { DashboardPreview } from '@/components/dashboard-preview';
 import { ReachAtlas } from '@/components/reach-atlas';
 import { MapApproach } from '@/components/map-approach';
 import { FamilyFooter } from '@/components/family-footer';
+import { FamilyInfinity } from '@/components/family-infinity';
 import { HeroRasterEdge } from '@/components/hero-raster-edge';
 import { ScrollThread } from '@/components/scroll-thread';
 
 export default function Home() {
   return <><Header /><HeroRasterEdge /><MapApproach /><main id="main"><Hero /><CreatorWork /><VideoSurface /><NetworkComparison /><PartnerFeedback /><ServiceChoices /><DashboardPreview /><ReachAtlas /></main>
-    <FamilyFooter /><ScrollThread />
+    <FamilyInfinity /><FamilyFooter /><ScrollThread />
   </>;
 }

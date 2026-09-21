@@ -19,6 +19,8 @@ export function Header() {
       setStone(start.getBoundingClientRect().top <= edge);
       const ending = document.querySelector('.family-ending');
       if (header.current) header.current.dataset.ending = String(!!ending && ending.getBoundingClientRect().top <= edge);
+      const family = document.getElementById('family');
+      if (header.current) header.current.dataset.family = String(!!family && family.getBoundingClientRect().top <= edge);
     };
     const queue = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();

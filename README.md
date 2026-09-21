@@ -1,3 +1,7 @@
+September 21 correction: user rejected the procedural recreation and requested image-based layered motion. The live family section now uses the isolated artist-rendered infinity in three SVG image layers, a 12-second moving colour mask, subtle depth and stationary five-colour logos. This site uses the ORANGE #F34B32 theme continuous with the map, not Polar. Implementation and push explicitly authorized. See docs/FAMILY-CURRENT.md.
+
+September 21: approved standalone dotted infinity is implemented between map and footer. Twelve-second single-accent current, shallow layered bead motion, fixed five-colour product marks from Raster Human (Social, Business, Sale, Careers, Research). Reusable theme prop and /concepts/family review preserve product colours on every background. User explicitly requested push; supersedes removal/defer for this approved concept. See docs/FAMILY-CURRENT.md. Other website repositories remain untouched.
+
 September 19 update: user requested removing the final animated 8x/product-family section for now, keeping the information footer, starting the hero dot transition earlier, and pushing to Git. The footer now follows the orange map directly. Hero progress includes the photo approach before sticky positioning, preserving the original endpoint, cursor wave and portrait colours. Future infinity design remains deferred.
 
 # 8x Social Minimal
