@@ -76,7 +76,7 @@ function drawResult(element: HTMLElement, progress: number) {
   const amplitude = Math.sin(Math.PI * clamp(progress / .82)) * 3.8;
   // Two paint batches, fixed 3,741 dots, no React updates or work after settling.
   for (const ink of [0, 1]) {
-    ctx.beginPath(); ctx.fillStyle = ink ? '#151515' : '#c6c1b6';
+    ctx.beginPath(); ctx.fillStyle = ink ? '#151515' : '#c2cbdc';
     for (const [x, y, r, isInk] of dots.dots) {
       if (isInk !== ink) continue;
       const dx = x - 289, dy = y - 345, distance = Math.hypot(dx, dy) || 1;
@@ -133,7 +133,7 @@ export function PartnerFeedback() {
       <div className="feedback-spread">
         <div className="feedback-result">
           <div ref={result} className="feedback-dot-art" role="img" aria-label="2.2 million campaign reach">
-            <svg className="feedback-dot-fallback" viewBox="0 0 900 470" aria-hidden="true"><path d={dots.groundPath} fill="#c6c1b6" /><path d={dots.inkPath} fill="#151515" /></svg>
+            <svg className="feedback-dot-fallback" viewBox="0 0 900 470" aria-hidden="true"><path d={dots.groundPath} fill="#c2cbdc" /><path d={dots.inkPath} fill="#151515" /></svg>
             <canvas aria-hidden="true" />
             <svg className="feedback-result-thread" viewBox="0 0 900 470" aria-hidden="true"><path d="M24 409 H876 Q896 409 900 421" /><circle cx="54" cy="409" r="4" /></svg>
           </div>

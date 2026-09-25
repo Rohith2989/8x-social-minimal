@@ -1,4 +1,4 @@
-.service-choices { background:var(--story-surface,#f34b32); color:#111; position:relative; scroll-margin-top:110px; }
+.service-choices { background:var(--story-surface,var(--signal)); color:#111; position:relative; scroll-margin-top:110px; }
 .service-inner { max-width:1800px; margin:auto; padding:clamp(64px,7vw,120px) clamp(24px,4.1vw,80px) clamp(90px,8vw,150px); }
 .service-heading h2 { font-size:clamp(40px,5.25vw,94px); letter-spacing:-.067em; line-height:.99; font-weight:600; margin:0; }
 .service-heading p { font-size:clamp(18px,1.5vw,27px); letter-spacing:-.035em; margin:22px 0 0; }
@@ -39,7 +39,7 @@
 .service-choices[data-layout=desktop] .service-details { flex:none; }
 .service-choices[data-layout=stacked] .service-options { display:block; }
 .service-choices[data-layout=stacked] .service-option-track + .service-option-track { margin-top:48px; }
-.service-choices[data-layout=stacked] .service-option { padding:16px 0 24px; background:var(--story-surface,#f34b32); }
+.service-choices[data-layout=stacked] .service-option { padding:16px 0 24px; background:var(--story-surface,var(--signal)); }
 .service-choices[data-layout=stacked] .service-option h3 { font-size:clamp(32px,6vw,38px); }
 .service-choices[data-layout=stacked] .service-stage { height:clamp(60px,calc(var(--service-view) - 390px),260px); aspect-ratio:auto; }
 @media (max-height:760px) and (min-width:760px) {

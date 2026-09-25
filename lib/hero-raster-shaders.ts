@@ -44,17 +44,17 @@ vec3 photograph(vec2 uv) {
 }
 vec3 pigment(vec3 c) {
   float l=clamp(dot(c,vec3(.2126,.7152,.0722))*1.07,0.,1.);
-  vec3 colour=mix(vec3(.022,.035,.050),vec3(.28,.20,.073),smoothstep(.045,.32,l));
-  colour=mix(colour,vec3(.84,.53,.045),smoothstep(.27,.52,l));
-  colour=mix(colour,vec3(1.,.827,.22),smoothstep(.49,.73,l));
-  return mix(colour,vec3(.995,.98,.92),smoothstep(.72,.96,l));
+  vec3 colour=mix(vec3(.022,.035,.050),vec3(.015,.055,.29),smoothstep(.045,.32,l));
+  colour=mix(colour,vec3(0.,.1294,.8),smoothstep(.27,.52,l));
+  colour=mix(colour,vec3(.40,.60,1.),smoothstep(.49,.73,l));
+  return mix(colour,vec3(.95,.97,1.),smoothstep(.72,.96,l));
 }
 vec3 voiceInk(float x) {
-  vec3 ink=vec3(1.,.83,.22);
-  ink=mix(ink,vec3(.48,.69,.91),smoothstep(.18,.22,x));
-  ink=mix(ink,vec3(.98,.955,.86),smoothstep(.38,.42,x));
-  ink=mix(ink,vec3(.68,.57,.88),smoothstep(.59,.63,x));
-  return mix(ink,vec3(.98,.33,.20),smoothstep(.79,.83,x));
+  vec3 ink=vec3(.46,.58,1.);
+  ink=mix(ink,vec3(.65,.81,1.),smoothstep(.18,.22,x));
+  ink=mix(ink,vec3(.93,.96,1.),smoothstep(.38,.42,x));
+  ink=mix(ink,vec3(.72,.77,1.),smoothstep(.59,.63,x));
+  return mix(ink,vec3(.32,.48,1.),smoothstep(.79,.83,x));
 }
 vec4 portrait(vec2 px) {
   // Contain all five voices, including on mobile. No hidden panning crop.
@@ -69,7 +69,7 @@ vec4 portrait(vec2 px) {
   if(source.x<0. || source.x>1. || source.y<0. || source.y>1.) return vec4(0.);
   float lum=texture2D(u_atlas,source).r;
   float light=min(1.,pow(lum,.52)*1.30);
-  vec3 ink=mix(voiceInk(source.x),vec3(1.,.97,.90),smoothstep(.40,.85,lum)*.38);
+  vec3 ink=mix(voiceInk(source.x),vec3(.95,.98,1.),smoothstep(.40,.85,lum)*.38);
   return vec4(ink*light,smoothstep(.018,.12,lum));
 }
 `;
@@ -83,7 +83,7 @@ varying vec2 v_uv;
 void main(){
   vec2 px=vec2(v_uv.x,1.-v_uv.y)*u_size;
   vec2 uv=vec2(v_uv.x,px.y/u_heroHeight);
-  vec3 colour=mix(pigment(photograph(uv)),vec3(.974,.977,.971),.44);
+  vec3 colour=mix(pigment(photograph(uv)),vec3(.95,.97,1.),.44);
   colour=mix(vec3(17./255.),colour,smoothstep(0.,.58,u_enter));
   float retained=(1.-smoothstep(releaseStart(px)-.025,releaseStart(px)+.025,u_progress))*step(px.y,u_heroHeight);
   vec3 surround=vec3(17./255.);

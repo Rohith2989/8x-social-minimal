@@ -28,9 +28,9 @@ function DotChart({ compact = false, variant = 0 }: { compact?: boolean; variant
       const value = chartValues[(i + variant * 5) % chartValues.length];
       const x = compact ? 3 + i * 7.5 : 12 + i * 10.85;
       const y = compact ? 31 - value * .35 : 130 - value * 1.45;
-      return <circle key={i} cx={x} cy={y} r={compact ? 1.65 : 2.25} fill={i === count - 1 ? '#e8432b' : 'currentColor'} />;
+      return <circle key={i} cx={x} cy={y} r={compact ? 1.65 : 2.25} fill={i === count - 1 ? 'var(--signal)' : 'currentColor'} />;
     })}
-    {!compact && <>{['Mar 1', 'Mar 8', 'Mar 15', 'Mar 22', 'Mar 29'].map((text, i) => <text key={text} x={12 + i * 176} y="145" textAnchor={i === 4 ? 'end' : 'start'}>{text}</text>)}<circle className="dp-chart-signal" cx={12 + 65 * 10.85} cy={130 - chartValues[(65 + variant * 5) % chartValues.length] * 1.45} r="5" fill="#e8432b" /></>}
+    {!compact && <>{['Mar 1', 'Mar 8', 'Mar 15', 'Mar 22', 'Mar 29'].map((text, i) => <text key={text} x={12 + i * 176} y="145" textAnchor={i === 4 ? 'end' : 'start'}>{text}</text>)}<circle className="dp-chart-signal" cx={12 + 65 * 10.85} cy={130 - chartValues[(65 + variant * 5) % chartValues.length] * 1.45} r="5" fill="var(--signal)" /></>}
   </svg>;
 }
 

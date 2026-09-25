@@ -85,6 +85,13 @@ export function NetworkComparison() {
   }, []);
 
   return <section ref={root} id="comparison" className="network-comparison" aria-labelledby="comparison-title" data-running={running} data-introducing={introducing}>
+    {/* Regrade the embedded colour strip in the original asset. Each RGB row
+        sums to one, so the grayscale portrait and transparent fringe stay intact. */}
+    <svg width="0" height="0" className="comparison-colour-defs" aria-hidden="true"><defs>
+      <filter id="comparison-blue-grade" colorInterpolationFilters="sRGB">
+        <feColorMatrix type="matrix" values="-.25 0 1.25 0 0 -.086 0 1.086 0 0 .75 0 .25 0 0 0 0 0 1 0" />
+      </filter>
+    </defs></svg>
     <div className="comparison-layout page-width">
       <div className="comparison-intro">
         <h2 id="comparison-title">Why brands are<br />{' '}moving budget here<span>.</span></h2>

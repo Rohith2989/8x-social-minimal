@@ -8,7 +8,7 @@ import markets from '@/lib/reach-markets.json';
 type Country = typeof markets[number] & { dots: string; outline: string };
 type Atlas = { background: string; countries: Country[]; highlightCount: number };
 const regions = ['All markets', 'Americas', 'Europe', 'Africa', 'Asia'];
-const accents = ['#b5dcff', '#cfbafa', '#fff3e6', '#ffe0a3'];
+const accents = ['#b5dcff', '#ccd8ff', '#f4f6fa', '#dceaff'];
 const marketColor = (code: string) => accents[[...code].reduce((sum, c) => sum + c.charCodeAt(0), 0) % accents.length];
 
 export function ReachAtlas() {

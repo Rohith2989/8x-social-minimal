@@ -23,7 +23,7 @@ function Still({ kind }: { kind: Kind }) {
   const p = hand[kind];
   return <svg className="service-still" viewBox={`0 0 ${W} ${H}`} aria-hidden="true">
     {dots(kind).map((d, i) => <circle key={i} cx={d.x} cy={d.y} r={kind === 'self' && i === 5 ? 16 : 10}
-      fill={(kind === 'self' ? i === 5 : i === 4) ? '#f2ead5' : '#111111'} />)}
+      fill={(kind === 'self' ? i === 5 : i === 4) ? '#ffffff' : '#b5ceff'} />)}
     <svg x={p.x} y={p.y} width={p.size} height={p.size} viewBox="1330.5 443.5 443.5 443.5" overflow="hidden">
       <image href={`/media/service-hands/${kind}.webp`} width="1774" height="887" />
     </svg>
@@ -67,7 +67,7 @@ export function ServiceChoices() {
           y -= wave * envelope * (d.row === 0 ? 16 : 4);
           cream = d.row === 0 && (t > .3 && t < 1.5 ? wave > .44 : d.col === 4);
         }
-        ctx.fillStyle = cream ? '#f2ead5' : '#111111'; ctx.beginPath(); ctx.arc(d.x, y, radius, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = cream ? '#ffffff' : '#b5ceff'; ctx.beginPath(); ctx.arc(d.x, y, radius, 0, Math.PI * 2); ctx.fill();
       }
       const p = hand[s.kind], cellW = s.image.naturalWidth / 4, cellH = s.image.naturalHeight / 2;
       ctx.drawImage(s.image, pose % 4 * cellW, Math.floor(pose / 4) * cellH, cellW, cellH, p.x, p.y, p.size, p.size);

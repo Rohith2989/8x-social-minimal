@@ -109,7 +109,7 @@ export function HeroPhotoJourney() {
   return <div className="hero-photo-journey" ref={root} data-enhanced="false" data-ready="false">
     <div className="hp-stage">
       <div className="hp-photo"><img ref={photo} src="/media/hero-original/studio.webp" alt="A creator filming a conversation with two women in a sunny studio." width="3840" height="640" fetchPriority="high" /></div>
-      <div className="hp-portraits"><img ref={portraits} src="/media/hero-original/portraits.webp" alt="Five creators, rendered in yellow, blue, cream, lavender and orange dots." width="1944" height="810" /><span aria-hidden="true" /></div>
+      <div className="hp-portraits"><img ref={portraits} src="/media/hero-original/portraits.webp" alt="Five creators, rendered in five distinct blue and silver halftone shades." width="1944" height="810" /><span aria-hidden="true" /></div>
       <canvas ref={canvas} className="hp-canvas" role="img" tabIndex={0} aria-label="Interactive dot panorama. Move the pointer or use arrow keys to ripple the dots. Escape releases the ripple. Scroll to reveal five coloured creator portraits." />
       <div className="hp-heading page-width"><h2>A world of voices<span>.</span></h2></div>
     </div>

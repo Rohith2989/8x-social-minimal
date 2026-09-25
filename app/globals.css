@@ -1,4 +1,4 @@
-:root{--ink:#111111;--paper:#f4f3ee;--signal:#f34b32;--quiet:#b9b8b3;--line:#ffffff2b;--gutter:clamp(24px,4.1vw,80px);--max:1800px;color-scheme:dark}
+:root{--ink:#111111;--paper:#f4f6fa;--signal:#0021cc;--signal-light:#8aa4ff;--quiet:#b9b8b3;--line:#ffffff2b;--gutter:clamp(24px,4.1vw,80px);--max:1800px;color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-padding-top:125px}
 body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--font-brand),Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
@@ -9,7 +9,7 @@ button{color:inherit}
 a{color:inherit;text-decoration:none}
 button{cursor:pointer}
 button:disabled{cursor:default}
-::selection{background:var(--signal);color:var(--ink)}
+::selection{background:var(--signal);color:#fff}
 :focus-visible{outline:2px solid var(--signal);outline-offset:6px}
 img,svg{display:block}
 svg{width:24px;height:24px;flex:none}
@@ -17,7 +17,7 @@ svg{width:24px;height:24px;flex:none}
 .skip-link{position:fixed;top:12px;left:12px;z-index:100;background:var(--paper);color:var(--ink);padding:14px;transform:translateY(-200%)}
 .skip-link:focus{transform:none}
 .site-header{--nav-surface:var(--ink);position:sticky;top:0;z-index:30;background:var(--nav-surface);padding:23px var(--gutter) 0;isolation:isolate;transition:background-color .18s,color .18s}
-.site-header[data-surface=stone]{--nav-surface:#e9e5dc;color:#111;color-scheme:light}
+.site-header[data-surface=stone]{--nav-surface:#f4f6fa;color:#111;color-scheme:light}
 .site-header[data-surface=stone] .brand img{filter:none}
 .nav-rail{display:flex;align-items:center;justify-content:space-between;min-height:73px;max-width:var(--max);margin:auto}
 .brand{display:flex;align-items:flex-end;gap:9px;padding-right:36px;line-height:1}
@@ -28,7 +28,7 @@ svg{width:24px;height:24px;flex:none}
 .nav-link::after{content:'';height:2px;background:var(--signal);position:absolute;bottom:4px;left:clamp(18px,2.2vw,38px);right:clamp(18px,2.2vw,38px);transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
 .nav-link[aria-current]::after,.nav-link:hover::after{transform:scaleX(1)}
 .nav-contact{display:flex;align-items:center;justify-content:center;gap:14px;background:var(--signal);color:#0c0c0c;min-height:52px;padding:0 25px;margin-left:14px;font-weight:650;font-size:17px;transition:background .2s}
-.nav-contact:hover{background:#ff654d}
+.nav-contact:hover{background:#2148e8}
 .nav-contact svg{width:20px;height:20px;transition:transform .25s}
 .nav-contact:hover svg{transform:translate(2px,-2px)}
 .menu-toggle{display:none}
@@ -41,7 +41,7 @@ h1 span{display:block}
 .hero-cta{display:flex;align-items:center;gap:22px;font-size:clamp(16px,1.5vw,24px);font-weight:560;letter-spacing:-.033em;margin-top:36px;width:fit-content}
 .arrow-disc{width:56px;height:56px;display:grid;place-items:center;background:var(--signal);color:var(--ink);border-radius:50%;flex:none;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s}
 .arrow-disc svg{width:25px;height:25px}
-.hero-cta:hover .arrow-disc{transform:rotate(45deg);background:#ff654d}
+.hero-cta:hover .arrow-disc{transform:rotate(45deg);background:#2148e8}
 .hero-portrait{position:relative;margin:-16px auto 0;isolation:isolate;aspect-ratio:1817/866;width:100%;max-width:calc(var(--max) + var(--gutter)*2);pointer-events:none}
 /* Keep the circle free of the artwork's width cap. Fade only the portrait
    perimeter, so large monitors never expose the source image's rectangle. */
@@ -79,7 +79,7 @@ h2{margin:0;font-weight:640;letter-spacing:-.058em;line-height:1.05;font-size:cl
 .video-controls{display:flex;gap:6px;align-items:center;position:absolute;bottom:0;left:0;right:0;padding:30px 5px 7px;background:linear-gradient(transparent,#000b);z-index:3}
 .video-controls button,.video-controls>a{background:none;border:0;display:grid;place-items:center;min-width:30px;min-height:35px;padding:6px;color:#fff}
 .video-controls svg{width:17px;height:17px}
-.video-controls button:hover,.video-controls>a:hover{color:#ffac9c}
+.video-controls button:hover,.video-controls>a:hover{color:#a8baff}
 .video-controls input{min-width:0;width:100%;height:3px;appearance:none;background:linear-gradient(to right,#fff var(--played),#ffffff50 var(--played));border-radius:0;cursor:pointer}
 .video-controls input::-webkit-slider-thumb{appearance:none;background:white;width:7px;height:7px;border-radius:50%}
 .video-controls input::-moz-range-thumb{border:0;background:white;width:7px;height:7px;border-radius:50%}

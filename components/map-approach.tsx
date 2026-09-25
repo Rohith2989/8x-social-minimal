@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 
-// The same reading surface warms before the orange map enters; geometry never moves.
+// One cool reading surface becomes cobalt; ink changes when contrast requires it.
 export function MapApproach() {
   useEffect(() => {
     const atlas = document.getElementById('reach-atlas');
@@ -9,18 +9,23 @@ export function MapApproach() {
     const entrance = document.getElementById('services') ?? atlas;
     const page = document.documentElement, motion = matchMedia('(prefers-reduced-motion: reduce)');
     let raf = 0, last = '';
-    const mix = (a: number[], b: number[], p: number) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * p)).join(', ')})`;
     const update = () => {
       raf = 0;
       const top = entrance.getBoundingClientRect().top;
       const t = Math.max(0, Math.min(1, (innerHeight - top) / (innerHeight * .3)));
       const p = motion.matches ? (top <= innerHeight ? 1 : 0) : t * t * (3 - 2 * t);
-      const color = mix([233, 229, 220], [243, 75, 50], p);
+      const channels = [244, 246, 250].map((v, i) => Math.round(v + ([0, 33, 204][i] - v) * p));
+      const color = `rgb(${channels.join(', ')})`;
       if (color === last) return;
       last = color;
       page.style.setProperty('--story-surface', color);
-      page.style.setProperty('--story-accent', mix([243, 75, 50], [17, 17, 17], p));
-      page.style.setProperty('--story-cta-ink', mix([12, 12, 12], [244, 243, 238], p));
+      const luminance = channels.map(v => { const c = v / 255; return c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4; }).reduce((sum, c, i) => sum + c * [.2126, .7152, .0722][i], 0);
+      const lightInk = luminance < .179;
+      page.style.setProperty('--story-ink', lightInk ? '#ffffff' : '#000000');
+      page.style.setProperty('--story-muted', lightInk ? '#ffffff' : (p < .2 ? '#333b50' : '#000000'));
+      page.style.setProperty('--story-accent', lightInk ? '#ffffff' : (p < .2 ? '#0021cc' : '#000000'));
+      page.style.setProperty('--story-cta-ink', lightInk ? '#0021cc' : '#ffffff');
+      page.dataset.storyDark = String(lightInk);
       atlas.dataset.approach = p.toFixed(3);
       window.dispatchEvent(new Event('storysurfacechange'));
     };
@@ -32,7 +37,8 @@ export function MapApproach() {
     return () => {
       cancelAnimationFrame(raf); size.disconnect(); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule);
       document.removeEventListener('visibilitychange', schedule); motion.removeEventListener('change', schedule);
-      ['--story-surface', '--story-accent', '--story-cta-ink'].forEach(name => page.style.removeProperty(name));
+      ['--story-surface', '--story-ink', '--story-muted', '--story-accent', '--story-cta-ink'].forEach(name => page.style.removeProperty(name));
+      delete page.dataset.storyDark;
     };
   }, []);
   return null;

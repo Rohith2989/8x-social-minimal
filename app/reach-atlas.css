@@ -1,5 +1,5 @@
 /* Original atlas geography and dot density; one open reading surface. */
-.reach-atlas{--ease:cubic-bezier(.2,.7,.2,1);background:var(--story-surface,#f34b32);color:#171922;color-scheme:light;isolation:isolate;position:relative;scroll-margin-top:100px}
+.reach-atlas{--ease:cubic-bezier(.2,.7,.2,1);background:var(--story-surface,var(--signal));color:#171922;color-scheme:light;isolation:isolate;position:relative;scroll-margin-top:100px}
 .ra-sheet{padding-block:74px 72px}
 .ra-heading{display:grid;grid-template-columns:minmax(0,1fr) 29%;align-items:end;gap:5%;position:relative;z-index:2}
 .ra-heading h2{font-size:clamp(65px,8.2vw,148px);line-height:.99;letter-spacing:-.068em;font-weight:620;color:#f4f6fa;margin:0}
@@ -9,18 +9,18 @@
 .ra-map{position:relative;aspect-ratio:1440/600;--ra-mx:0px;--ra-my:0px}
 .ra-geography,.ra-fallback{display:block;width:100%;height:100%;overflow:visible}
 .ra-land,.ra-country path{fill:none;stroke-linecap:round;stroke-width:4.3}
-.ra-land{stroke:#b93224;opacity:.4}
-.ra-country-shadow{stroke:#6e241d;opacity:.45;transform:translate(0px,1.8px);transition:transform .6s var(--ease),opacity .6s var(--ease);filter:blur(.6px)}
+.ra-land{stroke:#8aa4ff;opacity:.4}
+.ra-country-shadow{stroke:#001278;opacity:.45;transform:translate(0px,1.8px);transition:transform .6s var(--ease),opacity .6s var(--ease);filter:blur(.6px)}
 .ra-country-face{stroke:#171922;transform:translate(0,-.6px);transition:transform .6s var(--ease),stroke .36s ease,opacity .3s}
 .ra-country.is-outside .ra-country-face{opacity:.4}.ra-country.is-outside .ra-country-shadow{opacity:.12}
-.ra-country.is-active .ra-country-face{stroke:var(--ra-accent,#fff3e6);opacity:1;transform:translate(calc(var(--ra-mx) * .7),calc(-7px + var(--ra-my)));transition-duration:.24s}
+.ra-country.is-active .ra-country-face{stroke:var(--ra-accent,#f4f6fa);opacity:1;transform:translate(calc(var(--ra-mx) * .7),calc(-7px + var(--ra-my)));transition-duration:.24s}
 .ra-country.is-active .ra-country-shadow{transform:translate(2px,5px);opacity:.55;filter:blur(2.2px)}
 .ra-hit-regions{fill:transparent;stroke:transparent;stroke-width:3;cursor:pointer}
 .ra-count{position:absolute;left:0;bottom:5%;pointer-events:none;display:flex;flex-direction:column;line-height:.85}
 .ra-count strong{font-size:clamp(130px,17vw,306px);font-weight:550;letter-spacing:-.095em;color:#f4f6fa}
 .ra-count span{font-size:clamp(18px,1.75vw,32px);letter-spacing:-.045em;line-height:1.2;margin-top:11px}
-.ra-country-label{position:absolute;z-index:3;display:flex;flex-direction:column;align-items:flex-start;padding:14px 18px;max-width:235px;background:var(--ra-accent,#fff3e6);animation:ra-label .2s ease-out both;color:#171922}
-.ra-label-stem{position:absolute;right:100%;top:16px;width:23px;height:1px;background:var(--ra-accent,#fff3e6);transform:rotate(-22deg);transform-origin:right}
+.ra-country-label{position:absolute;z-index:3;display:flex;flex-direction:column;align-items:flex-start;padding:14px 18px;max-width:235px;background:var(--ra-accent,#f4f6fa);animation:ra-label .2s ease-out both;color:#171922}
+.ra-label-stem{position:absolute;right:100%;top:16px;width:23px;height:1px;background:var(--ra-accent,#f4f6fa);transform:rotate(-22deg);transform-origin:right}
 .ra-market-name{font-size:20px;line-height:1.2;font-weight:600;letter-spacing:-.025em;padding-right:24px}
 .ra-country-label a{display:flex;align-items:center;gap:8px;font-size:13px;margin-top:4px;min-height:44px;white-space:nowrap}.ra-country-label svg{height:14px;width:14px}
 .ra-clear{position:absolute;right:0;top:0;width:44px;height:44px;border:0;background:none;color:inherit;font-size:25px;line-height:1}
@@ -36,12 +36,12 @@
 @media(prefers-reduced-motion:reduce){.ra-country path,.ra-country-label,.ra-intro svg{transition:none!important;animation:none!important;transform:none!important;filter:none!important}}
 
 /* All stone content shares the approach colour, including the live photo masks. */
-.day-to-day{--stone:var(--story-surface,#e9e5dc)}
-.dot-reach,.reach-portrait,.network-comparison,.stone-continuation{background:var(--story-surface,#e9e5dc)}
-.site-header[data-surface=stone]{--nav-surface:var(--story-surface,#e9e5dc);transition:none}
-.site-header[data-surface=stone] .nav-contact{background:var(--story-accent,#f34b32);color:var(--story-cta-ink,#0c0c0c)}
-.site-header[data-surface=stone] .nav-link::after,.comparison-tabs button::before,.comparison-benefit::before{background:var(--story-accent,#f34b32)}
-.comparison-intro h2 span,.comparison-benefit h3 span{color:var(--story-accent,#f34b32)}
+.day-to-day{--stone:var(--story-surface,#f4f6fa)}
+.dot-reach,.reach-portrait,.network-comparison,.stone-continuation{background:var(--story-surface,#f4f6fa)}
+.site-header[data-surface=stone]{--nav-surface:var(--story-surface,#f4f6fa);transition:none}
+.site-header[data-surface=stone] .nav-contact{background:var(--story-accent,var(--signal));color:var(--story-cta-ink,#0c0c0c)}
+.site-header[data-surface=stone] .nav-link::after,.comparison-tabs button::before,.comparison-benefit::before{background:var(--story-accent,var(--signal))}
+.comparison-intro h2 span,.comparison-benefit h3 span{color:var(--story-accent,var(--signal))}
 .stone-continuation .site-footer>a svg{color:inherit}
-.site-header[data-surface=stone] .menu-toggle span{color:var(--story-accent,#f34b32)}
+.site-header[data-surface=stone] .menu-toggle span{color:var(--story-accent,var(--signal))}
 .stone-continuation .site-footer>div{color:#171922}

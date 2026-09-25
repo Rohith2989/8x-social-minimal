@@ -3,7 +3,7 @@ import { test, expect, type Page } from '@playwright/test';
 async function arrive(page: Page) {
   await page.goto('/#reach-atlas');
   await expect(page.locator('#reach-atlas')).toHaveAttribute('data-ready', 'true');
-  await expect(page.locator('#reach-atlas')).toHaveCSS('background-color', 'rgb(243, 75, 50)');
+  await expect(page.locator('#reach-atlas')).toHaveCSS('background-color', 'rgb(0, 33, 204)');
 }
 
 async function point(page: Page, code: string) {
@@ -15,7 +15,7 @@ async function point(page: Page, code: string) {
   return point;
 }
 
-test('original map coverage, density, orange and country interactions are preserved', async ({ page }) => {
+test('original map coverage, density, cobalt and country interactions are preserved', async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
   await arrive(page);
   const coverage = await (await page.request.get('/reach/coverage.json')).json();
@@ -27,8 +27,8 @@ test('original map coverage, density, orange and country interactions are preser
   const heading = await headingBox();
   const india = await point(page, 'IND');
   await expect(page.locator('#reach-atlas')).toHaveAttribute('data-selected', 'IND');
-  await expect(page.locator('.ra-country[data-code=IND] .ra-country-face')).toHaveCSS('stroke', 'rgb(255, 224, 163)');
-  await expect(page.locator('.ra-country-label')).toHaveCSS('background-color', 'rgb(255, 224, 163)');
+  await expect(page.locator('.ra-country[data-code=IND] .ra-country-face')).toHaveCSS('stroke', 'rgb(220, 234, 255)');
+  await expect(page.locator('.ra-country-label')).toHaveCSS('background-color', 'rgb(220, 234, 255)');
   await page.mouse.click(india.x, india.y);
   await page.mouse.move(1, 1);
   await expect(page.locator('#reach-atlas')).toHaveAttribute('data-selected', 'IND');
@@ -39,7 +39,7 @@ test('original map coverage, density, orange and country interactions are preser
   await page.getByRole('button', { name: 'Clear selected market' }).click();
   await expect(page.locator('#reach-atlas')).toHaveAttribute('data-selected', '');
   await page.mouse.move(1, 1);
-  await expect(page.locator('.ra-country[data-code=JPN] .ra-country-face')).toHaveCSS('stroke', 'rgb(23, 25, 34)');
+  await expect(page.locator('.ra-country[data-code=JPN] .ra-country-face')).toHaveCSS('stroke', 'rgb(244, 246, 250)');
   await page.locator('#reach-atlas').evaluate(el => scrollTo({ top: el.getBoundingClientRect().top + scrollY - 100, behavior: 'instant' }));
   await page.screenshot({ path: 'docs/qa/map-desktop.png' });
   expect(errors).toEqual([]);
@@ -51,14 +51,14 @@ test('approach reverses exactly across services and dashboard into the unpinned 
     await page.locator('#services').evaluate((el, f) => scrollTo({ top: el.getBoundingClientRect().top + scrollY - innerHeight * f, behavior: 'instant' }), fraction);
   };
   await position(1.1);
-  await expect(page.locator('#comparison')).toHaveCSS('background-color', 'rgb(233, 229, 220)');
+  await expect(page.locator('#comparison')).toHaveCSS('background-color', 'rgb(244, 246, 250)');
   await position(.85);
   await expect.poll(async () => Math.abs(Number(await page.locator('#reach-atlas').getAttribute('data-approach')) - .5)).toBeLessThan(.01);
   const mid = await page.locator('#comparison').evaluate(el => getComputedStyle(el).backgroundColor);
   await expect(page.locator('#reach-atlas')).toHaveCSS('background-color', mid);
   await expect(page.locator('.site-header')).toHaveCSS('background-color', mid);
   await position(.7);
-  await expect(page.locator('#reach-atlas')).toHaveCSS('background-color', 'rgb(243, 75, 50)');
+  await expect(page.locator('#reach-atlas')).toHaveCSS('background-color', 'rgb(0, 33, 204)');
   await position(.85);
   await expect(page.locator('#comparison')).toHaveCSS('background-color', mid);
   // Feedback, service choices and dashboard share one unbroken surface before the map.

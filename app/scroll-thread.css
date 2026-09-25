@@ -1,13 +1,13 @@
 /* A native-scroll control, with a generous hit area around the quiet line. */
-.scroll-thread{--thread-line:#e9e5dc40;--thread-accent:#f34b32;--thread-core:#f4f3ee;position:fixed;z-index:45;right:4px;top:50%;transform:translateY(-50%);width:44px;height:clamp(180px,54svh,560px);cursor:grab;touch-action:none;user-select:none;display:none}
+.scroll-thread{--thread-line:#f4f6fa40;--thread-accent:var(--signal);--thread-core:#f4f3ee;position:fixed;z-index:45;right:4px;top:50%;transform:translateY(-50%);width:44px;height:clamp(180px,54svh,560px);cursor:grab;touch-action:none;user-select:none;display:none}
 .scroll-thread-track{position:absolute;top:12px;bottom:12px;left:21px;width:1px;background:var(--thread-line);pointer-events:none}
 .scroll-thread-marker{position:absolute;top:var(--thread-position,0%);left:0;width:1px;height:0}
 .scroll-thread-marker::before{content:'';position:absolute;bottom:0;left:-1px;width:3px;height:36px;background:var(--thread-accent);border-radius:2px}
 .scroll-thread-marker::after{content:'';position:absolute;width:7px;height:7px;left:.5px;top:0;transform:translate(-50%,-50%);border-radius:50%;background:var(--thread-core);border:2px solid var(--thread-accent);transition:box-shadow .2s}
-.scroll-thread:hover .scroll-thread-marker::after,.scroll-thread:focus-visible .scroll-thread-marker::after{box-shadow:0 0 0 3px #f34b3220}
+.scroll-thread:hover .scroll-thread-marker::after,.scroll-thread:focus-visible .scroll-thread-marker::after{box-shadow:0 0 0 3px #0021cc20}
 .scroll-thread[data-dragging=true]{cursor:grabbing}
 .scroll-thread[data-surface=stone]{--thread-line:#11111133}
-.scroll-thread[data-surface=orange]{--thread-line:#11111133;--thread-accent:#111;--thread-core:#f4f3ee}
+.scroll-thread[data-surface=blue]{--thread-line:#11111133;--thread-accent:#111;--thread-core:#f4f3ee}
 .scroll-thread:focus-visible{outline:1px solid var(--thread-accent);outline-offset:-8px;border-radius:14px}
 @media(min-width:901px) and (pointer:fine){
   .scroll-thread[data-scrollable=true]{display:block}

@@ -20,11 +20,11 @@ test('infinity keeps stable links while the current moves and pauses offscreen',
 
 test('all five logo colours survive each theme and every supported width',async({page})=>{
   await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/concepts/family');
-  const colours=['rgb(255, 212, 56)','rgb(77, 44, 145)','rgb(243, 75, 50)','rgb(120, 174, 232)','rgb(157, 173, 194)'];
-  for(const theme of ['polar','social','business','sale','careers','research']){
+  const colours=['rgb(0, 33, 204)','rgb(77, 44, 145)','rgb(243, 75, 50)','rgb(120, 174, 232)','rgb(157, 173, 194)'];
+  for(const theme of ['cobalt','polar','social','business','sale','careers','research']){
     const root=page.locator(`#family-${theme}`);await root.scrollIntoViewIfNeeded();
     expect(await root.locator('.fi-icon').evaluateAll(els=>els.map(el=>getComputedStyle(el).backgroundColor))).toEqual(colours);
-    await expect(root.locator('.fi-icon[data-product=social] img')).toHaveCSS('filter','none');
+    await expect(root.locator('.fi-icon[data-product=social] img')).toHaveCSS('filter','brightness(0) invert(1)');
     await root.screenshot({path:`docs/qa/family-theme-${theme}.png`});
   }
   for(const [width,height] of [[320,568],[390,844],[768,1024],[1366,768],[1920,1080],[2560,1440],[3440,1440]]){

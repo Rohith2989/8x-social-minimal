@@ -6,14 +6,14 @@ import { familyCurrentPosition, familyThemes, type FamilyTheme } from '@/lib/fam
 
 const asset='/media/family/infinity-graphite.webp';
 const products=[
-  {id:'social',name:'Social',colour:'#FFD438',href:'https://www.8x.social/'},
+  {id:'social',name:'Social',colour:'#0021CC',href:'https://www.8x.social/'},
   {id:'business',name:'Business',colour:'#4D2C91',href:undefined},
   {id:'sale',name:'Sale',colour:'#F34B32',href:undefined},
   {id:'careers',name:'Careers',colour:'#78AEE8',href:'https://8x.careers'},
   {id:'research',name:'Research',colour:'#9DADC2',href:undefined},
 ];
 
-export function FamilyInfinity({theme='sale',id='family'}:{theme?:FamilyTheme;id?:string}) {
+export function FamilyInfinity({theme='cobalt',id='family'}:{theme?:FamilyTheme;id?:string}) {
   const root=useRef<HTMLElement>(null),scene=useRef<SVGGElement>(null),light=useRef<SVGGElement>(null),front=useRef<SVGGElement>(null);
   const unique=useId().replace(/:/g,'');
   const palette=familyThemes[theme];

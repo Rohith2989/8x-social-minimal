@@ -1,7 +1,7 @@
 /* Shared editorial navigation: preserve dimensions and the original mark. */
 .site-header .nav-contact,.site-header[data-ending=true] .nav-contact{background:transparent!important;color:var(--signal)!important;padding-inline:12px 0;font-weight:500}
-.site-header[data-surface=stone] .nav-contact{color:color-mix(in srgb,var(--story-accent,#f34b32) 75%,#111)!important}
-.site-header[data-ending=true] .nav-contact{color:#b82e18!important}
+.site-header[data-surface=stone] .nav-contact{color:color-mix(in srgb,var(--story-accent,var(--signal)) 75%,#111)!important}
+.site-header[data-ending=true] .nav-contact{color:var(--signal)!important}
 .site-header .nav-link{color:#b9b8b3;font-weight:450}
 .site-header .nav-link[aria-current],.site-header .nav-link:hover{color:var(--paper)}
 .site-header .nav-link::after{display:none}
@@ -18,7 +18,7 @@
 .selection-dot{display:block;width:9px;height:9px;border-radius:50%;background:#72716e;flex:none}
 .clip-selectors button[aria-pressed=true] .selection-dot{background:var(--signal)}
 .work-media{isolation:isolate}
-.work-media::before{content:'';position:absolute;inset:-30px;z-index:-1;pointer-events:none;background:radial-gradient(circle,#c4bfb239 .6px,transparent .9px) 0 0/5px 5px;mask-image:radial-gradient(ellipse,#0005 20%,transparent 72%)}
+.work-media::before{content:'';position:absolute;inset:-30px;z-index:-1;pointer-events:none;background:radial-gradient(circle,#aab9d239 .6px,transparent .9px) 0 0/5px 5px;mask-image:radial-gradient(ellipse,#0005 20%,transparent 72%)}
 .video-rail{gap:24px}
 .video-shell{position:relative;isolation:isolate}
 .video-frame{z-index:1;border-radius:5px;box-shadow:0 0 0 1px #dad7ce40;background:#111}
@@ -32,7 +32,7 @@
 .creator-card figcaption svg{opacity:1;margin-left:auto;flex:none}
 .creator-status{width:8px;height:8px;flex:none;border-radius:50%;background:#72716e}
 .creator-card[data-active=true] .creator-status{background:var(--signal)}
-.media-raster{position:absolute;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);overflow:visible;pointer-events:none;fill:#c4bfb2;z-index:0}
+.media-raster{position:absolute;inset:-24px;width:calc(100% + 48px);height:calc(100% + 48px);overflow:visible;pointer-events:none;fill:#aab9d2;z-index:0}
 main .media-raster-layer{transform-box:view-box;transform-origin:center;animation:media-print-breathe 8s ease-in-out infinite!important;animation-play-state:paused!important}
 main .media-raster[data-active=true] .media-raster-layer{animation-play-state:running!important}
 main .media-raster-layer-1{animation-delay:-2.67s!important}

@@ -1,0 +1,86 @@
+/* September 2026: cobalt from 8x.social. Light accents on carbon, white ink on
+   cobalt, and cool paper for the editorial content and embedded dashboard. */
+:root{--story-ink:#111;--story-muted:#333b50;--story-accent:#0021cc;--story-cta-ink:#fff}
+.hero-original .hero-period{color:#476dff!important}
+.hero-original .hero-cta:hover{background:#2148e8}
+.site-header .nav-contact{color:var(--paper)!important}
+.site-header .nav-contact svg{color:var(--signal-light)}
+.site-header .nav-link::after{display:block;background:#476dff}
+.site-header[data-surface=stone]{color:var(--story-ink)}
+.site-header[data-surface=stone] .nav-contact{color:var(--story-accent)!important}
+.site-header[data-surface=stone] .nav-contact svg{color:inherit}
+.site-header[data-surface=stone] .nav-link{color:var(--story-muted)}
+.site-header[data-surface=stone] .nav-link[aria-current],.site-header[data-surface=stone] .nav-link:hover{color:var(--story-ink)}
+.site-header[data-surface=stone] .nav-link::after{background:var(--story-accent)}
+html[data-story-dark=true] .site-header[data-surface=stone] .brand img{filter:brightness(0) invert(1)}
+.site-header[data-ending=true]{color:#171922}
+.site-header[data-ending=true] .brand img{filter:none!important}
+.site-header[data-ending=true] .nav-link{color:#4b5263!important}
+.site-header[data-ending=true] .nav-link[aria-current],.site-header[data-ending=true] .nav-contact{color:var(--signal)!important}
+.site-header[data-family=true][data-ending=false]{--nav-surface:#0021cc!important;color:white}
+.site-header[data-family=true][data-ending=false] .brand img{filter:brightness(0) invert(1)}
+.site-header[data-family=true][data-ending=false] :is(.nav-link,.nav-contact){color:#fff!important}
+.site-header[data-family=true][data-ending=false] .nav-link::after{background:#fff}
+.site-header :focus-visible,.work-journey :focus-visible,.hero :focus-visible{outline-color:var(--signal-light)}
+.site-header[data-surface=stone] :focus-visible{outline-color:var(--story-ink)}
+.site-header[data-ending=true] :focus-visible{outline-color:var(--signal)}
+.menu-toggle span{color:var(--signal-light)}
+.arrow-disc{color:white}
+.video-error a{color:var(--signal-light)}
+.creator-card[data-active=true] .creator-status,.clip-selectors button[aria-pressed=true] .selection-dot{background:var(--signal-light)}
+.scroll-thread{--thread-accent:#8aa4ff}
+.scroll-thread[data-surface=stone]{--thread-accent:#0021cc}
+.scroll-thread[data-surface=blue]{--thread-line:#ffffff55;--thread-accent:#fff;--thread-core:#0021cc}
+
+/* Content retains a quiet paper ground; inherited ink tracks the shared blue approach. */
+.video-surface-section,.network-comparison,.partner-feedback{color:var(--story-ink,#111)}
+.surface-heading h2 span,.surface-heading a,.feedback-heading h2>span{color:var(--story-accent)}
+.feedback-heading i{background:var(--story-accent)}
+.comparison-option{color:var(--story-ink)}
+.comparison-colour-defs{position:absolute;width:0;height:0;pointer-events:none}
+.comparison-portrait img{filter:url(#comparison-blue-grade)}
+.comparison-option dt,.comparison-option-heading p{color:var(--story-muted)}
+.comparison-ink{--signal:#8aa4ff}
+.comparison-ink .comparison-cta svg,.comparison-ink .comparison-signature{color:#8aa4ff!important}
+.comparison-ink .comparison-option-heading h3>i{background:#8aa4ff}
+.comparison-print{fill:#7091ff}
+.feedback-ink{--signal:#8aa4ff}
+.feedback-quote-thread{--signal:#8aa4ff}
+.feedback-result-thread path,.feedback-result-thread circle{stroke:var(--story-accent)}
+html[data-story-dark=true] .feedback-dot-art{filter:invert(1) grayscale(1)}
+html[data-story-dark=true] .comparison-portrait{opacity:.9}
+
+/* On cobalt, service copy and gestures remain light; photography keeps its material. */
+.service-choices,.dashboard-section,.reach-atlas{color:var(--story-ink,#fff);color-scheme:dark}
+html:not([data-story-dark]) :is(.service-choices,.dashboard-section,.reach-atlas){color:#fff}
+.service-full-cta{color:inherit}
+.service-self-cta,.service-full-cta span{background:#fff;color:#0021cc}
+.service-details a:focus-visible{outline-color:currentColor}
+.service-stage{filter:grayscale(1)}
+.service-still circle{filter:none}
+
+/* A deliberately neutral dashboard avoids blue-on-blue data and tinted footage. */
+.dp-window{background:#f4f6fa;color:#171922;box-shadow:0 20px 70px #00104d24,0 0 0 1px #ffffff33}
+.dp-bar{background:#d4dce9}.dp-bar>i{background:#63748f}
+.dp-rail-indicator{background:#8aa4ff}
+.dp-steps button>span{background:#ffffff50}.dp-steps button[aria-current]>span{background:white}
+.dp-ambient i{background-image:radial-gradient(circle,#b5ceff 1.1px,transparent 1.5px)}
+.dashboard-section :focus-visible{outline-color:currentColor}
+.dp-window :focus-visible{outline-color:var(--signal)}
+.dp-rail :focus-visible{outline-color:#b5ceff}
+
+/* Keep the existing atlas geometry; invert its hierarchy for the cobalt ground. */
+.ra-land{stroke:#8aa4ff;opacity:.4}
+.ra-country-face{stroke:#f4f6fa}
+.ra-country-shadow{stroke:#001278;opacity:.3}
+.ra-heading h2,.ra-count strong{color:inherit}
+.ra-select-label select{color:inherit;border-color:#ffffff88;color-scheme:dark}
+.ra-select-label option{background:#f4f6fa;color:#171922}
+.reach-atlas :focus-visible{outline-color:currentColor}
+.ra-country-label :focus-visible{outline-color:#0021cc}
+.ra-map-scroll{scrollbar-color:#b5ceff transparent}
+
+.family-infinity[data-theme=cobalt] .fi-top>img{filter:brightness(0) invert(1)}
+.fi-icon[data-product=social] img{filter:brightness(0) invert(1)!important}
+/* Product identity swatches are intentional: Sale remains orange, Business violet, etc. */
+.family-ending{--story-ink:#171922;--story-accent:#0021cc}

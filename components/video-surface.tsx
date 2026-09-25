@@ -83,7 +83,7 @@ export function VideoSurface() {
       // One shared, restrained warm reflection, not borders on individual cells.
       ctx.save(); ctx.translate(x * width, y * height); ctx.scale(rx, ry);
       const warmth = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
-      warmth.addColorStop(0, 'rgba(255,170,100,.075)'); warmth.addColorStop(.65, 'rgba(255,190,120,.025)'); warmth.addColorStop(1, 'rgba(255,190,120,0)');
+      warmth.addColorStop(0, 'rgba(115,155,255,.075)'); warmth.addColorStop(.65, 'rgba(155,190,255,.025)'); warmth.addColorStop(1, 'rgba(155,190,255,0)');
       ctx.fillStyle = warmth; ctx.fillRect(-1, -1, 2, 2); ctx.restore();
       ctx.globalCompositeOperation = 'destination-in'; ctx.drawImage(mask, 0, 0); ctx.globalCompositeOperation = 'source-over';
       host.dataset.ready = 'true'; host.dataset.lightX = x.toFixed(3);
