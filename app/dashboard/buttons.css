@@ -1,0 +1,28 @@
+/* The current: a fixed action disc, a reversible ink front, and a raster seam. */
+.ds-app .ds-current-button{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:space-between;gap:18px;min-height:46px;max-width:100%;padding:7px 8px 7px 18px;border:1px solid #222c3b;border-radius:13px;background:#11161f;color:#fff;font-size:12px;font-weight:550;line-height:1.3;text-align:left;box-shadow:inset 0 1px 0 #ffffff0b,0 3px 8px #10182b08;transition:box-shadow .22s ease,transform .16s ease;cursor:pointer;vertical-align:middle}
+.ds-app .ds-current-button:focus-visible{outline:2px solid #4368ff;outline-offset:3px}
+.ds-app .ds-current-button:not(:disabled):not([aria-disabled=true]):active{transform:translateY(1px);box-shadow:none}
+.ds-current-label{display:grid;min-width:0;position:relative;z-index:1}
+.ds-current-label>span{grid-area:1/1;white-space:nowrap}
+.ds-current-reserve{visibility:hidden}
+.ds-current-disc{position:relative;z-index:1;display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;color:#10151d;background:#fff;transition:color .25s ease}
+.ds-current-button:is(:hover,:focus-visible,[data-phase=working],[data-phase=ready]) .ds-current-disc{color:#0021cc}
+.ds-current-disc .ds-dotmark{width:15px;height:15px;gap:2px;color:#0021cc}
+.ds-current-disc .ds-dotmark i{animation:ds-current-pulse 1.05s ease-in-out infinite;animation-delay:calc(var(--dot-order,0) * 65ms)}
+.ds-current-disc .ds-dotmark i:nth-child(2),.ds-current-disc .ds-dotmark i:nth-child(4){--dot-order:1}
+.ds-current-disc .ds-dotmark i:nth-child(3),.ds-current-disc .ds-dotmark i:nth-child(5),.ds-current-disc .ds-dotmark i:nth-child(7){--dot-order:2}
+.ds-current-disc .ds-dotmark i:nth-child(6),.ds-current-disc .ds-dotmark i:nth-child(8){--dot-order:3}
+.ds-current-disc .ds-dotmark i:nth-child(9){--dot-order:4}
+@keyframes ds-current-pulse{0%,100%{opacity:.3}45%{opacity:1}}
+.ds-app .ds-current-secondary{background:#fff;border-color:#dce2ed;color:#10151d;box-shadow:0 2px 5px #10182b04}
+.ds-current-secondary .ds-current-disc{background:#10151d;color:#fff}
+.ds-current-secondary:is(:hover,:focus-visible) .ds-current-disc{color:#fff;background:#0021cc}
+.ds-app .ds-current-button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+.ds-current-button[aria-disabled=true]:not(:disabled){cursor:progress}
+.ds-calendar-picker>.ds-current-button{width:100%}
+.ds-help-content>.ds-current-button{margin-top:9px}
+.ds-app .ds-icon-button{transition:background .22s ease,color .22s ease,box-shadow .22s ease}
+.ds-app .ds-icon-button:hover{box-shadow:inset 0 0 0 1px #cad7ff}
+@media(max-width:620px){.ds-app .ds-current-header{min-height:40px;width:40px;padding:4px;gap:0;justify-content:center;border-radius:11px}.ds-current-header .ds-current-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.ds-current-header .ds-current-disc{width:28px;height:28px}.ds-app .ds-current-button{font-size:12px}}
+.ds-app[data-quiet=true] .ds-current-disc .ds-dotmark i{animation:none;opacity:1}
+.ds-app[data-quiet=true] .ds-current-button:active{transform:none}

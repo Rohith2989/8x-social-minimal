@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { DashboardWorkspace } from '@/components/dashboard/workspace';
 import './dashboard.css';
+import './buttons.css';
+import './raster-controls.css';
+import './creator-table.css';
 
 export const metadata: Metadata = {
   title: '8x Social — Campaign workspace',

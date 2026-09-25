@@ -1,0 +1,34 @@
+/* Every dashboard control shares the same slow ink front, with tone-aware contrast. */
+.ds-app :is(.ds-raster-button,.ds-current-button){--raster-fill:#e7eeff;--raster-dot:#557dff;--raster-duration:1150ms;position:relative;isolation:isolate}
+:where(.ds-app .ds-raster-button){border-radius:10px}
+.ds-app :is(.ds-current-primary,.ds-nav-item[aria-current=page],.ds-view-switch>button[aria-pressed=true],.ds-date-grid>button[data-edge=true]){--raster-fill:#0021cc;--raster-dot:#315aff}
+.ds-app :is(.ds-blue-panel,.ds-performance,.ds-selection-bar,.ds-toast) .ds-raster-button{--raster-fill:#2349dc;--raster-dot:#6a8dff}
+.ds-app .ds-chart-tabs>button{--raster-fill:#1c40d6;border-radius:8px 8px 0 0}
+.ds-app .ds-play{--raster-fill:#0021cc;--raster-dot:#587aff}
+.ds-app :is(.ds-raster-button,.ds-current-button)>.ds-raster-surface{position:absolute!important;display:block!important;inset:0!important;width:auto!important;height:auto!important;min-width:0;max-width:none;margin:0!important;padding:0!important;border:0!important;border-radius:inherit;background:none!important;box-shadow:none!important;overflow:hidden;pointer-events:none;z-index:-1;transform:none!important;opacity:1;flex:none!important}
+.ds-raster-motion{position:absolute;inset:0 auto 0 0;width:200%;height:100%;transform:translateX(50%);transition:transform var(--raster-duration) cubic-bezier(.36,.06,.3,1);pointer-events:none}
+.ds-raster-solid,.ds-raster-dots{position:absolute;inset:0;display:block;pointer-events:none;mask-size:100% 100%;mask-repeat:no-repeat}
+.ds-raster-solid{background:var(--raster-fill);mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 64' preserveAspectRatio='none'%3E%3Cpath d='M0 64C100 64 100 0 220 0H800V64Z' fill='black'/%3E%3C/svg%3E")}
+.ds-raster-dots{background:radial-gradient(circle,var(--raster-dot) 1px,transparent 1.3px) 0 0/5px 5px;mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 64' preserveAspectRatio='none'%3E%3Cpath d='M0 64C100 64 100 0 220 0' fill='none' stroke='black' stroke-width='48'/%3E%3C/svg%3E")}
+@media(hover:hover){.ds-app :is(.ds-raster-button,.ds-current-button):not(:disabled):not([aria-disabled=true]):not([data-phase=ready]):hover>.ds-raster-surface>.ds-raster-motion{transform:translateX(-30%)}}
+.ds-app :is(.ds-raster-button,.ds-current-button):not(:disabled):not([data-phase=ready]):focus-visible>.ds-raster-surface>.ds-raster-motion,.ds-app .ds-current-button[data-phase=working]>.ds-raster-surface>.ds-raster-motion{transform:translateX(-30%)}
+.ds-app .ds-raster-button:focus-visible{outline:2px solid #4368ff;outline-offset:3px}
+.ds-app .ds-raster-button:disabled>.ds-raster-surface{visibility:hidden}
+/* Retain active states and tooltips, replacing the older fast circular nav reveal. */
+.ds-app .ds-nav-item:before{display:none}
+.ds-app .ds-nav-item>.ds-raster-surface{flex:none}
+.ds-app .ds-nav-item[aria-current=page] :is(small,.ds-dotmark){color:#94b2ff}
+.ds-app .ds-nav-item[aria-current=page]:hover .ds-dotmark{color:#fff;transition:color .8s}
+.ds-app .ds-nav-item>.ds-nav-hint{z-index:2}
+.ds-app .ds-mobile-backdrop{position:fixed;isolation:auto;border-radius:0}
+.ds-app .ds-mobile-toggle{position:absolute}
+.ds-app .ds-play{position:absolute;border-radius:50%}
+.ds-app .ds-metric-links>button,.ds-app .ds-main-metrics>button{border-radius:10px}
+.ds-app .ds-current-secondary{--raster-fill:#e7eeff;--raster-dot:#557dff}
+/* Decorative child is never interpreted as content by older descendant selectors. */
+.ds-app .ds-current-label,.ds-app .ds-current-disc{z-index:1}
+.ds-app .ds-logo>.ds-raster-surface{display:block;align-self:auto}
+.ds-app .ds-post-card>.ds-raster-surface,.ds-app .ds-creator-card>.ds-raster-surface{inset:0!important}
+@media(prefers-reduced-motion:reduce){.ds-app .ds-raster-motion{transform:translateX(-30%)!important;transition:none!important;opacity:0}.ds-app :is(.ds-raster-button,.ds-current-button):not(:disabled):not([data-phase=ready]):is(:hover,:focus-visible,[data-phase=working])>.ds-raster-surface>.ds-raster-motion{opacity:1}.ds-app .ds-current-disc .ds-dotmark i{animation:none;opacity:1}}
+.ds-app[data-quiet=true] .ds-raster-motion{transform:translateX(-30%)!important;transition:none!important;opacity:0}
+.ds-app[data-quiet=true] :is(.ds-raster-button,.ds-current-button):not(:disabled):not([data-phase=ready]):is(:hover,:focus-visible,[data-phase=working])>.ds-raster-surface>.ds-raster-motion{opacity:1}

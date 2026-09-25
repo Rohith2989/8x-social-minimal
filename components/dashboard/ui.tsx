@@ -1,5 +1,7 @@
 'use client';
 
+import { RasterButton } from './raster-button';
+
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 
 export function Icon({ name, size = 20 }: { name: string; size?: number }) {
@@ -59,10 +61,10 @@ export function Menu({ id, label, open, setOpen, children, className = '', icon,
       const items = Array.from(root.current?.querySelectorAll<HTMLButtonElement>('.ds-menu-panel button:not(:disabled), .ds-menu-panel input') ?? []);
       if (items.length) { e.preventDefault(); const at = items.indexOf(document.activeElement as HTMLButtonElement); items[e.key === 'Home' ? 0 : e.key === 'End' ? items.length - 1 : (at + (e.key === 'ArrowUp' ? -1 : 1) + items.length) % items.length]?.focus(); }
     }
-  }}><button ref={button} className="ds-menu-trigger" aria-label={label} aria-expanded={active} aria-controls={`${id}-panel`} onClick={() => setOpen(active ? null : id)} onKeyDown={e => { if (e.key === 'ArrowDown' && !active) { e.preventDefault(); setOpen(id); requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>('.ds-menu-panel button')?.focus()); } }}>{trigger ?? <>{icon && <Icon name={icon} />}<span>{label}</span><Icon name="down" size={14} /></>}</button>{active && <div id={`${id}-panel`} className="ds-menu-panel" data-align={align}>{children}</div>}</div>;
+  }}><RasterButton ref={button} className="ds-menu-trigger" aria-label={label} aria-expanded={active} aria-controls={`${id}-panel`} onClick={() => setOpen(active ? null : id)} onKeyDown={e => { if (e.key === 'ArrowDown' && !active) { e.preventDefault(); setOpen(id); requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>('.ds-menu-panel button')?.focus()); } }}>{trigger ?? <>{icon && <Icon name={icon} />}<span>{label}</span><Icon name="down" size={14} /></>}</RasterButton>{active && <div id={`${id}-panel`} className="ds-menu-panel" data-align={align}>{children}</div>}</div>;
 }
 export function Choice({ active, children, onClick, description }: { active?: boolean; children: ReactNode; onClick: () => void; description?: string }) {
-  return <button type="button" className="ds-choice" aria-pressed={active} onClick={onClick}><span>{children}{description && <small>{description}</small>}</span>{active ? <Icon name="check" size={17} /> : <span className="ds-choice-dot" />}</button>;
+  return <RasterButton type="button" className="ds-choice" aria-pressed={active} onClick={onClick}><span>{children}{description && <small>{description}</small>}</span>{active ? <Icon name="check" size={17} /> : <span className="ds-choice-dot" />}</RasterButton>;
 }
 export function Modal({ title, children, onClose, className = '' }: { title: string; children: ReactNode; onClose: () => void; className?: string }) {
   const dialog = useRef<HTMLDialogElement>(null), titleId = useId();
@@ -74,5 +76,5 @@ export function Modal({ title, children, onClose, className = '' }: { title: str
     el?.showModal();
     return () => { el?.close(); document.body.style.overflow = overflow; before?.focus(); };
   }, []);
-  return <dialog ref={dialog} className={`ds-dialog ${className}`} aria-labelledby={titleId} onCancel={e => { e.preventDefault(); onClose(); }} onClick={e => { if (e.target === e.currentTarget) { const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) onClose(); } }}><header><div><span className="ds-eyebrow">8x workspace</span><h2 id={titleId}>{title}</h2></div><button className="ds-icon-button" onClick={onClose} aria-label="Close dialog"><Icon name="close" /></button></header>{children}</dialog>;
+  return <dialog ref={dialog} className={`ds-dialog ${className}`} aria-labelledby={titleId} onCancel={e => { e.preventDefault(); onClose(); }} onClick={e => { if (e.target === e.currentTarget) { const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) onClose(); } }}><header><div><span className="ds-eyebrow">8x workspace</span><h2 id={titleId}>{title}</h2></div><RasterButton className="ds-icon-button" onClick={onClose} aria-label="Close dialog"><Icon name="close" /></RasterButton></header>{children}</dialog>;
 }

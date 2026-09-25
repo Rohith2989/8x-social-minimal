@@ -70,9 +70,11 @@ test('real local video plays and dialogs return keyboard focus', async ({ page }
 test('all dashboard destinations are populated and local team interactions work', async ({ page }) => {
   await page.goto('/dashboard');
   const nav = page.getByRole('navigation', { name: 'Dashboard sections' });
+  await expect(nav.locator('a:not(.ds-raster-button)')).toHaveCount(0);
   for (const name of ['Creators', 'Posts', 'Feed', 'Content plan', 'Analytics', 'Team']) {
     await nav.getByRole('link', { name: new RegExp(name) }).click();
     await expect(page.getByRole('heading', { name, exact: true, level: 1 })).toBeVisible();
+    await expect(page.locator('.ds-app button:not(.ds-raster-button):not(.ds-current-button)')).toHaveCount(0);
   }
   await page.getByRole('button', { name: 'Invite member' }).click();
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Demo Reviewer');
@@ -83,12 +85,39 @@ test('all dashboard destinations are populated and local team interactions work'
   await expect(page.getByRole('heading', { name: 'Analytics', exact: true, level: 1 })).toBeVisible();
 });
 
+test('current buttons preserve geometry, finish export, and respect reduced motion', async ({ page }) => {
+  await page.goto('/dashboard');
+  const action = page.getByRole('button', { name: 'Export report', exact: true });
+  const before = await action.boundingBox();
+  expect(await action.locator('.ds-raster-motion').evaluate(el => getComputedStyle(el).transitionDuration)).toBe('1.15s');
+  await action.hover();
+  await expect.poll(() => action.locator('.ds-raster-motion').evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41)).toBeLessThan(0);
+  expect(await action.boundingBox()).toEqual(before);
+  await action.focus();
+  await page.keyboard.press('Enter');
+  const downloadButton = page.getByRole('button', { name: 'Download CSV', exact: true });
+  // Measure layout dimensions, independent of the dialog's entrance transform.
+  const initialSize = await downloadButton.evaluate(el => [el.clientWidth, el.clientHeight]);
+  const download = page.waitForEvent('download');
+  await downloadButton.click();
+  await download;
+  const ready = page.getByRole('button', { name: /Report ready/ });
+  await expect(ready).toHaveAttribute('data-phase', 'ready');
+  const readySize = await ready.evaluate(el => [el.clientWidth, el.clientHeight]);
+  expect(readySize).toEqual(initialSize);
+  await page.keyboard.press('Escape');
+  await expect(action).toBeFocused();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const transition = await action.locator('.ds-raster-motion').evaluate(el => getComputedStyle(el).transitionDuration);
+  expect(transition).toBe('0s');
+});
+
 for (const [width, height] of [[1920, 1080], [1440, 900], [2560, 1440], [768, 1024], [390, 844]]) {
   test(`responsive overview ${width}×${height}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     await page.goto('/dashboard');
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await expect(page.locator('.ds-post-card')).toHaveCount(4);
+    await expect(page.locator('.ds-post-card')).toHaveCount(8);
     await expect.poll(() => page.evaluate(() => [...document.images].every(img => img.complete && img.naturalWidth > 0))).toBeTruthy();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     if (width <= 850) {
