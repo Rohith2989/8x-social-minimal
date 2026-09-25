@@ -10,14 +10,14 @@ test('overview filters, keyboard chart, custom dates and refresh keep one report
   await expect(page.getByTestId('total-views')).toHaveText('2.40M');
   await page.locator('#chart-platform-panel').count();
   await page.getByRole('button', { name: 'All platforms', exact: true }).click();
-  await page.locator('#chart-platform-panel').getByRole('button', { name: 'TikTok', exact: true }).click();
+  await page.locator('#chart-platform-panel').getByRole('checkbox', { name: 'Instagram', exact: true }).uncheck();
   await expect(page.getByTestId('total-views')).toHaveText('1.50M');
   await page.getByRole('button', { name: 'Daily', exact: true }).click();
   await page.getByRole('button', { name: 'Cumulative', exact: true }).click();
   const chart = page.getByRole('group', { name: /Cumulative views chart/ });
   await chart.focus();
   await page.keyboard.press('End');
-  await expect(page.locator('.ds-sr')).toContainText('1.50M');
+  await expect(page.locator('.ds-chart-wrap .ds-sr')).toContainText('1.50M');
   await page.getByRole('button', { name: 'Choose reporting dates' }).click();
   await page.getByRole('button', { name: 'September 11', exact: true }).click();
   await page.getByRole('button', { name: 'September 18', exact: true }).click();
@@ -38,7 +38,7 @@ test('post search retains focus and CSV contains every filtered record, not only
   await expect(page.locator('.ds-table tbody tr')).toHaveCount(11);
   await search.fill('');
   await page.getByRole('button', { name: 'All platforms', exact: true }).click();
-  await page.locator('#list-platform-panel').getByRole('button', { name: 'Instagram', exact: true }).click();
+  await page.locator('#list-platform-panel').getByRole('checkbox', { name: 'TikTok', exact: true }).uncheck();
   await expect(page.locator('.ds-pagination')).toContainText('of 88 posts');
   await page.getByRole('button', { name: 'Export report' }).click();
   const download = page.waitForEvent('download');

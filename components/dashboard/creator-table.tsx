@@ -6,6 +6,7 @@ import { compact, demoCreators, totals, type DemoPost } from '@/lib/dashboard-de
 import { Dots, Icon, Menu } from './ui';
 import { RasterButton } from './raster-button';
 import { CurrentButton } from './current-button';
+import { FilterOption } from './filters';
 
 type Creator = typeof demoCreators[number];
 type Row = { creator: Creator; posts: DemoPost[]; metrics: ReturnType<typeof totals> };
@@ -33,7 +34,7 @@ function RowActions({ row, onView, onPosts }: { row: Row; onView: () => void; on
   const close = () => { setPosition(null); button.current?.focus({ preventScroll: true }); };
   const place = () => {
     const rect = button.current!.getBoundingClientRect();
-    setPosition({ left: Math.max(12, Math.min(rect.right - 206, window.innerWidth - 218)), top: rect.bottom + 166 > window.innerHeight ? Math.max(12, rect.top - 162) : Math.max(12, rect.bottom + 8) });
+    setPosition({ left: Math.max(12, Math.min(rect.right - 280, window.innerWidth - 292)), top: rect.bottom + 246 > window.innerHeight ? Math.max(12, rect.top - 246) : Math.max(12, rect.bottom + 8) });
   };
   useEffect(() => {
     if (!isOpen) return;
@@ -59,8 +60,9 @@ function RowActions({ row, onView, onPosts }: { row: Row; onView: () => void; on
         items[e.key === 'Home' ? 0 : e.key === 'End' ? items.length - 1 : (at + (e.key === 'ArrowUp' ? -1 : 1) + items.length) % items.length].focus();
       }
     }}>
-      <RasterButton role="menuitem" onClick={() => { close(); onView(); }}><Icon name="eye" size={17} />View creator</RasterButton>
-      <RasterButton role="menuitem" onClick={() => { close(); onPosts(); }}><Icon name="posts" size={17} />Open posts</RasterButton>
+      <div className="ds-quick-identity"><img src={row.creator.poster} alt="" /><span><strong>{row.creator.handle}</strong><small>Creator profile</small></span><Dots /></div>
+      <RasterButton role="menuitem" onClick={() => { close(); onView(); }}><Icon name="eye" size={17} />View creator<Icon name="outward" size={15} /></RasterButton>
+      <RasterButton role="menuitem" onClick={() => { close(); onPosts(); }}><Icon name="posts" size={17} />Open posts<span className="ds-quick-count" aria-hidden="true">{row.posts.length}</span></RasterButton>
       <RasterButton role="menuitem" onClick={() => { exportRows([row]); close(); }}><Icon name="download" size={17} />Export row</RasterButton>
     </div>, document.querySelector('.ds-app')!)}
   </>;
@@ -76,7 +78,8 @@ export function CreatorTable({ creators, posts, query, status, page, context, on
   const [sort, setSort] = useState<'reach-desc' | 'reach-asc' | 'name' | 'engagement'>('reach-desc');
   const [columns, setColumns] = useState<Record<Column, boolean>>({ content: true, reach: true, engagement: true });
   const selectAll = useRef<HTMLInputElement>(null);
-  useEffect(() => { setSelected([]); setOpen(null); }, [context, query, status]);
+  useEffect(() => { setSelected([]); }, [context, query, status]);
+  useEffect(() => { setOpen(null); }, [context, query]);
   const rows = useMemo(() => creators.map(creator => {
     const matching = posts.filter(p => p.creator === creator.id).sort((a, b) => b.day - a.day);
     return { creator, posts: matching, metrics: totals(matching) };
@@ -95,8 +98,12 @@ export function CreatorTable({ creators, posts, query, status, page, context, on
     <header className="ds-ledger-intro"><div><span className="ds-eyebrow">YOUR CREATOR NETWORK</span><h2 id="creator-ledger-title">A network in motion.</h2><p>Every voice. Every contribution.</p></div><div className="ds-ledger-wave" aria-hidden="true" /></header>
     <div className="ds-ledger-shell">
       <div className="ds-ledger-toolbar">
-        <div className="ds-ledger-tabs" role="group" aria-label="Creator workflow">
-          {(['All statuses', 'Publishing', 'In review'] as const).map(value => <RasterButton key={value} aria-pressed={status === value} onClick={() => onStatus(value)}>{value === 'All statuses' ? 'All creators' : value}<span>{value === 'All statuses' ? rows.length : rows.filter(r => r.creator.workflow === value).length}</span></RasterButton>)}
+        <div className="ds-ledger-workflow">
+          <Menu id="creator-workflow" label={`${status === 'All statuses' ? 'All creators' : status} ${status === 'All statuses' ? rows.length : rows.filter(r => r.creator.workflow === status).length}`} open={open} setOpen={setOpen} className="ds-filter-menu" align="left" icon="creators">
+            <h3 className="ds-filter-heading">Creator workflow</h3>
+            {(['All statuses', 'Publishing', 'In review'] as const).map(value => <FilterOption key={value} active={status === value} icon={<Icon name={value === 'All statuses' ? 'creators' : value === 'Publishing' ? 'send' : 'calendar'} />} count={value === 'All statuses' ? rows.length : rows.filter(r => r.creator.workflow === value).length} onClick={() => onStatus(value)}>{value === 'All statuses' ? 'All creators' : value}</FilterOption>)}
+          </Menu>
+          <span className="ds-workflow-caption">Every voice, in view.</span>
         </div>
         <label className="ds-ledger-search"><Icon name="search" size={17} /><input type="search" aria-label="Search creators" value={query} placeholder="Find a creator" onChange={e => onQuery(e.target.value)} /></label>
         <Menu id="creator-columns" label="Columns" open={open} setOpen={setOpen} className="ds-ledger-columns" trigger={<><Dots /><span>Columns</span></>}>
@@ -127,7 +134,7 @@ export function CreatorTable({ creators, posts, query, status, page, context, on
       </div>
       <footer className="ds-ledger-footer">
         <span>{filtered.length ? `${(currentPage - 1) * 5 + 1}–${Math.min(currentPage * 5, filtered.length)}` : '0'} of {filtered.length} creators</span>
-        {picked.length > 0 && <div className="ds-ledger-selection" role="region" aria-label="Selected creators"><strong>{picked.length} selected</strong><CurrentButton icon="download" onClick={() => exportRows(picked)}>Export selected</CurrentButton><RasterButton aria-label="Clear creator selection" onClick={() => setSelected([])}><Icon name="close" size={15} /></RasterButton></div>}
+        {picked.length > 0 && <div className="ds-ledger-selection" role="region" aria-label="Selected creators"><strong className="ds-selection-count"><b>{String(picked.length).padStart(2, '0')}</b><span>Creators selected</span></strong><CurrentButton icon="download" onClick={() => exportRows(picked)}>Export selected</CurrentButton><RasterButton aria-label="Clear creator selection" onClick={() => setSelected([])}><Icon name="close" size={15} /></RasterButton></div>}
         <div className="ds-ledger-pagination"><RasterButton aria-label="Previous creator page" disabled={currentPage === 1} onClick={() => onPage(currentPage - 1)}><Icon name="chevron" size={17} /></RasterButton><span>{String(currentPage).padStart(2, '0')} / {String(pageCount).padStart(2, '0')}</span><RasterButton aria-label="Next creator page" disabled={currentPage === pageCount} onClick={() => onPage(currentPage + 1)}><Icon name="chevron" size={17} /></RasterButton></div>
       </footer>
     </div>

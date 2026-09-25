@@ -1,4 +1,9 @@
 /* Every dashboard control shares the same slow ink front, with tone-aware contrast. */
+.ds-app .ds-notifications>.ds-menu-trigger{display:grid;place-items:center;justify-content:center;padding:0;gap:0;color:#24334b;min-width:44px;min-height:44px;border-color:#e3e9f4;box-shadow:0 2px 5px #15295703}
+.ds-notification-glyph{position:relative;display:grid;place-items:center;width:24px;height:24px;flex:none}
+.ds-app .ds-notification-glyph>.ds-icon{width:22px;height:22px;stroke-width:1.7;transform:none}
+.ds-app .ds-notification-glyph>.ds-unread-dot{position:absolute;right:0;top:0;width:6px;height:6px;border-radius:50%;background:#194bff;box-shadow:0 0 0 2px white}
+.ds-app .ds-notifications[data-open=true]>.ds-menu-trigger{color:#0038db;border-color:#c8d7fa}
 .ds-app :is(.ds-raster-button,.ds-current-button){--raster-fill:#e7eeff;--raster-dot:#557dff;--raster-duration:1150ms;position:relative;isolation:isolate}
 :where(.ds-app .ds-raster-button){border-radius:10px}
 .ds-app :is(.ds-current-primary,.ds-nav-item[aria-current=page],.ds-view-switch>button[aria-pressed=true],.ds-date-grid>button[data-edge=true]){--raster-fill:#0021cc;--raster-dot:#315aff}

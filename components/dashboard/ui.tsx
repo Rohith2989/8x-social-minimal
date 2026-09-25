@@ -1,8 +1,9 @@
 'use client';
 
 import { RasterButton } from './raster-button';
+import { RasterTransition } from './raster-transition';
 
-import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useId, useRef, type ReactNode } from 'react';
 
 export function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const paths: Record<string, ReactNode> = {
@@ -18,7 +19,7 @@ export function Icon({ name, size = 20 }: { name: string; size?: number }) {
     chevron: <path d="m8 5 7 7-7 7" />,
     down: <path d="m6 9 6 6 6-6" />,
     download: <><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" /></>,
-    bell: <><path d="M6 9a6 6 0 0 1 12 0v5l2 3H4l2-3ZM10 21h4" /></>,
+    bell: <><path d="M9.75 19.5a2.4 2.4 0 0 0 4.5 0M12 3v1.25M5.25 16.5c1.35-1.5 1.5-3.2 1.5-6a5.25 5.25 0 0 1 10.5 0c0 2.8.15 4.5 1.5 6 .4.45.08 1.15-.52 1.15H5.77c-.6 0-.92-.7-.52-1.15Z" /></>,
     search: <><circle cx="10" cy="10" r="6" /><path d="m15 15 6 6" /></>,
     close: <path d="m6 6 12 12M6 18 18 6" />,
     more: <><circle cx="12" cy="5" r=".8" /><circle cx="12" cy="12" r=".8" /><circle cx="12" cy="19" r=".8" /></>,
@@ -49,6 +50,36 @@ export function Banner() {
 export function Menu({ id, label, open, setOpen, children, className = '', icon, trigger, align = 'right' }: { id: string; label: string; open: string | null; setOpen: (v: string | null) => void; children: ReactNode; className?: string; icon?: string; trigger?: ReactNode; align?: 'left' | 'right' }) {
   const root = useRef<HTMLDivElement>(null), button = useRef<HTMLButtonElement>(null);
   const active = open === id;
+  useLayoutEffect(() => {
+    if (!active) return;
+    const panel = root.current?.querySelector<HTMLElement>('.ds-menu-panel');
+    if (!panel) return;
+    const fit = () => {
+      panel.style.translate = '0px 0px';
+      panel.style.maxHeight = `${Math.max(120, innerHeight - 24)}px`;
+      const anchor = button.current?.getBoundingClientRect();
+      if (!anchor) return;
+      // A short window can use the space above the trigger. The list, rather
+      // than the whole page, then handles any remaining overflow natively.
+      const below = Math.max(100, innerHeight - anchor.bottom - 24);
+      const above = Math.max(100, anchor.top - 24);
+      const wanted = panel.scrollHeight;
+      const flipped = wanted > below && above > below;
+      panel.dataset.placement = flipped ? 'above' : 'below';
+      panel.style.maxHeight = `${Math.min(innerHeight - 24, flipped ? above : below)}px`;
+      const rect = panel.getBoundingClientRect();
+      const shift = rect.left < 12 ? 12 - rect.left : rect.right > innerWidth - 12 ? innerWidth - 12 - rect.right : 0;
+      const top = Math.max(12, Math.min(flipped ? anchor.top - rect.height - 12 : anchor.bottom + 12, innerHeight - rect.height - 12));
+      // Inline sidebar menus remain part of the sidebar's own scroll flow.
+      const inline = getComputedStyle(panel).position === 'static';
+      panel.style.translate = inline ? '0px 0px' : `${shift}px ${top - rect.top}px`;
+      panel.style.setProperty('--popup-anchor-x', `${anchor.left + anchor.width / 2 - rect.left - shift}px`);
+    };
+    fit(); window.addEventListener('resize', fit);
+    const onScroll = (event: Event) => { if (!(event.target instanceof Node) || !panel.contains(event.target)) fit(); };
+    window.addEventListener('scroll', onScroll, true);
+    return () => { window.removeEventListener('resize', fit); window.removeEventListener('scroll', onScroll, true); };
+  }, [active, className]);
   useEffect(() => {
     if (!active) return;
     const outside = (event: PointerEvent) => { if (!root.current?.contains(event.target as Node)) setOpen(null); };
@@ -61,12 +92,12 @@ export function Menu({ id, label, open, setOpen, children, className = '', icon,
       const items = Array.from(root.current?.querySelectorAll<HTMLButtonElement>('.ds-menu-panel button:not(:disabled), .ds-menu-panel input') ?? []);
       if (items.length) { e.preventDefault(); const at = items.indexOf(document.activeElement as HTMLButtonElement); items[e.key === 'Home' ? 0 : e.key === 'End' ? items.length - 1 : (at + (e.key === 'ArrowUp' ? -1 : 1) + items.length) % items.length]?.focus(); }
     }
-  }}><RasterButton ref={button} className="ds-menu-trigger" aria-label={label} aria-expanded={active} aria-controls={`${id}-panel`} onClick={() => setOpen(active ? null : id)} onKeyDown={e => { if (e.key === 'ArrowDown' && !active) { e.preventDefault(); setOpen(id); requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>('.ds-menu-panel button')?.focus()); } }}>{trigger ?? <>{icon && <Icon name={icon} />}<span>{label}</span><Icon name="down" size={14} /></>}</RasterButton>{active && <div id={`${id}-panel`} className="ds-menu-panel" data-align={align}>{children}</div>}</div>;
+  }}><RasterButton ref={button} className="ds-menu-trigger" aria-label={label} aria-expanded={active} aria-controls={`${id}-panel`} onClick={() => setOpen(active ? null : id)} onKeyDown={e => { if (e.key === 'ArrowDown' && !active) { e.preventDefault(); setOpen(id); requestAnimationFrame(() => root.current?.querySelector<HTMLButtonElement>('.ds-menu-panel button')?.focus()); } }}>{trigger ?? <>{icon && <Icon name={icon} />}<span>{label}</span><Icon name="down" size={14} /></>}</RasterButton>{active && <div id={`${id}-panel`} className="ds-menu-panel" data-align={align} onClick={() => { if (className.includes('ds-filter-menu')) requestAnimationFrame(() => { if (!root.current?.querySelector('.ds-menu-panel') && document.activeElement === document.body) button.current?.focus({ preventScroll: true }); }); }}>{children}</div>}</div>;
 }
 export function Choice({ active, children, onClick, description }: { active?: boolean; children: ReactNode; onClick: () => void; description?: string }) {
   return <RasterButton type="button" className="ds-choice" aria-pressed={active} onClick={onClick}><span>{children}{description && <small>{description}</small>}</span>{active ? <Icon name="check" size={17} /> : <span className="ds-choice-dot" />}</RasterButton>;
 }
-export function Modal({ title, children, onClose, className = '' }: { title: string; children: ReactNode; onClose: () => void; className?: string }) {
+export function Modal({ title, children, onClose, className = '', kind = '', context = '8x workspace', detail = '' }: { title: string; children: ReactNode; onClose: () => void; className?: string; kind?: string; context?: string; detail?: string }) {
   const dialog = useRef<HTMLDialogElement>(null), titleId = useId();
   useEffect(() => {
     const el = dialog.current;
@@ -76,5 +107,5 @@ export function Modal({ title, children, onClose, className = '' }: { title: str
     el?.showModal();
     return () => { el?.close(); document.body.style.overflow = overflow; before?.focus(); };
   }, []);
-  return <dialog ref={dialog} className={`ds-dialog ${className}`} aria-labelledby={titleId} onCancel={e => { e.preventDefault(); onClose(); }} onClick={e => { if (e.target === e.currentTarget) { const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) onClose(); } }}><header><div><span className="ds-eyebrow">8x workspace</span><h2 id={titleId}>{title}</h2></div><RasterButton className="ds-icon-button" onClick={onClose} aria-label="Close dialog"><Icon name="close" /></RasterButton></header>{children}</dialog>;
+  return <dialog ref={dialog} className={`ds-dialog ${className}`} aria-labelledby={titleId} onCancel={e => { e.preventDefault(); onClose(); }} onClick={e => { if (e.target === e.currentTarget) { const r = e.currentTarget.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) onClose(); } }} data-kind={kind}><div className="ds-dialog-frame">{kind !== 'post' && <aside className="ds-dialog-rail" aria-hidden="true"><span className="ds-popup-tab" /><Dots /><span className="ds-rail-context">{context}</span><p>{kind === 'export' ? <>Your work,<br />in numbers.</> : kind === 'brief' ? <>A shared<br />direction.</> : kind === 'creator' ? <>People.<br />Possibility.</> : <>Your work.<br />Connected.</>}</p><small>{detail || '8x social / Workspace'}</small></aside>}<div className="ds-dialog-main"><header><div><span className="ds-eyebrow">{kind === 'export' ? 'Export report' : kind === 'post' ? 'Content preview' : '8x workspace'}</span><h2 id={titleId}>{title}</h2></div><RasterButton className="ds-icon-button" onClick={onClose} aria-label="Close dialog"><Icon name="close" /></RasterButton></header><RasterTransition layout="dialog" revision={title}>{children}</RasterTransition></div></div></dialog>;
 }

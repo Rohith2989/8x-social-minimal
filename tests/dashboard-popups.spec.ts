@@ -1,0 +1,58 @@
+import { test, expect } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
+
+test('PDF report contains the filtered metrics and a valid cross-reference table', async ({ page }) => {
+  await page.goto('/dashboard?platform=Instagram');
+  await page.getByRole('button', { name: 'Export report', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog.locator('.ds-report-metrics')).toContainText('88');
+  await expect(dialog.locator('.ds-report-metrics')).toContainText('900K');
+  await dialog.getByRole('button', { name: 'PDF Summary & top 10 posts' }).click();
+  const downloading = page.waitForEvent('download');
+  await dialog.getByRole('button', { name: 'Download PDF' }).click();
+  const file = await downloading;
+  expect(file.suggestedFilename()).toBe('8x-campaign-report.pdf');
+  const contents = await readFile((await file.path())!, 'utf8');
+  expect(contents.startsWith('%PDF-1.4')).toBe(true);
+  expect(contents).toContain('(900K)');
+  expect(contents).toContain('(88)');
+  const xref = Number(contents.match(/startxref\n(\d+)/)![1]);
+  expect(contents.slice(xref, xref + 4)).toBe('xref');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('button', { name: 'Export report', exact: true })).toBeFocused();
+});
+
+for (const width of [1920, 768, 390]) test(`popup surfaces remain contained and usable at ${width}px`, async ({ page }) => {
+  await page.setViewportSize({ width, height: width === 390 ? 844 : 1080 });
+  await page.goto('/dashboard');
+  await page.getByRole('button', { name: 'Notifications', exact: true }).click();
+  const activity = page.locator('#notifications-panel');
+  await expect(activity).toBeVisible();
+  const bounds = await activity.boundingBox();
+  expect(bounds!.x).toBeGreaterThanOrEqual(0);
+  expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+  await expect.poll(() => activity.evaluate(el => getComputedStyle(el).opacity)).toBe('1');
+  await page.screenshot({ path: `docs/qa/popup-activity-${width}.png` });
+  await activity.getByRole('button', { name: 'Mark all read' }).click();
+  await expect(activity.locator('.ds-activity-unread')).toHaveCount(0);
+  await activity.getByRole('button', { name: 'View all activity' }).click();
+  await expect(page.getByRole('dialog')).toContainText('You’re all caught up.');
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Export report', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog).toBeVisible();
+  expect(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
+  await expect(dialog.locator('[data-raster-layout=dialog]')).toHaveAttribute('data-raster-phase', 'ready');
+  await page.screenshot({ path: `docs/qa/popup-export-${width}.png` });
+  await dialog.getByRole('button', { name: 'Cancel', exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+  await page.goto('/dashboard?tab=posts');
+  await page.locator('.ds-table tbody input[type=checkbox]').first().check();
+  const selected = page.getByRole('region', { name: 'Selected posts' });
+  await expect(selected).toBeVisible();
+  const selectionBounds = await selected.boundingBox();
+  expect(selectionBounds!.x).toBeGreaterThanOrEqual(0);
+  expect(selectionBounds!.x + selectionBounds!.width).toBeLessThanOrEqual(width);
+  await selected.getByRole('button', { name: 'Clear selection' }).click();
+  await expect(selected).toHaveCount(0);
+});

@@ -1,0 +1,19 @@
+/* Raster reveal never moves a page, clones controls, or delays ready data. */
+.ds-app .ds-raster-transition{position:relative;min-width:0;animation:none;isolation:isolate}
+.ds-raster-content{min-width:0;position:relative}
+.ds-app .ds-raster-stencil{position:absolute;left:0;top:0;display:block;width:100%;height:100%;max-width:none;max-height:none;pointer-events:none;z-index:3;overflow:hidden}
+.ds-raster-print{animation:ds-print-resolve 640ms cubic-bezier(.2,.65,.3,1) both;pointer-events:none}
+[data-raster-arriving=true]{animation:ds-data-resolve 540ms ease-out both}
+.ds-app [data-raster-pending=true]{opacity:0!important}
+.ds-raster-current{animation:ds-media-current 2.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.ds-raster-route-current{animation:ds-media-current 600ms ease-out both;transform-box:fill-box;transform-origin:center}
+@keyframes ds-print-resolve{0%{opacity:.65}30%{opacity:.3}100%{opacity:0}}
+@keyframes ds-data-resolve{from{opacity:.48}to{opacity:1}}
+@keyframes ds-media-current{0%{transform:translateX(0)}100%{transform:translateX(210%)}}
+/* The SVG is decorative. Live menus always remain above its clipped shapes. */
+.ds-raster-content .ds-menu[data-open=true]{z-index:65}
+.ds-app .ds-dialog{animation:ds-dialog-resolve 180ms ease-out}
+@keyframes ds-dialog-resolve{from{opacity:.7}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.ds-app .ds-raster-print,.ds-app .ds-raster-current{display:none}.ds-app [data-raster-arriving=true],.ds-app .ds-dialog{animation:none}}
+.ds-app[data-quiet=true] .ds-raster-print,.ds-app[data-quiet=true] .ds-raster-current{display:none}
+.ds-app[data-quiet=true] [data-raster-arriving=true],.ds-app[data-quiet=true] .ds-dialog{animation:none}

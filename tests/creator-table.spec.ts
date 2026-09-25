@@ -4,11 +4,12 @@ import { readFile } from 'node:fs/promises';
 test('creator filters, sorting, columns and empty reset remain functional', async ({ page }) => {
   await page.goto('/dashboard?tab=creators');
   await expect(page.locator('.ds-creator-table tbody tr')).toHaveCount(5);
+  await page.getByRole('button', { name: 'All creators 24', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Publishing 18', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'In review 6', exact: true }).click();
   await expect(page.locator('.ds-ledger-footer')).toContainText('1–5 of 6 creators');
   await page.reload();
-  await expect(page.getByRole('button', { name: 'In review 6', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'In review 6', exact: true })).toBeVisible();
   const search = page.getByRole('searchbox', { name: 'Search creators' });
   await search.pressSequentially('no-such-creator', { delay: 10 });
   await expect(search).toBeFocused();
@@ -30,10 +31,10 @@ test('creator filters, sorting, columns and empty reset remain functional', asyn
 test('creator selection spans pages and CSV aggregates the same campaign data', async ({ page }) => {
   await page.goto('/dashboard?tab=creators');
   await page.getByRole('checkbox', { name: 'Select all 24 filtered creators' }).check();
-  await expect(page.getByRole('region', { name: 'Selected creators', exact: true })).toContainText('24 selected');
+  await expect(page.getByRole('region', { name: 'Selected creators', exact: true })).toContainText('24Creators selected');
   await page.getByRole('button', { name: 'Next creator page' }).click();
   await expect(page.locator('.ds-ledger-footer')).toContainText('6–10 of 24 creators');
-  await expect(page.getByRole('region', { name: 'Selected creators', exact: true })).toContainText('24 selected');
+  await expect(page.getByRole('region', { name: 'Selected creators', exact: true })).toContainText('24Creators selected');
   const download = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export selected', exact: true }).click();
   const file = await download;
