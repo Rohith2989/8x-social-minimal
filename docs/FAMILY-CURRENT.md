@@ -1,3 +1,5 @@
+September 29: user requested a black family/infinity section and explicitly authorized a Git push. The homepage now uses Carbon #111111, silver image layers and a neutral light accent. All five product-logo colours and existing layered motion remain. Navigation matches the black surface; Scroll Thread uses its carbon treatment here. The preceding map remains cobalt and the information footer stays paper. This supersedes the cobalt-family direction below.
+
 # Shared 8x infinity — September 21
 
 User approved the theme/motion boards, implementation ABOVE the information footer, and pushing to Git. During implementation the user rejected the procedural dot recreation and explicitly requested layered motion using the images themselves. They also clarified that this Raster Human website must use the ORANGE theme. Those corrections govern this implementation.

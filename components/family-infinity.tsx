@@ -13,7 +13,7 @@ const products=[
   {id:'research',name:'Research',colour:'#9DADC2',href:undefined},
 ];
 
-export function FamilyInfinity({theme='cobalt',id='family'}:{theme?:FamilyTheme;id?:string}) {
+export function FamilyInfinity({theme='carbon',id='family'}:{theme?:FamilyTheme;id?:string}) {
   const root=useRef<HTMLElement>(null),scene=useRef<SVGGElement>(null),light=useRef<SVGGElement>(null),front=useRef<SVGGElement>(null);
   const unique=useId().replace(/:/g,'');
   const palette=familyThemes[theme];
