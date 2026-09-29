@@ -13,7 +13,7 @@ const products=[
   {id:'research',name:'Research',colour:'#9DADC2',href:undefined},
 ];
 
-export function FamilyInfinity({theme='carbon',id='family'}:{theme?:FamilyTheme;id?:string}) {
+export function FamilyInfinity({theme='cobalt',id='family'}:{theme?:FamilyTheme;id?:string}) {
   const root=useRef<HTMLElement>(null),scene=useRef<SVGGElement>(null),light=useRef<SVGGElement>(null),front=useRef<SVGGElement>(null);
   const unique=useId().replace(/:/g,'');
   const palette=familyThemes[theme];
@@ -54,7 +54,7 @@ export function FamilyInfinity({theme='carbon',id='family'}:{theme?:FamilyTheme;
     <div className="fi-inner">
       <div className="fi-top"><img src="/8x.svg" alt="8x" width="386" height="264" /><span>Explore the family</span></div>
       <div className="fi-composition">
-        <div className="fi-art" role="img" aria-label="A sculpted infinity with a slow colour current and gently breathing image layers.">
+        <div className="fi-art" role="img" aria-label={theme==='cobalt'?'A black graphite infinity with softly lit spheres and gently breathing image layers.':'A sculpted infinity with a slow colour current and gently breathing image layers.'}>
           <svg className="fi-image-scene" viewBox="0 0 1984 793" aria-hidden="true">
             <defs>
               <filter id={`${unique}-colour`} colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values={colourMatrix}/></filter>
@@ -67,7 +67,7 @@ export function FamilyInfinity({theme='carbon',id='family'}:{theme?:FamilyTheme;
             <g ref={scene}>
               <image className="fi-base-image" href={asset} width="1984" height="793" filter={palette.light?`url(#${unique}-pale)`:undefined}/>
               <g ref={front} mask={`url(#${unique}-front)`}><image href={asset} width="1984" height="793" filter={palette.light?`url(#${unique}-pale)`:undefined}/></g>
-              <image className="fi-colour-image" href={asset} width="1984" height="793" filter={`url(#${unique}-colour)`} mask={`url(#${unique}-current)`}/>
+              <image className="fi-colour-image" href={asset} width="1984" height="793" opacity={theme==='cobalt'?.12:1} filter={`url(#${unique}-colour)`} mask={`url(#${unique}-current)`}/>
             </g>
           </svg>
         </div>

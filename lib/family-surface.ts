@@ -1,6 +1,6 @@
 export const familyThemes = {
   carbon:{surface:'#111111',ink:'#F4F6FA',accent:'#DCE2EC',light:true},
-  cobalt:{surface:'#0021CC',ink:'#F4F6FA',accent:'#A6CFFF',light:true},
+  cobalt:{surface:'#0021CC',ink:'#F4F6FA',accent:'#343842',light:false},
   polar:{surface:'#F4F6FA',ink:'#171922',accent:'#FFD438',light:false},
   social:{surface:'#FFD438',ink:'#171922',accent:'#F4F6FA',light:false},
   business:{surface:'#4D2C91',ink:'#F4F6FA',accent:'#FFD438',light:true},

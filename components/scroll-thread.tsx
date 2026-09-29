@@ -23,8 +23,7 @@ export function ScrollThread() {
       const map = document.getElementById('reach-atlas')?.getBoundingClientRect();
       const family = document.getElementById('family')?.getBoundingClientRect();
       const services = document.getElementById('services')?.getBoundingClientRect();
-      rail.dataset.surface = family && family.top <= middle && family.bottom >= middle ? 'carbon'
-        : map && (services ?? map).top <= middle && map.bottom >= middle ? 'blue'
+      rail.dataset.surface = map && (services ?? map).top <= middle && (family?.bottom ?? map.bottom) >= middle ? 'blue'
         : stone && stone.getBoundingClientRect().top <= middle ? 'stone' : 'carbon';
     };
     const queue = () => { if (!frame) frame = requestAnimationFrame(update); };

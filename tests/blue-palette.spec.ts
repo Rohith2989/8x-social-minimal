@@ -12,7 +12,7 @@ test('blue surfaces, controls and shared transition retain readable contrast',as
   await expect(page.locator('.hero-cta')).toHaveCSS('color','rgb(255, 255, 255)');
   for(const id of ['services','dashboard','reach-atlas','family']){
     const section=page.locator('#'+id);await section.evaluate(el=>scrollTo({top:el.getBoundingClientRect().top+scrollY-96,behavior:'instant'}));
-    await expect(section).toHaveCSS('background-color',id==='family'?'rgb(17, 17, 17)':'rgb(0, 33, 204)');
+    await expect(section).toHaveCSS('background-color','rgb(0, 33, 204)');
     const colours=await section.evaluate(el=>{const c=getComputedStyle(el);return [c.color,c.backgroundColor]});
     expect(contrast(colours[0],colours[1]),id).toBeGreaterThan(4.5);
     await page.screenshot({path:`docs/qa/blue-${id}-desktop.png`});

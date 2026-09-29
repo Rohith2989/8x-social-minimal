@@ -7,6 +7,6 @@
 .family-infinity[data-theme=carbon]{color-scheme:dark}
 .family-infinity[data-theme=carbon] .fi-top>img{filter:brightness(0) invert(1)}
 .family-infinity[data-theme=carbon] .fi-icon{box-shadow:0 0 0 1px #ffffff38,0 3px 12px #0003}
-.site-header[data-family=true][data-ending=false]{--nav-surface:#111111!important}
+.site-header[data-family=true][data-ending=false]{--nav-surface:#0021cc!important}
 @media(max-width:760px){.family-infinity{padding:38px var(--gutter) 52px}.fi-composition{padding:0;margin-top:30px}.fi-art{width:calc(100% + 24px);margin-left:-12px}.fi-products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;margin-top:18px}.fi-product{position:static;transform:none;white-space:normal;font-size:16px;letter-spacing:-.035em}.fi-product>a,.fi-label{gap:10px;min-height:48px}.fi-icon{width:34px;border-radius:7px}.fi-product svg{width:14px;height:14px;flex:none}.family-infinity h2{margin-top:32px;font-size:clamp(30px,6vw,42px)}.fi-business{order:1}.fi-sale{order:2}.fi-careers{order:3}.fi-research{order:4}}
 @media(prefers-reduced-motion:reduce){.family-infinity *{scroll-behavior:auto}}

@@ -17,7 +17,7 @@ html[data-story-dark=true] .site-header[data-surface=stone] .brand img{filter:br
 .site-header[data-ending=true] .brand img{filter:none!important}
 .site-header[data-ending=true] .nav-link{color:#4b5263!important}
 .site-header[data-ending=true] .nav-link[aria-current],.site-header[data-ending=true] .nav-contact{color:var(--signal)!important}
-.site-header[data-family=true][data-ending=false]{--nav-surface:#111111!important;color:white}
+.site-header[data-family=true][data-ending=false]{--nav-surface:#0021cc!important;color:white}
 .site-header[data-family=true][data-ending=false] .brand img{filter:brightness(0) invert(1)}
 .site-header[data-family=true][data-ending=false] :is(.nav-link,.nav-contact){color:#fff!important}
 .site-header[data-family=true][data-ending=false] .nav-link::after{background:#fff}

@@ -1,3 +1,5 @@
+September 29 correction: the user clarified that the SECTION must remain cobalt blue and only the INFINITY must be black. The approved preview uses the original graphite image with its natural highlights, no pale/silver filter, a restrained neutral current, white type and unchanged full-colour product icons. Homepage default is cobalt again; navigation and Scroll Thread follow the blue ground. Implementing and pushing this correction is explicitly authorized. This supersedes the mistaken black-background change below.
+
 September 29: user requested a black family/infinity section and explicitly authorized a Git push. The homepage now uses Carbon #111111, silver image layers and a neutral light accent. All five product-logo colours and existing layered motion remain. Navigation matches the black surface; Scroll Thread uses its carbon treatment here. The preceding map remains cobalt and the information footer stays paper. This supersedes the cobalt-family direction below.
 
 # Shared 8x infinity — September 21
